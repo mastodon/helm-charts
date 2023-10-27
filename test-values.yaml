@@ -1,0 +1,30 @@
+nodeSelector:
+  joinmastodon.org/property: mastodon.social
+replicaCount: 1
+
+databases:
+  social-db-01:
+    host: 10.11.128.6
+    port: 5432
+    user: maas_msocial
+    dbname: maas_msocial
+
+  social-db-02:
+    host: 10.11.128.7
+    port: 5432
+    user: maas_msocial
+    dbname: maas_msocial
+
+settings:
+  statsUsers:
+    - pgbouncer_exporter
+  connectionLimits:
+    maxClientConn: 4000
+    defaultPoolSize: 750 # * 2 = 1200, less than the 1300 max_conn on pg servers
+
+resources:
+  requests:
+    cpu: 1
+    memory: 128Mi
+  limits:
+    memory: 512Mi
