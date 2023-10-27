@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pgbouncer.fullname" . }}
+  labels:
+    {{- include "pgbouncer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "pgbouncer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.rollMe }}
+        rollme: {{ randAlphaNum 5 | quote }}
+        {{- end }}
+      labels:
+        {{- include "pgbouncer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: pgbouncer
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: postgres
+              containerPort: 6432
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 6432
+          livenessProbe:
+            tcpSocket:
+              port: 6432
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: userssecret
+              mountPath: /etc/pgbouncer/userlist.txt
+              subPath: {{ .Values.usersSecretRef.key }}
+              readOnly: true
+            - name: config
+              mountPath: /etc/pgbouncer/pgbouncer.ini
+              subPath: pgbouncer.ini
+              readOnly: true
+          lifecycle:
+            preStop:
+              exec:
+                # Allow existing queries clients to complete transactions within 120 seconds
+                command: ["/bin/sh", "-c", "kill -s INT pgbouncer && sleep {{ .Values.terminationGracePeriodSeconds }}"]
+        {{- with .Values.prometheusExporter }}
+        {{- if .enabled }}
+        - name: pgbouncer-exporter
+          image: prometheuscommunity/pgbouncer-exporter
+          command:
+            - /bin/pgbouncer_exporter
+          args:
+            - --pgBouncer.connectionString=postgres://{{ .statsPgUser }}:$(CONNECTION_PASSWORD)@localhost:6432?sslmode=disable&dbname=pgbouncer
+          ports:
+            - name: metrics
+              containerPort: 9127
+              protocol: TCP
+          env:
+            - name: CONNECTION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .statsPgPasswordSecretRef.name }}
+                  key: {{ .statsPgPasswordSecretRef.key }}
+        {{- end }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      volumes:
+        - name: userssecret
+          secret:
+            secretName: {{ .Values.usersSecretRef.name }}
+            items:
+              - key: {{ .Values.usersSecretRef.key }}
+                path: userlist.txt
+        - name: config
+          configMap:
+            name: {{ template "pgbouncer.fullname" . }}-config
+            items:
+              - key: pgbouncer.ini
+                path: pgbouncer.ini
