@@ -1,0 +1,20 @@
+{{- if .Values.prometheusExporter.installServiceMonitor }}
+# postgres_exporter for external services
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "pgbouncer.fullname" . }}
+  labels:
+    {{- include "pgbouncer.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "pgbouncer.name" . }}
+      release: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - interval: 10s
+      port: metrics
+{{- end }}
