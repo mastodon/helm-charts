@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  pgbouncer:
+  - apiVersion: v2
+    appVersion: 1.21.0
+    created: "2023-10-27T09:58:13.611003871Z"
+    description: Deploys pgbouncer
+    digest: 08d05baa5aa7fa535edf490e43367d037ab308fbdea99c48f16329e5b7a24df2
+    name: pgbouncer
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/pgbouncer-1.0.0/pgbouncer-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-10-27T09:58:13.611009671Z"
