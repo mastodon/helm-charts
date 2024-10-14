@@ -82,7 +82,7 @@ spec:
                   name: {{ .statsPgPasswordSecretRef.name }}
                   key: {{ .statsPgPasswordSecretRef.key }}
           resources:
-            {{- toYaml .Values.prometheusExporter.resources | nindent 12 }}
+            {{- toYaml .resources | nindent 12 }}
         {{- end }}
         {{- end }}
       {{- with .Values.nodeSelector }}
