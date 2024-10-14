@@ -74,6 +74,7 @@ prometheusExporter:
     name: pgbouncer-exporter-password
     key: password
   installServiceMonitor: false
+  resources: {}
 
 podSecurityContext:
   {}
