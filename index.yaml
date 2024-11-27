@@ -31,4 +31,18 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgbouncer-1.0.0/pgbouncer-1.0.0.tgz
     version: 1.0.0
-generated: "2024-10-14T16:38:41.134077529Z"
+  pgcat:
+  - apiVersion: v2
+    appVersion: 1.2.0
+    created: "2024-11-27T10:46:10.213968125Z"
+    description: A Helm chart for Kubernetes
+    digest: cec02dc37f7788093e8a82c21f31e425fde898d446f0b714c3b9ecc4bb86d5dd
+    maintainers:
+    - email: tim@joinmastodon.org
+      name: Tim Campbell
+    name: pgcat
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-11-27T10:46:10.214018289Z"
