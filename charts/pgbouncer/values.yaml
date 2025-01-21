@@ -21,10 +21,15 @@ fullnameOverride: ""
 
 podAnnotations: {}
 
+# List of users written in key=value lines like:
+#    user1: settings
+users: {}
+
 # The secret containing the userlist.txt to deploy
-usersSecretRef:
-  name: pgbouncer-conf-users
-  key: userlist.txt
+authFile:
+  secretRef:
+    name:
+    key:
 
 databases:
   # name:
@@ -34,8 +39,13 @@ databases:
   #   dbname:
 
 settings:
+  authType: scram-sha-256
   adminUsers: []
-  statsUsers: [pgbouncer_exporter]
+  statsUsers: []
+
+  tls:
+    clientMode: disable
+    serverMode: require
 
   poolMode: transaction
   serverResetQuery: DISCARD ALL
@@ -67,8 +77,11 @@ settings:
 # but will wait until all transactions end, or this amount of time
 terminationGracePeriodSeconds: 120
 
+# Sidecar configuration for prometheus exporter.
+# This sidecar needs an additional user "pgbouncer_exporter" to be configured in
+# the auth_file if enabled.
 prometheusExporter:
-  enabled: true
+  enabled: false
   statsPgUser: pgbouncer_exporter
   statsPgPasswordSecretRef:
     name: pgbouncer-exporter-password
