@@ -50,14 +50,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: userssecret
-              mountPath: /etc/pgbouncer/userlist.txt
-              subPath: {{ .Values.usersSecretRef.key }}
-              readOnly: true
             - name: config
               mountPath: /etc/pgbouncer/pgbouncer.ini
               subPath: pgbouncer.ini
               readOnly: true
+            {{- if and .Values.authFile.secretRef.name .Values.authFile.secretRef.key }}
+            - name: auth-file
+              mountPath: /etc/pgbouncer/userlist.txt
+              subPath: {{ .Values.authFile.secretRef.key }}
+              readOnly: true
+            {{- end }}
           lifecycle:
             preStop:
               exec:
@@ -99,15 +101,17 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:
-        - name: userssecret
-          secret:
-            secretName: {{ .Values.usersSecretRef.name }}
-            items:
-              - key: {{ .Values.usersSecretRef.key }}
-                path: userlist.txt
         - name: config
           configMap:
             name: {{ template "pgbouncer.fullname" . }}-config
             items:
               - key: pgbouncer.ini
                 path: pgbouncer.ini
+        {{- if and .Values.authFile.secretRef.name .Values.authFile.secretRef.key }}
+        - name: auth-file
+          secret:
+            secretName: {{ .Values.authFile.secretRef.name }}
+            items:
+              - key: {{ .Values.authFile.secretRef.key }}
+                path: userlist.txt
+        {{- end }}

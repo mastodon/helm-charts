@@ -23,7 +23,7 @@ listen_port = 6432
 ; unix_socket_dir = var/run/postgresql
 ;unix_socket_mode = 0777
 ;unix_socket_group =
-;client_tls_sslmode = disable
+client_tls_sslmode = {{ .Values.settings.tls.clientMode }}
 ;client_tls_ca_file = <system default>
 ;client_tls_key_file =
 ;client_tls_cert_file =
@@ -31,7 +31,7 @@ listen_port = 6432
 ;client_tls_protocols = all
 ;client_tls_dheparams = auto
 ;client_tls_ecdhcurve = auto
-;server_tls_sslmode = disable
+server_tls_sslmode = {{ .Values.settings.tls.serverMode }}
 ;server_tls_ca_file = <system default>
 ;server_tls_key_file =
 ;server_tls_cert_file =
@@ -41,9 +41,12 @@ listen_port = 6432
 
 ;;; Authentication settings
 
-auth_type = md5
-;auth_file = /8.0/main/global/pg_auth
+auth_type = {{ .Values.settings.authType }}
+{{- if and .Values.authFile.secretRef.name .Values.authFile.secretRef.key }}
 auth_file = /etc/pgbouncer/userlist.txt
+{{- else }}
+;auth_file =
+{{- end }}
 ;auth_hba_file =
 
 {{ .Values.settings.auth_query }}
