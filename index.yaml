@@ -3,6 +3,16 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.21.0
+    created: "2025-01-21T14:55:30.793719219Z"
+    description: Deploys pgbouncer
+    digest: 794bf698e7ac6d456c78a0d92408ca604a9d2fb76c92aa130d63fafa5878208c
+    name: pgbouncer
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/pgbouncer-1.2.0/pgbouncer-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 1.21.0
     created: "2024-10-14T16:38:41.134060307Z"
     description: Deploys pgbouncer
     digest: cf18cb3ead3295284e7096d10afb02b1b866a0982bc583af4e8ee02bf9cb52f3
@@ -58,4 +68,4 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-27T11:06:07.520689615Z"
+generated: "2025-01-21T14:55:30.793740339Z"
