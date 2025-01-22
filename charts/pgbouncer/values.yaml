@@ -13,7 +13,7 @@ image:
   repository: edoburu/pgbouncer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.21.0-p0"
+  tag: "v1.24.0-p0"
 
 imagePullSecrets: []
 nameOverride: ""
