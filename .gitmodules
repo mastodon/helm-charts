@@ -1,0 +1,3 @@
+[submodule "charts/mastodon"]
+	path = charts/mastodon
+	url = git@github.com:mastodon/chart.git
