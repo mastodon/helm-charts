@@ -20,7 +20,7 @@ config:
   # Fediverse secret key base.
   secretKeyBase:
     secretKeyRef:
-      name:
+      name: fediscoverer-secrets
       key: secret-key-base
 
   # PostgreSQL database connection information.
@@ -35,7 +35,7 @@ config:
     port: 5432
     password:
       secretKeyRef:
-        name:
+        name: postgresql-auth
         key: password
 
 # Additional environment variables to set for all pods.
