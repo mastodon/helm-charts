@@ -40,6 +40,9 @@ config:
         name:
         key: password
 
+# Additional environment variables to set for all pods.
+env:
+
 podAnnotations: {}
 
 podSecurityContext: {}
