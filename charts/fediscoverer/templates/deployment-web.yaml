@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fediscoverer.fullname" . }}
+  name: {{ include "fediscoverer.fullname" . }}-web
   labels:
     {{- include "fediscoverer.labels" . | nindent 4 }}
+    joinmastodon.org/component: fediscoverer-web
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "fediscoverer.selectorLabels" . | nindent 6 }}
+      joinmastodon.org/component: fediscoverer-web
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "fediscoverer.selectorLabels" . | nindent 8 }}
+        joinmastodon.org/component: fediscoverer-web
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -27,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-web
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -45,6 +46,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.database.password.secretKeyRef.name }}
                   key: {{ .Values.config.database.password.secretKeyRef.key }}
+            {{- if .Values.metrics.prometheus.enabled }}
+            - name: PROMETHEUS_EXPORTER_ENABLED
+              value: "true"
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
@@ -63,6 +68,27 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.metrics.prometheus.enabled }}
+        - name: prometheus-exporter
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command:
+            - ./bin/prometheus_exporter
+          args:
+            - "--bind"
+            - "0.0.0.0"
+            - "--port"
+            - "{{ .Values.metrics.prometheus.port }}"
+          resources:
+            requests:
+              cpu: "0.1"
+              memory: "180M"
+            limits:
+              cpu: "0.5"
+              memory: "250M"
+          ports:
+            - name: prometheus
+              containerPort: {{ .Values.metrics.prometheus.port }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

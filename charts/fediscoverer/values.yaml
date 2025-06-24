@@ -41,6 +41,12 @@ config:
 # Additional environment variables to set for all pods.
 env:
 
+# Whether to enable the prometheus exporter for monitoring
+metrics:
+  prometheus:
+    enabled: false
+    port: 9394
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -85,13 +91,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
