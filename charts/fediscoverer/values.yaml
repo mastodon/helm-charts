@@ -18,14 +18,12 @@ fullnameOverride: ""
 config:
 
   # Fediverse secret key base.
-  # Can be provided as a secretKeyRef (recommended) or a string.
   secretKeyBase:
     secretKeyRef:
       name:
       key: secret-key-base
 
   # PostgreSQL database connection information.
-  # Password can be provided as a secretKeyRef (recommended) or a string.
   # Some values for the database are hard-coded into the app, and must be:
   #   - Username: fediscoverer
   #   - Databases (all owned by fediscoverer):

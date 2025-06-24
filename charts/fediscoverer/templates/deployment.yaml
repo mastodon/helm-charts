@@ -34,33 +34,17 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: SECRET_KEY_BASE
-              {{- if .Values.config.secretKeyBase }}
-              {{- if kindIs "string" .Values.config.secretKeyBase }}
-              value: {{ .Values.config.secretKeyBase }}
-              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.config.secretKeyBase.secretKeyRef.name }}
                   key: {{ .Values.config.secretKeyBase.secretKeyRef.key }}
-              {{- end }}
-              {{- else}}
-              {{ fail "Either a value or a secretKeyRef needs to be provided for 'config.secretKeyBase'" }}
-              {{- end }}
             - name: DATABASE_URL
               value: {{ include "fediscoverer.database.uri" . }}
             - name: FEDISCOVERER_DATABASE_PASSWORD
-              {{- if .Values.config.database.password }}
-              {{- if kindIs "string" .Values.config.database.password }}
-              value: {{ .Values.config.database.password }}
-              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.config.database.password.secretKeyRef.name }}
                   key: {{ .Values.config.database.password.secretKeyRef.key }}
-              {{- end }}
-              {{- else }}
-              {{ fail "Either a value or a secretKeyRef needs to be provided for 'config.database.password'" }}
-              {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
