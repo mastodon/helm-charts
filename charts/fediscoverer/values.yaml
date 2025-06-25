@@ -17,6 +17,9 @@ fullnameOverride: ""
 # App-specific configuration
 config:
 
+  # URL that the service is accessible from
+  domain: localhost
+
   # Fediverse secret key base.
   secretKeyBase:
     secretKeyRef:
