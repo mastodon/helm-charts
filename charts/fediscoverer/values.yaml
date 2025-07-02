@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# General replica count for all pods
 replicaCount: 1
 
 image:
@@ -14,7 +15,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# App-specific configuration
+# App-wide configuration
 config:
 
   # URL that the service is accessible from
@@ -40,6 +41,20 @@ config:
       secretKeyRef:
         name: postgresql-auth
         key: password
+
+# Configuration for web pods
+web:
+
+  # Number of web pods
+  # Will override the global replicaCount value
+  replicaCount:
+
+# Configuration for job pods
+jobs:
+
+  # Number of job pods
+  # Will override the global replicaCount value
+  replicaCount:
 
 # Additional environment variables to set for all pods.
 env:

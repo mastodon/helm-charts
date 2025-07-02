@@ -6,7 +6,7 @@ metadata:
     {{- include "fediscoverer.labels" . | nindent 4 }}
     joinmastodon.org/component: fediscoverer-web
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ coalesce .Values.web.replicaCount .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "fediscoverer.selectorLabels" . | nindent 6 }}
