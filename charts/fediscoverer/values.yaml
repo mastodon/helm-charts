@@ -49,12 +49,34 @@ web:
   # Will override the global replicaCount value
   replicaCount:
 
+  # Tags for the deployment object
+  tags:
+
+  # Additional annotations for web pods
+  # These will be added in addition to global podAnnotations
+  podAnnotations:
+
+  # Additional labels for web pods
+  # These will be added in addition to other labels
+  podlabels:
+
 # Configuration for job pods
 jobs:
 
   # Number of job pods
   # Will override the global replicaCount value
   replicaCount:
+
+  # Tags for the deployment object
+  tags:
+
+  # Additional annotations for web pods
+  # These will be added in addition to global podAnnotations
+  podAnnotations:
+
+  # Additional labels for jobs pods
+  # These will be added in addition to other labels
+  podlabels:
 
 # Additional environment variables to set for all pods.
 env:

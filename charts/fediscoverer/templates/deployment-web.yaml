@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "fediscoverer.labels" . | nindent 4 }}
     joinmastodon.org/component: fediscoverer-web
+    {{- with .Values.web.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ coalesce .Values.web.replicaCount .Values.replicaCount }}
   selector:
@@ -13,13 +16,19 @@ spec:
       joinmastodon.org/component: fediscoverer-web
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
+        {{- with .Values.web.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "fediscoverer.selectorLabels" . | nindent 8 }}
         joinmastodon.org/component: fediscoverer-web
+        {{- with .Values.web.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

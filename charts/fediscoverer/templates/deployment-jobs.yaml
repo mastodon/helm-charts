@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "fediscoverer.labels" . | nindent 4 }}
     joinmastodon.org/component: fediscoverer-jobs
+    {{- with .Values.jobs.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ coalesce .Values.jobs.replicaCount .Values.replicaCount }}
   selector:
@@ -13,13 +16,19 @@ spec:
       joinmastodon.org/component: fediscoverer-jobs
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
+        {{- with .Values.jobs.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "fediscoverer.selectorLabels" . | nindent 8 }}
         joinmastodon.org/component: fediscoverer-jobs
+        {{- with .Values.jobs.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
