@@ -42,6 +42,9 @@ config:
         name: postgresql-auth
         key: password
 
+  # Whether to enable JSON logging
+  jsonLogging: true
+
 # Configuration for web pods
 web:
 

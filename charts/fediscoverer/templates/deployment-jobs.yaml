@@ -58,6 +58,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.database.password.secretKeyRef.name }}
                   key: {{ .Values.config.database.password.secretKeyRef.key }}
+            {{- if .Values.config.jsonLogging }}
+            - name: JSON_LOGGING
+              value: "true"
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
