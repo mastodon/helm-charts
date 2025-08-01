@@ -17,7 +17,6 @@ fullnameOverride: ""
 
 # Configuration for the postgres cluster itself
 cluster:
-  name: cloudnative
 
   # Database name and owner
   dbname: mastodon

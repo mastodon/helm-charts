@@ -45,12 +45,12 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Object store name
 */}}
 {{- define "cnpg.store.name"}}
-{{- printf "%s-store" .Values.cluster.name }}
+{{- printf "%s-store" (include "cnpg.fullname" .) }}
 {{- end }}
 
 {{/*
 Cluster backup name
 */}}
 {{- define "cnpg.backup.name"}}
-{{- printf "%s-backup" .Values.cluster.name }}
+{{- printf "%s-backup" (include "cnpg.fullname" .) }}
 {{- end }}

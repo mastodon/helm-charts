@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: {{ .Values.cluster.name }}
+  name: {{ include "cnpg.fullname" . }}
   labels:
     {{- include "cnpg.labels" . | nindent 4 }}
     {{- with .Values.labels }}
