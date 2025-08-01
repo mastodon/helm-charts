@@ -26,7 +26,7 @@ spec:
       postInitSQL:
         - CREATE DATABASE {{ .Values.cluster.dbname }} OWNER {{ .Values.cluster.owner }}
   storage:
-    size: {{ .Values.storage }}
+    size: {{ .Values.cluster.storage }}
   monitoring:
     enablePodMonitor: true
   affinity:
