@@ -11,7 +11,7 @@ metadata:
 spec:
   configuration:
     destinationPath: {{ .Values.backup.objectStore.destinationPath }}
-    endpointURL: {{ .Values.backup.objectStore.destinationPath }}
+    endpointURL: {{ .Values.backup.objectStore.endpointUrl }}
     s3Credentials:
       accessKeyId:
         name: {{ .Values.backup.objectStore.s3Credentials }}
