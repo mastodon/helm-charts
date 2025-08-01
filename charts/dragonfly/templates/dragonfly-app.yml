@@ -15,7 +15,7 @@ spec:
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   args:
     - "--dbfilename=dragonflydbSnapshot"
   snapshot:
