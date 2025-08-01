@@ -10,7 +10,6 @@ metadata:
 spec:
   instances: {{ .Values.replicaCount }}
   imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-
   {{- if eq .Values.backup.method "plugin" }}
   plugins:
   - name: barman-cloud.cloudnative-pg.io
@@ -18,7 +17,6 @@ spec:
     parameters:
       barmanObjectName: {{ include "cnpg.store.name" . }}
   {{- end }}
-
   bootstrap:
     initdb:
       database: {{ .Values.cluster.dbname }}
@@ -27,13 +25,10 @@ spec:
         name: {{ .Values.cluster.secret }}
       postInitSQL:
         - CREATE DATABASE {{ .Values.cluster.dbname }} OWNER {{ .Values.cluster.owner }}
-
   storage:
     size: {{ .Values.storage }}
-
   monitoring:
     enablePodMonitor: true
-
   affinity:
     {{- with .Values.affinity }}
     {{- toYaml . | nindent 4 }}
