@@ -1,0 +1,50 @@
+# Default values for cnpg.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of postgres instances to create for this cluster.
+instances: 2
+
+# Postgres image to use for the cluster.
+image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "17.5"
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Configuration for the postgres cluster itself
+cluster:
+  name: cloudnative
+
+  # Database name and owner
+  dbname: mastodon
+  owner: mastodon
+  # Secret contains the user credentials (must be kubernetes.io/basic-auth)
+  secret: postgres-auth
+
+  # Volume size for the cluster pods
+  storage: 25Gi
+
+# Configuration for cluster backup
+backup:
+  method: plugin
+  schedule: "0 0 0 * * *"  # At midnight every day
+
+  # If using 'method: plugin', these need to be filled out
+  objectStore:
+    destinationPath:
+    endpointUrl:
+
+    # Secret where S3 credentials are stored, must be in the form:
+    #  ACCESS_KEY_ID: xxxxxxx
+    #  ACCESS_SECRET_KEY: xxxxxxx
+    #  ACCESS_SESSION_TOKEN: xxxxxxx         # if required
+    s3Credentials: s3-credentials
+
+# Additional labels to add to all resources
+labels: {}
+
+affinity: {}

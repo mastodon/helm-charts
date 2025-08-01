@@ -1,0 +1,24 @@
+{{- if eq .Values.backup.method "plugin" }}
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: {{ include "cnpg.store.name" . }}
+  labels:
+    {{- include "cnpg.labels" . | nindent 4 }}
+    {{- with .Values.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  configuration:
+    destinationPath: {{ .Values.backup.objectStore.destinationPath }}
+    endpointURL: {{ .Values.backup.objectStore.destinationPath }}
+    s3Credentials:
+      accessKeyId:
+        name: {{ .Values.backup.objectStore.s3Credentials }}
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: {{ .Values.backup.objectStore.s3Credentials }}
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
+{{- end }}
