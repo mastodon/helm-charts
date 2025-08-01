@@ -11,9 +11,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-# Name to give the dragonfly instances
-name: dragonfly
-
 nameOverride: ""
 fullnameOverride: ""
 
