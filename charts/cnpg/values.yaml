@@ -10,7 +10,7 @@ image:
   repository: ghcr.io/cloudnative-pg/postgresql
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "17.5"
+  tag: ""
 
 nameOverride: ""
 fullnameOverride: ""
