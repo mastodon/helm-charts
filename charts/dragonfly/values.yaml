@@ -14,7 +14,12 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-# Snapshot configuration
+# Whether to enable password authentication.
+authentication:
+  secret:
+  key: password
+
+# Regular snapshot backups to be made to an attached volume.
 snapshot:
   cron: "*/5 * * * *"      # Every 5 minutes
   storage: 20Gi

@@ -18,6 +18,12 @@ spec:
   replicas: {{ .Values.replicas }}
   args:
     - "--dbfilename=dragonflydbSnapshot"
+  {{- if .Values.authentication.secret }}
+  authentication:
+    passwordFromSecret:
+      name: {{ .Values.authentication.secret }}
+      key: {{ .Values.authentication.key }}
+  {{- end }}
   snapshot:
     cron: "{{ .Values.snapshot.cron }}"
     persistentVolumeClaimSpec:
