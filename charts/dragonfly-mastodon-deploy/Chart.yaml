@@ -1,5 +1,5 @@
 apiVersion: v2
-name: dragonfly
+name: dragonfly-mastodon-deploy
 description: Dragonfly deployments for a Mastodon app.
 
 # A chart can be either an 'application' or a 'library' chart.
