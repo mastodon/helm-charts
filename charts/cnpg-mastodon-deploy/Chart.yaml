@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cnpg
+name: cnpg-mastodon-deploy
 description: A deployment of a Cloudnative PostgreSQL cluster for Mastodon.
 
 # A chart can be either an 'application' or a 'library' chart.
