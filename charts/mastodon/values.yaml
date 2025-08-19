@@ -30,13 +30,15 @@ mastodon:
   revisionHistoryLimit: 2
 
   # Sets the default locale for this server.
-  #
-  # NOTICE: This will force this locale on every user who is not logged in, and
-  # the instance will no longer do any local detection for clients.
+  # Instance will detect the user's browser language, otherwise it will fall
+  # back to this value.
   #
   # For a list of locales, please see:
   # https://docs.joinmastodon.org/admin/config/#default_locale
   locale:
+
+  # Do not detect the user's browser language, and use `locale` instead.
+  forceLocale: false
 
   # The domain that this Mastodon instance will be reachable from.
   localDomain: mastodon.local
@@ -199,7 +201,6 @@ mastodon:
   secrets:
 
     secretKeyBase:
-    otp_secret:
 
     vapidPrivateKey:
     vapidPublicKey:
@@ -470,7 +471,6 @@ mastodon:
       enable: false
 
   # Configuration for S3 storage that Mastodon's persistent data will live in.
-  # If enabled, this will override `persistence` and use S3 instead.
   #
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/optional/object-storage/#environment-variables-for-s3-api-access
