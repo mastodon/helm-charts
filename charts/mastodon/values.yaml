@@ -655,11 +655,6 @@ mastodon:
     namePrefix: mastodon
     nameSeparator: "-"
 
-  # Sets the PREPARED_STATEMENTS environment variable.
-  # For more information, please see:
-  # https://docs.joinmastodon.org/admin/config/#prepared_statements
-  preparedStatements: true
-
   # Specify extra environment variables to be added to all Mastodon pods.
   # These can be used for configuration not included in this chart, including
   # configuration for Mastodon varients and forks.
@@ -797,15 +792,6 @@ postgresql:
   port: 5432
   database: mastodon
 
-  # If using a connection pooler such as pgbouncer, please specify a hostname/IP
-  # that serves as a "direct" connection to the database, rather than going
-  # through the connection pooler. This is required for migrations to work
-  # properly.
-  direct:
-    hostname:
-    port:
-    database:
-
   # Database authentication.
   username: mastodon
   password:
@@ -817,6 +803,20 @@ postgresql:
   #   - username
   #   - password
   existingSecret:
+
+  # Whether to enable prepared statement support.
+  # For more information, please see:
+  # https://docs.joinmastodon.org/admin/config/#prepared_statements
+  preparedStatements: true
+
+  # If using a connection pooler such as pgbouncer, please specify a hostname/IP
+  # that serves as a "direct" connection to the database, rather than going
+  # through the connection pooler. This is required for migrations to work
+  # properly.
+  direct:
+    hostname:
+    port:
+    database:
 
   # Set the password for the "postgres" admin user.
   # Not required, but can be useful for debugging.
@@ -841,17 +841,17 @@ postgresql:
     port:
     database:
 
-    auth:
-      username:
-      password:
+    # Read replica database authentication.
+    username:
+    password:
 
-      # May also specify a secret for authentication. If set, takes precedence over
-      # `username` and `password`
-      #
-      # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-      #   - username
-      #   - password
-      existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence over
+    # `username` and `password`
+    #
+    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
+    #   - username
+    #   - password
+    existingSecret:
 
 # Configuration for Redis.
 redis:
