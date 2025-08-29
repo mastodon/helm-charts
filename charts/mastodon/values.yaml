@@ -758,7 +758,6 @@ elasticsearch:
 
   hostname:
   port: 9200
-  tls: true
 
   # Cluster side preset. Possible values are:
   #   single_node_cluster ,small_cluster, large_cluster
