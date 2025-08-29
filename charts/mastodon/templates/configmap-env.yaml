@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mastodon.fullname" . }}-env
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+data:
+  {{- include "mastodon.env.database" . | nindent 2 }}
+  {{- include "mastodon.env.database.replica" . | nindent 2 }}
+  {{- include "mastodon.env.elasticsearch" . | nindent 2 }}
+  {{- include "mastodon.env.redis" . | nindent 2 }}
+  {{- include "mastodon.env.s3" . | nindent 2 }}
