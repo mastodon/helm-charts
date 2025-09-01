@@ -417,7 +417,7 @@ mastodon:
 
     # The base url for streaming can be set if the streaming API is deployed to
     # a different domain/subdomain.
-    base_url: null
+    baseUrl: null
 
     # Puma-specific options.
     # Below values are based on default behavior in config/puma.rb when no
@@ -546,7 +546,7 @@ mastodon:
     domain:
     fromAddress: notifications@example.com
     returnPath:
-    reply_to:
+    replyTo:
 
     server: smtp.mailgun.org
     port: 587
