@@ -20,7 +20,7 @@ Database direct connection info.
 {{- define "mastodon.env.database.direct" -}}
 {{- with .Values.postgresql -}}
 DB_HOST: {{ coalesce .direct.hostname .hostname | quote }}
-DB_PORT: {{ coalesce .direct.port .port | quote}}
+DB_PORT: {{ coalesce .direct.port .port | quote }}
 DB_NAME: {{ coalesce .direct.database .database | quote }}
 PREPARED_STATEMENTS: {{ .preparedStatements | quote }}
 {{- end }}
