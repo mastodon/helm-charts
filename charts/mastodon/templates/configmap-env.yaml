@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "mastodon.fullname" . }}-env
+  name: {{ include "mastodon.configMapName" . }}
   labels:
-    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.labels" . | trim | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
 data:
   {{- include "mastodon.env" . | trim | nindent 2 }}
   {{- include "mastodon.env.database" . | trim | nindent 2 }}
