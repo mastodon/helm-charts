@@ -521,7 +521,7 @@ mastodon:
     # `apiKey`.
     #
     # Secret must contain the following keys:
-    #   - HCAPTCHA_SECRET_KEY
+    #   - DEEPL_API_KEY
     existingSecret:
 
   # Configuration for hcaptcha verification on user account creation.
@@ -535,7 +535,7 @@ mastodon:
     # `apiKey`.
     #
     # Secret must contain the following keys:
-    #   - DEEPL_API_KEY
+    #   - HCAPTCHA_SECRET_KEY
     existingSecret:
 
   # SMTP configuration for email delivery.
