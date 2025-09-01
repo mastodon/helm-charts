@@ -665,11 +665,6 @@ mastodon:
   # in key-value format.
   extraEnvFrom:
 
-  # Labels added to every Mastodon-related object
-  labels: {}
-  # Labes added to every deployed mastodon pod
-  podLabels: {}
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -1040,6 +1035,13 @@ serviceAccount:
 
   annotations: {}
 
+
+# Labels added to every Mastodon-related object
+labels: {}
+
+# Labes added to every deployed mastodon pod
+podLabels: {}
+
 # Custom annotations to apply to all created mastodon deployment objects. These
 # can be used to help mastodon interact with other services in the cluster.
 deploymentAnnotations: {}
@@ -1049,13 +1051,13 @@ deploymentAnnotations: {}
 # The annotations set with podAnnotations will be added to all mastodon pods.
 podAnnotations: {}
 
+# The annotations set with jobAnnotations will be added to all mastodon job pods
+jobAnnotations: {}
+
 # If set to true, an annotation with the current chart release number will be
 # added to all mastodon pods. This will cause all pods to be recreated every
 # `helm upgrade` regardless of whether their config or spec changes.
 revisionPodAnnotation: true
-
-# The annotations set with jobAnnotations will be added to all mastodon job pods
-jobAnnotations: {}
 
 # Default resources for all mastodon Deployments and jobs unless overridden.
 resources:
