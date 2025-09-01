@@ -739,47 +739,6 @@ ingress:
         hosts:
           - streaming.mastodon.local
 
-# Configuration for Elasticsearch.
-#
-# If you enable ES after the initial install, you will need to enable the
-# pre-install hook `deploySearch` for the initial chart install ONLY.
-elasticsearch:
-  enabled: true
-
-  hostname:
-  port: 9200
-
-  # Cluster side preset. Possible values are:
-  #   single_node_cluster ,small_cluster, large_cluster
-  #
-  # For more information, please see:
-  # https://docs.joinmastodon.org/admin/elasticsearch/#choosing-the-correct-preset
-  preset: single_node_cluster
-
-  # Authentication for the cluster (optional)
-  username:
-  password:
-
-  # May also specify a secret for authentication. If set, takes precedence over
-  # `username` and `password`
-  #
-  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-  #   - username
-  #   - password
-  existingSecret:
-
-  # Nodes on which the various elasticsearch pods will run.
-  master:
-    nodeSelector: {}
-  data:
-    nodeSelector: {}
-  coordinating:
-    nodeSelector: {}
-  ingest:
-    nodeSelector: {}
-  metrics:
-    nodeSelector: {}
-
 # Configuration for PostgreSQL.
 postgresql:
 
@@ -855,15 +814,14 @@ redis:
   port: 6379
 
   # Authentication for redis
-  auth:
-    password:
+  password:
 
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - password
-    existingSecret:
+  # May also specify a secret for authentication. If set, takes precedence over
+  # `password`
+  #
+  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
+  #   - password
+  existingSecret:
 
   # Configuration for a separate redis instance only for sidekiq processing.
   # If enabled, any values not specified will be copied from the base config.
@@ -875,15 +833,14 @@ redis:
     hostname:
     port: 6379
 
-    auth:
-      password:
+    password:
 
-      # May also specify a secret for authentication. If set, takes precedence over
-      # `password`
-      #
-      # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-      #   - password
-      existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence over
+    # `password`
+    #
+    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
+    #   - password
+    existingSecret:
 
   # Configuration for a separate redis instance only for cache.
   # If enabled, any values not specified will be copied from the base config.
@@ -895,15 +852,55 @@ redis:
     hostname:
     port: 6379
 
-    auth:
-      password:
+    password:
 
-      # May also specify a secret for authentication. If set, takes precedence over
-      # `password`
-      #
-      # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-      #   - password
-      existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence over
+    # `password`
+    #
+    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
+    #   - password
+    existingSecret:
+
+# Configuration for Elasticsearch.
+#
+# If you enable ES after the initial install, you will need to enable the
+# pre-install hook `deploySearch` for the initial chart install ONLY.
+elasticsearch:
+  enabled: true
+
+  hostname:
+  port: 9200
+
+  # Cluster side preset. Possible values are:
+  #   single_node_cluster ,small_cluster, large_cluster
+  #
+  # For more information, please see:
+  # https://docs.joinmastodon.org/admin/elasticsearch/#choosing-the-correct-preset
+  preset: single_node_cluster
+
+  # Authentication for the cluster (optional)
+  username:
+  password:
+
+  # May also specify a secret for authentication. If set, takes precedence over
+  # `username` and `password`
+  #
+  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
+  #   - username
+  #   - password
+  existingSecret:
+
+  # Nodes on which the various elasticsearch pods will run.
+  master:
+    nodeSelector: {}
+  data:
+    nodeSelector: {}
+  coordinating:
+    nodeSelector: {}
+  ingest:
+    nodeSelector: {}
+  metrics:
+    nodeSelector: {}
 
 # Configuration for external authentication mechanisms.
 externalAuth:
