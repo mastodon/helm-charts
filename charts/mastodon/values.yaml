@@ -261,8 +261,8 @@ mastodon:
 
     affinity: {}
     nodeSelector: {}
-    topologySpreadConstraints: {}
-    tolerations: {}
+    topologySpreadConstraints: []
+    tolerations: []
 
     resources: {}
 
@@ -346,8 +346,8 @@ mastodon:
 
         affinity: {}
         nodeSelector: {}
-        topologySpreadConstraints: {}
-        tolerations: {}
+        topologySpreadConstraints: []
+        tolerations: []
 
         resources: {}
 
@@ -371,8 +371,8 @@ mastodon:
 
     affinity: {}
     nodeSelector: {}
-    topologySpreadConstraints: {}
-    tolerations: {}
+    topologySpreadConstraints: []
+    tolerations: []
 
     resources: {}
 
@@ -451,8 +451,8 @@ mastodon:
 
     affinity: {}
     nodeSelector: {}
-    topologySpreadConstraints: {}
-    tolerations: {}
+    topologySpreadConstraints: []
+    tolerations: []
 
     resources: {}
 
@@ -1074,9 +1074,6 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
-# Toleratinos for all mastodon pods unless overridden.
-tolerations: []
-
 # Affinity for all mastodon pods unless overridden.
 affinity: {}
 
@@ -1085,14 +1082,17 @@ affinity: {}
 # setting.
 nodeSelector: {}
 
-# -- Timezone for all mastodon pods unless overwritten
-timezone: UTC
-
 # -- Topology Spread Constraints for all mastodon pods unless overwritten
 # Please note that you need to use `matchLabelKeys` (Kubernetes 1.25+) if you
 # want to spread each deployment independently, or override topologySpreadConstraints
 # for each deployment
-topologySpreadConstraints: {}
+topologySpreadConstraints: []
+
+# Toleratinos for all mastodon pods unless overridden.
+tolerations: []
+
+# -- Timezone for all mastodon pods unless overwritten
+timezone: UTC
 
 # Default volume mounts for all mastodon pods
 volumeMounts: []
