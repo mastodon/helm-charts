@@ -213,6 +213,28 @@ S3 secret name.
 {{- end }}
 
 {{/*
+SMTP secret name.
+*/}}
+{{- define "mastodon.secrets.smtpName" -}}
+{{- if .Values.mastodon.smtp.existingSecret }}
+{{- .Values.mastodon.smtp.existingSecret }}
+{{- else }}
+{{- printf "%s-smtp-auth" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
+SMTP bulk secret name.
+*/}}
+{{- define "mastodon.secrets.smtpBulkName" -}}
+{{- if .Values.mastodon.smtp.bulk.existingSecret }}
+{{- .Values.mastodon.smtp.bulk.existingSecret }}
+{{- else }}
+{{- printf "%s-smtp-bulk-auth" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
 Deepl secret name.
 */}}
 {{- define "mastodon.secrets.deeplName" -}}

@@ -73,6 +73,34 @@ S3 secrets.
 {{- end }}
 
 {{/*
+SMTP secrets.
+*/}}
+{{- define "mastodon.secrets.smtp" -}}
+- name: "SMTP_LOGIN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.smtpName" . }}
+      key: username
+- name: "SMTP_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.smtpName" . }}
+      key: password
+{{- if .Values.mastodon.smtp.bulk.enabled }}
+- name: "BULK_SMTP_LOGIN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.smtpBulkName" . }}
+      key: username
+- name: "BULK_SMTP_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.smtpBulkName" . }}
+      key: password
+{{- end }}
+{{- end }}
+
+{{/*
 Deepl secrets.
 */}}
 {{- define "mastodon.secrets.deepl" -}}
