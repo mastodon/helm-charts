@@ -27,12 +27,6 @@ spec:
       app.kubernetes.io/component: streaming
   template:
     metadata:
-      annotations:
-        {{- include "mastodon.userPodAnnotations" . | trim | nindent 8 }}
-        {{- include "mastodon.rollingPodAnnotations" . | trim | nindent 8 }}
-        {{- with .Values.mastodon.streaming.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
       labels:
         {{- include "mastodon.selectorLabels" . | trim | nindent 8 }}
         {{- include "mastodon.podUserLabels" . | trim | nindent 8 }}
@@ -40,6 +34,12 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         app.kubernetes.io/component: streaming
+      annotations:
+        {{- include "mastodon.userPodAnnotations" . | trim | nindent 8 }}
+        {{- include "mastodon.rollingPodAnnotations" . | trim | nindent 8 }}
+        {{- with .Values.mastodon.streaming.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
       {{- with coalesce .Values.mastodon.streaming.podSecurityContext .Values.podSecurityContext }}

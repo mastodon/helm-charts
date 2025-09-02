@@ -28,12 +28,6 @@ spec:
       app.kubernetes.io/part-of: rails
   template:
     metadata:
-      annotations:
-        {{- include "mastodon.userPodAnnotations" . | trim | nindent 8 }}
-        {{- include "mastodon.rollingPodAnnotations" . | trim | nindent 8 }}
-        {{- with .Values.mastodon.web.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
       labels:
         {{- include "mastodon.selectorLabels" . | trim | nindent 8 }}
         {{- include "mastodon.podUserLabels" . | trim | nindent 8 }}
@@ -42,6 +36,12 @@ spec:
         {{- end }}
         app.kubernetes.io/component: web
         app.kubernetes.io/part-of: rails
+      annotations:
+        {{- include "mastodon.userPodAnnotations" . | trim | nindent 8 }}
+        {{- include "mastodon.rollingPodAnnotations" . | trim | nindent 8 }}
+        {{- with .Values.mastodon.web.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "mastodon.deployment.specWithVolumes" . | trim | nindent 6 }}
       {{- with coalesce .Values.mastodon.web.podSecurityContext .Values.podSecurityContext }}

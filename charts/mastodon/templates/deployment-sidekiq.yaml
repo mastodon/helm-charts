@@ -38,14 +38,6 @@ spec:
       app.kubernetes.io/part-of: rails
   template:
     metadata:
-      annotations:
-        {{- include "mastodon.userPodAnnotations" $context | trim | nindent 8 }}
-        {{- include "mastodon.rollingPodAnnotations" $context | trim | nindent 8 }}
-        {{- with $context.Values.mastodon.sidekiq.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
-        # roll the pods to pick up any db migrations or other changes
-        {{- include "mastodon.rollingPodAnnotations" $context | nindent 8 }}
       labels:
         {{- include "mastodon.selectorLabels" $context | trim | nindent 8 }}
         {{- include "mastodon.podUserLabels" $context | trim | nindent 8 }}
@@ -54,6 +46,14 @@ spec:
         {{- end }}
         app.kubernetes.io/component: sidekiq-{{ .name }}
         app.kubernetes.io/part-of: rails
+      annotations:
+        {{- include "mastodon.userPodAnnotations" $context | trim | nindent 8 }}
+        {{- include "mastodon.rollingPodAnnotations" $context | trim | nindent 8 }}
+        {{- with $context.Values.mastodon.sidekiq.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        # roll the pods to pick up any db migrations or other changes
+        {{- include "mastodon.rollingPodAnnotations" $context | nindent 8 }}
     spec:
       {{- include "mastodon.deployment.specWithVolumes" $context | nindent 6 }}
       {{- with coalesce $context.Values.mastodon.sidekiq.podSecurityContext $context.Values.podSecurityContext }}
