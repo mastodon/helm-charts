@@ -1,0 +1,46 @@
+{{- if .Values.mastodon.createAdmin.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mastodon.fullname" . }}-create-admin
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name: {{ include "mastodon.fullname" . }}-create-admin
+      annotations:
+        {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
+    spec:
+      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ include "mastodon.fullname" . }}-create-admin
+          {{- include "mastodon.container.spec" . | trim | nindent 10 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - bin/tootctl
+            - accounts
+            - create
+            - {{ .Values.mastodon.createAdmin.username }}
+            - --email
+            - {{ .Values.mastodon.createAdmin.email }}
+            - --confirmed
+            - --role
+            - Owner
+          env:
+            - name: "PORT"
+              value: {{ .Values.mastodon.web.port | quote }}
+            {{- include "mastodon.secrets.database" . | nindent 12 }}
+            {{- include "mastodon.secrets.redis" . | nindent 12 }}
+      {{- with coalesce .Values.mastodon.createAdmin.nodeSelector .Values.nodeSelector }}
+      nodeSelector:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+{{- end }}

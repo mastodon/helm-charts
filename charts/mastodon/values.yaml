@@ -145,6 +145,8 @@ mastodon:
       # How many threads to use when deploying the index(es).
       concurrency: 5
 
+      resetChewy: true
+
       resources:
         requests:
           cpu: 250m

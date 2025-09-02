@@ -213,6 +213,17 @@ S3 secret name.
 {{- end }}
 
 {{/*
+S3 (asset copy) secret name.
+*/}}
+{{- define "mastodon.secrets.s3UploadName" -}}
+{{- if .Values.mastodon.hooks.s3Upload.existingSecret }}
+{{- .Values.mastodon.hooks.s3Upload.existingSecret }}
+{{- else }}
+{{- printf "%s-s3-assets-copy-auth" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
 SMTP secret name.
 */}}
 {{- define "mastodon.secrets.smtpName" -}}

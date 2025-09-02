@@ -1,0 +1,92 @@
+{{- if .Values.mastodon.hooks.s3Upload.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mastodon.fullname" . }}-assets-upload
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name: {{ include "mastodon.fullname" . }}-assets-upload
+      annotations:
+        {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
+    spec:
+      {{- include "mastodon.deployment.spec" . | nindent 6 }}
+      volumes:
+      restartPolicy: Never
+      initContainers:
+        - name: extract-assets
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+          - cp
+          args:
+          - -rv
+          - public
+          - /assets
+          volumeMounts:
+            - mountPath: /assets
+              name: assets
+      containers:
+        - name: upload-assets
+          image: rclone/rclone:1
+          imagePullPolicy: Always
+          env:
+          - name: RCLONE_S3_NO_CHECK_BUCKET
+            value: "true"
+          - name: RCLONE_S3_ACL
+            value: {{ required "Please specify a canned ACL for S3 asset uploads" .Values.mastodon.hooks.s3Upload.acl }}
+          - name: RCLONE_CONFIG_REMOTE_TYPE
+            value: s3
+          - name: RCLONE_CONFIG_REMOTE_PROVIDER
+            value: AWS
+          - name: RCLONE_CONFIG_REMOTE_ENDPOINT
+            value: {{ required "Please specify an endpoint for S3 asset uploads" .Values.mastodon.hooks.s3Upload.endpoint }}
+          - name: RCLONE_CONFIG_REMOTE_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "mastodon.secrets.s3UploadName" . }}
+                key: AWS_SECRET_ACCESS_KEY
+          - name: RCLONE_CONFIG_REMOTE_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "mastodon.secrets.s3UploadName" . }}
+                key: AWS_ACCESS_KEY_ID
+          {{- with .Values.mastodon.hooks.s3Upload.rclone.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command:
+          - rclone
+          args:
+          - copy
+          - /assets/public
+          - "remote:{{ required "Please specify a bucket for S3 asset uploads" .Values.mastodon.hooks.s3Upload.bucket }}"
+          - --fast-list
+          - --transfers=32
+          - --include
+          - "{assets,packs}/**"
+          - --progress
+          - -vv
+          volumeMounts:
+            - mountPath: /assets
+              name: assets
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 500Mi
+      volumes:
+        - name: assets
+          emptyDir: {}
+      {{- with coalesce .Values.mastodon.hooks.s3Upload.nodeSelector .Values.nodeSelector }}
+      nodeSelector:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+{{- end -}}
