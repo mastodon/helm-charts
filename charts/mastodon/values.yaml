@@ -714,12 +714,13 @@ ingress:
     #   for the NGINX ingress controller:
     # nginx.org/client-max-body-size: 40m
 
-  ingressClassName:
+  className:
 
   hosts:
     - host: mastodon.local
       paths:
         - path: "/"
+          pathType: Prefix
   tls:
     - secretName: mastodon-tls
       hosts:
@@ -732,12 +733,13 @@ ingress:
     enabled: false
 
     annotations:
-    ingressClassName:
+    className:
 
     hosts:
       - host: streaming.mastodon.local
         paths:
           - path: "/"
+            pathType: Prefix
     tls:
       - secretName: mastodon-tls
         hosts:
