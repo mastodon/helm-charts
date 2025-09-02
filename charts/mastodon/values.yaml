@@ -262,6 +262,7 @@ mastodon:
     affinity: {}
     nodeSelector: {}
     topologySpreadConstraints: {}
+    tolerations: {}
 
     resources: {}
 
@@ -370,6 +371,7 @@ mastodon:
     affinity: {}
     nodeSelector: {}
     topologySpreadConstraints: {}
+    tolerations: {}
 
     resources: {}
 
@@ -449,6 +451,7 @@ mastodon:
     affinity: {}
     nodeSelector: {}
     topologySpreadConstraints: {}
+    tolerations: {}
 
     resources: {}
 
@@ -1070,6 +1073,7 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
+# Toleratinos for all mastodon pods unless overridden.
 tolerations: []
 
 # Affinity for all mastodon pods unless overridden.
