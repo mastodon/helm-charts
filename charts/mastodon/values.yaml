@@ -253,8 +253,8 @@ mastodon:
       namePrefix:
       nameSeparator:
 
-    # Pod/container management options.
-    # All values override their equivalent parent values.
+    # Pod/container management options for all web pods.
+    # All values override their equivalent global values.
 
     podSecurityContext: {}
     securityContext: {}
@@ -341,12 +341,13 @@ mastodon:
           repository:
           tag:
 
-        # Pod/container management options.
+        # Pod/container management options for this worker's pods.
         # All values override their equivalent parent values.
 
         affinity: {}
         nodeSelector: {}
         topologySpreadConstraints: {}
+        tolerations: {}
 
         resources: {}
 
@@ -362,8 +363,8 @@ mastodon:
       namePrefix:
       nameSeparator:
 
-    # Pod/container management options.
-    # All values override their equivalent parent values.
+    # Pod/container management options for all sidekiq pods.
+    # All values override their equivalent global values.
 
     podSecurityContext: {}
     securityContext: {}
@@ -442,8 +443,8 @@ mastodon:
     # These will be added in addition to global values.
     extraEnvVars: {}
 
-    # Pod/container management options.
-    # All values override their equivalent parent values.
+    # Pod/container management options for all streaming pods.
+    # All values override their equivalent global values.
 
     podSecurityContext: {}
     securityContext: {}
