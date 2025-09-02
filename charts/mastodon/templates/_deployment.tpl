@@ -51,3 +51,19 @@ volumeMounts:
   {{- toYaml . | nindent 12 }}
 {{- end }}
 {{- end }}
+
+{{/*
+Common container spec (pre-deploy jobs).
+Points to pre-deploy config maps and secrets.
+*/}}
+{{- define "mastodon.container.specPreDeploy" -}}
+envFrom:
+  - configMapRef:
+      name: {{ include "mastodon.configMapName" . }}-predeploy
+  - secretRef:
+      name: {{ include "mastodon.secrets.secretNamePreDeploy" . }}
+  {{- if .Values.mastodon.extraEnvFrom }}
+  - configMapRef:
+      name: {{ .Values.mastodon.extraEnvFrom }}
+  {{- end }}
+{{- end }}

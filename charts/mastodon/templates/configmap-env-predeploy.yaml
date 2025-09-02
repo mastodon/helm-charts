@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mastodon.configMapName" . }}-predeploy
+  labels:
+    {{- include "mastodon.labels" . | trim | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+data:
+  {{- include "mastodon.env" . | trim | nindent 2 }}
+  {{- include "mastodon.env.database" . | trim | nindent 2 }}
+  {{- include "mastodon.env.database.replica" . | trim | nindent 2 }}
+  {{- include "mastodon.env.elasticsearch" . | trim | nindent 2 }}
+  {{- include "mastodon.env.redis" . | trim | nindent 2 }}

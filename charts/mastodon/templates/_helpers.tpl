@@ -136,6 +136,17 @@ Secret name containing mastodon secrets.
 {{- end }}
 
 {{/*
+Secret name containing mastodon secrets. (pre-deploy).
+*/}}
+{{- define "mastodon.secrets.secretNamePreDeploy" -}}
+{{- if .Values.mastodon.secrets.existingSecret }}
+{{- .Values.mastodon.secrets.existingSecret }}
+{{- else }}
+{{- printf "%s-secrets-predeploy" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
 Postgres secret name.
 */}}
 {{- define "mastodon.secrets.postgresName" -}}
