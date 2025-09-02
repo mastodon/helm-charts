@@ -43,22 +43,15 @@ spec:
         app.kubernetes.io/component: web
         app.kubernetes.io/part-of: rails
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "mastodon.serviceAccountName" . }}
-      {{- with (default .Values.podSecurityContext .Values.mastodon.web.podSecurityContext) }}
+      {{- include "mastodon.deployment.specWithVolumes" . | trim | nindent 6 }}
+      {{- with coalesce .Values.mastodon.web.podSecurityContext .Values.podSecurityContext }}
       securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}-web
-          {{- with (default .Values.securityContext .Values.mastodon.web.securityContext) }}
+          {{- include "mastodon.container.specWithVolumes" . | trim | nindent 10 }}
+          {{- with coalesce .Values.mastodon.web.securityContext .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -70,15 +63,6 @@ spec:
             - puma
             - -C
             - config/puma.rb
-          envFrom:
-            - configMapRef:
-                name: {{ include "mastodon.configMapName" . }}
-            - secretRef:
-                name: {{ template "mastodon.secrets.secretName" . }}
-            {{- if .Values.mastodon.extraEnvFrom }}
-            - configMapRef:
-                name: {{ .Values.mastodon.extraEnvFrom }}
-            {{- end }}
           env:
             - name: "PORT"
               value: {{ .Values.mastodon.web.port | quote }}
@@ -101,7 +85,9 @@ spec:
             {{- include "mastodon.secrets.s3" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
+            {{- if .Values.elasticsearch.enabled }}
             {{- include "mastodon.secrets.elasticsearch" . | nindent 12 }}
+            {{- end }}
             {{- if .Values.mastodon.deepl.enabled }}
             {{- include "mastodon.secrets.deepl" . | nindent 12 }}
             {{- end }}
@@ -131,10 +117,10 @@ spec:
               value: "true"
             {{- end }}
             {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            {{- range $k, $v := .Values.mastodon.web.extraEnvVars }}
+            - name: {{ $k }}
+              value: {{ quote $v }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.mastodon.web.port }}
@@ -153,7 +139,7 @@ spec:
             initialDelaySeconds: 15
             failureThreshold: 30
             periodSeconds: 5
-          {{- with (default .Values.resources .Values.mastodon.web.resources) }}
+          {{- with coalesce .Values.mastodon.web.resources .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -182,15 +168,15 @@ spec:
       nodeSelector:
         {{- . | toYaml | nindent 8 }}
       {{- end }}
-      {{- with (default .Values.affinity .Values.mastodon.web.affinity) }}
+      {{- with coalesce .Values.mastodon.web.affinity .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with (default .Values.topologySpreadConstraints .Values.mastodon.web.topologySpreadConstraints) }}
+      {{- with coalesce .Values.mastodon.web.topologySpreadConstraints .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with (default .Values.tolerations .Values.mastodon.web.tolerations) }}
+      {{- with coalesce .Values.mastodon.web.tolerations .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
