@@ -65,6 +65,10 @@ spec:
             - name: JSON_LOGGING
               value: "true"
             {{- end }}
+            {{- if .Values.config.queueConnectionPoolSize }}
+            - name: QUEUE_CONNECTION_POOL_SIZE
+              value: {{ .Values.config.queueConnectionPoolSize }}
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}

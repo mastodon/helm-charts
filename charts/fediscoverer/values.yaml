@@ -27,6 +27,9 @@ config:
       name: fediscoverer-secrets
       key: secret-key-base
 
+  # Size of the DB connection pool used by the application.
+  queueConnectionPoolSize: 5
+
   # PostgreSQL database connection information.
   # Some values for the database are hard-coded into the app, and must be:
   #   - Username: fediscoverer
