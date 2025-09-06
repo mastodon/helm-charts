@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mastodon.configMapName" . }}
+  labels:
+    {{- include "mastodon.labels" . | trim | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+data:
+  {{- include "mastodon.env" . | trim | nindent 2 }}
+  {{- include "mastodon.env.database" . | trim | nindent 2 }}
+  {{- include "mastodon.env.database.replica" . | trim | nindent 2 }}
+  {{- include "mastodon.env.elasticsearch" . | trim | nindent 2 }}
+  {{- include "mastodon.env.redis" . | trim | nindent 2 }}
+  {{- include "mastodon.env.s3" . | trim | nindent 2 }}
+  {{- include "mastodon.env.smtp" . | trim | nindent 2 }}
+  {{- include "mastodon.env.smtp.bulk" . | trim | nindent 2 }}
+  {{- include "mastodon.env.cacheBuster" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.oidc" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.saml" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.cas" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.pam" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.ldap" . | trim | nindent 2 }}
+  {{- include "mastodon.env.auth.oauthGlobal" . | trim | nindent 2 }}
+  {{- include "mastodon.env.extra" . | trim | nindent 2 }}

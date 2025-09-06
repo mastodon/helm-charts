@@ -1,0 +1,35 @@
+{{- if .Values.mastodon.hooks.dbMigrate.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mastodon.fullname" . }}-db-migrate
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name: {{ include "mastodon.fullname" . }}-db-migrate
+      annotations:
+        {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
+    spec:
+      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ include "mastodon.fullname" . }}-db-migrate
+          {{- include "mastodon.container.specPreDeploy" . | trim | nindent 10 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - bundle
+            - exec
+            - rake
+            - db:migrate
+          env:
+            {{- include "mastodon.secrets.database" . | nindent 12 }}
+            {{- include "mastodon.secrets.redis" . | nindent 12 }}
+{{- end }}
