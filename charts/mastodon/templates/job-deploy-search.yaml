@@ -1,0 +1,65 @@
+{{- if and .Values.mastodon.hooks.deploySearch.enabled .Values.elasticsearch.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mastodon.fullname" . }}-deploy-search
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  suspend: false
+  template:
+    metadata:
+      name: {{ include "mastodon.fullname" . }}-deploy-search
+      annotations:
+        {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
+    spec:
+      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ include "mastodon.fullname" . }}-deploy-search
+          {{- include "mastodon.container.spec" . | trim | nindent 10 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.mastodon.hooks.deploySearch }}
+          command:
+            - bin/tootctl
+            - search
+            - deploy
+            {{- with .concurrency }}
+            - '--concurrency'
+            - {{ . | quote }}
+            {{- end }}
+            {{- if .resetChewy }}
+            - '--reset-chewy'
+            {{- end }}
+            {{- with .batchSize }}
+            - '--batch-size'
+            - {{ . | quote }}
+            {{- end }}
+            {{- with .only }}
+              {{- if not (has . (list "instances" "accounts" "tags" "statuses" "public_statuses")) -}}
+                {{ fail "mastodon.hooks.deploySearch.only: Value must be one of the following words: instances, accounts, tags, statuses, public_statuses"}}
+              {{- end }}
+            - '--only'
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
+          env:
+            - name: "PORT"
+              value: {{ .Values.mastodon.web.port | quote }}
+            {{- include "mastodon.secrets.database" . | nindent 12 }}
+            {{- include "mastodon.secrets.redis" . | nindent 12 }}
+          {{- with .Values.mastodon.hooks.deploySearch.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with coalesce .Values.mastodon.createAdmin.nodeSelector .Values.nodeSelector }}
+      nodeSelector:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+{{- end }}
