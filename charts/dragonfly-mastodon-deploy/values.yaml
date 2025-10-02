@@ -19,10 +19,16 @@ authentication:
   secret:
   key: password
 
+# Whether we should use separate dragonflies for app and sidekiq
+separate: false
+
 # Regular snapshot backups to be made to an attached volume.
 snapshot:
   cron: "*/5 * * * *"      # Every 5 minutes
   storage: 20Gi
+
+# Additional arguments to add to the process.
+args: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

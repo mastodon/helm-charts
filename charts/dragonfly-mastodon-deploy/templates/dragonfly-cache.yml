@@ -18,6 +18,9 @@ spec:
   replicas: {{ .Values.replicas }}
   args:
     - "--dbfilename=dragonflydbSnapshot"
+    {{- with .Values.args }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- if .Values.authentication.secret }}
   authentication:
     passwordFromSecret:

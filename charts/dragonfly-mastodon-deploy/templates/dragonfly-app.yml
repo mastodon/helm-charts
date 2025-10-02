@@ -1,7 +1,11 @@
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
 metadata:
+  {{- if .Values.separate }}
   name: {{ include "dragonfly.fullname" . }}-app
+  {{- else }}
+  name: {{ include "dragonfly.fullname" . }}-app-sidekiq
+  {{- end }}
   labels:
     {{- include "dragonfly.labels" . | nindent 4 }}
     {{- with .Values.labels }}
@@ -18,6 +22,9 @@ spec:
   replicas: {{ .Values.replicas }}
   args:
     - "--dbfilename=dragonflydbSnapshot"
+    {{- with .Values.args }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- if .Values.authentication.secret }}
   authentication:
     passwordFromSecret:
