@@ -52,12 +52,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ include "mastodon.secrets.s3UploadName" . }}
-                key: AWS_SECRET_ACCESS_KEY
+                key: {{ .Values.mastodon.hooks.s3Upload.existingSecretKeys.accessKeyId }}
           - name: RCLONE_CONFIG_REMOTE_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ include "mastodon.secrets.s3UploadName" . }}
-                key: AWS_ACCESS_KEY_ID
+                key: {{ .Values.mastodon.hooks.s3Upload.existingSecretKeys.secretAccessKey }}
           {{- with .Values.mastodon.hooks.s3Upload.rclone.env }}
             {{- toYaml . | nindent 12 }}
           {{- end }}

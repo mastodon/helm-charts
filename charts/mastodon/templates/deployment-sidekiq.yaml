@@ -80,6 +80,7 @@ spec:
             - {{ . | quote }}
             {{- end }}
           env:
+            {{- include "mastodon.secrets.secret" $context | nindent 12 }}
             {{- include "mastodon.secrets.s3" $context | nindent 12 }}
             {{- include "mastodon.secrets.database" $context | nindent 12 }}
             {{- include "mastodon.secrets.redis" $context | nindent 12 }}

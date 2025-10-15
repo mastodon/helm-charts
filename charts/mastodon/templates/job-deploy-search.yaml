@@ -52,6 +52,7 @@ spec:
           env:
             - name: "PORT"
               value: {{ .Values.mastodon.web.port | quote }}
+            {{- include "mastodon.secrets.secret" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
           {{- with .Values.mastodon.hooks.deploySearch.resources }}

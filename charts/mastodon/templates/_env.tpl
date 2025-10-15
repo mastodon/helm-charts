@@ -53,12 +53,12 @@ Mastodon secret definitions
 */}}
 {{- define "mastodon.env.secrets" -}}
 {{- with .Values.mastodon.secrets -}}
-SECRET_KEY_BASE: {{ required "secretKeyBase is required" (.secretKeyBase | b64enc | quote) }}
-VAPID_PRIVATE_KEY: {{ required "vapidPrivateKey is required" (.vapidPrivateKey | b64enc | quote) }}
-VAPID_PUBLIC_KEY: {{ required "vapidPublicKey is required" (.vapidPublicKey | b64enc | quote) }}
-ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY: {{ required "arPrimaryKey is required" (.arPrimaryKey | b64enc | quote) }}
-ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: {{ required "arDeterministicKey is required" (.arDeterministicKey | b64enc | quote) }}
-ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT: {{ required "arKeyDerivationSalt is required" (.arKeyDerivationSalt | b64enc | quote) }}
+secret-key-base: {{ required "secretKeyBase is required" (.secretKeyBase | b64enc | quote) }}
+vapid-private-key: {{ required "vapidPrivateKey is required" (.vapidPrivateKey | b64enc | quote) }}
+vapid-public-key: {{ required "vapidPublicKey is required" (.vapidPublicKey | b64enc | quote) }}
+are-primary-key: {{ required "arPrimaryKey is required" (.arPrimaryKey | b64enc | quote) }}
+are-deterministic-key: {{ required "arDeterministicKey is required" (.arDeterministicKey | b64enc | quote) }}
+are-derivation-salt: {{ required "arKeyDerivationSalt is required" (.arKeyDerivationSalt | b64enc | quote) }}
 {{- end }}
 {{- end }}
 

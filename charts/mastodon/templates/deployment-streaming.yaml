@@ -96,6 +96,7 @@ spec:
             - name: "DB_HOST"
               value: {{ . }}
             {{- end }}
+            {{- include "mastodon.secrets.secret" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
             {{- range $k, $v := .Values.mastodon.streaming.extraEnvVars }}

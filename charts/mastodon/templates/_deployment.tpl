@@ -32,8 +32,6 @@ Common container spec.
 envFrom:
   - configMapRef:
       name: {{ include "mastodon.configMapName" . }}
-  - secretRef:
-      name: {{ include "mastodon.secrets.secretName" . }}
   {{- if .Values.mastodon.extraEnvFrom }}
   - configMapRef:
       name: {{ .Values.mastodon.extraEnvFrom }}
@@ -60,8 +58,6 @@ Points to pre-deploy config maps and secrets.
 envFrom:
   - configMapRef:
       name: {{ include "mastodon.configMapName" . }}-predeploy
-  - secretRef:
-      name: {{ include "mastodon.secrets.secretNamePreDeploy" . }}
   {{- if .Values.mastodon.extraEnvFrom }}
   - configMapRef:
       name: {{ .Values.mastodon.extraEnvFrom }}

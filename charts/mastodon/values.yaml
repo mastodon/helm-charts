@@ -182,11 +182,11 @@ mastodon:
 
       # May also specify a secret with the access keys. If set, takes precedence
       # over `accessKeyId` and `secretAccessKey`.
-      #
-      # Secret must contain the following keys:
-      #   - AWS_ACCESS_KEY_ID
-      #   - AWS_SECRET_ACCESS_KEY
       existingSecret:
+
+      existingSecretKeys:
+        accessKeyId: access-key-id
+        secretAccessKey: secret-access-key
 
       # Configuration for the rclone container that will preform the upload.
       rclone:
@@ -204,25 +204,27 @@ mastodon:
 
     secretKeyBase:
 
+    # VAPID
     vapidPrivateKey:
     vapidPublicKey:
 
-    arPrimaryKey:
-    arDeterministicKey:
-    arKeyDerivationSalt:
+    # Active Record Encryption
+    arePrimaryKey:
+    areDeterministicKey:
+    areKeyDerivationSalt:
 
     # May also specify a secret with all mastodon secrets. If set, takes
     # precedence over above values.
-    #
-    # Secret must contain these keys:
-    #   - SECRET_KEY_BASE
-    #   - OTP_SECRET
-    #   - VAPID_PRIVATE_KEY
-    #   - VAPID_PUBLIC_KEY
-    #   - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
-    #   - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY
-    #   - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
     existingSecret:
+
+    existingSecretKeys:
+      secretKeyBase: secret-key-base
+      vapidPrivateKey: vapid-private-key
+      vapidPublicKey: vapid-public-key
+      arePrimaryKey: are-primary-key
+      areDeterministicKey: are-deterministic-key
+      areKeyDerivationSalt: are-derivation-salt
+
 
   # Configuration for web service pods.
   web:
@@ -495,11 +497,12 @@ mastodon:
 
     # May also specify a secret with the access keys. If set, takes precedence
     # over `accessKeyId` and `secretAccessKey`.
-    #
-    # Secret must contain the following keys:
-    #   - AWS_ACCESS_KEY_ID
-    #   - AWS_SECRET_ACCESS_KEY
     existingSecret:
+
+    existingSecretKeys:
+      accessKeyId: access-key-id
+      secretAccessKey: secret-access-key
+
 
     # S3 ACL to assign to uploaded objects. Defaults to `public-read`.
     permission:
@@ -525,10 +528,10 @@ mastodon:
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
-    #
-    # Secret must contain the following keys:
-    #   - DEEPL_API_KEY
     existingSecret:
+
+    existingSecretKeys:
+      apiKey: api-key
 
   # Configuration for hcaptcha verification on user account creation.
   hcaptcha:
@@ -539,10 +542,10 @@ mastodon:
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
-    #
-    # Secret must contain the following keys:
-    #   - HCAPTCHA_SECRET_KEY
     existingSecret:
+
+    existingSecretKeys:
+      apiKey: api-key
 
   # SMTP configuration for email delivery.
   # For more information, please see:
@@ -570,11 +573,11 @@ mastodon:
 
     # May also specify a secret for authentication. If set, takes precedence over
     # `username` and `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - username
-    #   - password
     existingSecret:
+
+    existingSecretKeys:
+      username: username
+      password: password
 
     # Configuration for bulk/broadcast messages.
     # Some transactional email providers require customers to use a separate set
@@ -603,11 +606,11 @@ mastodon:
 
       # May also specify a secret for authentication. If set, takes precedence over
       # `username` and `password`
-      #
-      # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-      #   - username
-      #   - password
       existingSecret:
+
+      existingSecretKeys:
+        username: username
+        password: password
 
   # HTTP cache buster configuration.
   # For more information, please see:
@@ -623,10 +626,10 @@ mastodon:
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `authToken`
-    #
-    # Secret must contain the following keys:
-    #   - auth-token
     existingSecret:
+
+    existingSecretKeys:
+      authToken: auth-token
 
   # Configuration for metrics collection.
   metrics:
@@ -760,11 +763,11 @@ postgresql:
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
-  #
-  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-  #   - username
-  #   - password
   existingSecret:
+
+  existingSecretKeys:
+    username: username
+    password: password
 
   # Whether to enable prepared statement support.
   # For more information, please see:
@@ -787,16 +790,15 @@ postgresql:
 
     # May also specify a secret for authentication. If set, takes precedence over
     # `username` and `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - username
-    #   - password
     existingSecret:
+
+    existingSecretKeys:
+      username: username
+      password: password
 
   # Options for a read-only replica.
   # If enabled, mastodon uses existing defaults for postgres for these values as well.
-  # NOTE: This feature is only available on Mastodon v4.2+
-  # Documentation for more information on this feature:
+  # For more information, please see:
   # https://docs.joinmastodon.org/admin/scaling/#read-replicas
   readReplica:
     hostname:
@@ -809,11 +811,11 @@ postgresql:
 
     # May also specify a secret for authentication. If set, takes precedence over
     # `username` and `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - username
-    #   - password
     existingSecret:
+
+    existingSecretKeys:
+      username: username
+      password: password
 
 # Configuration for Redis.
 redis:
@@ -826,10 +828,10 @@ redis:
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `password`
-  #
-  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-  #   - password
   existingSecret:
+
+  existingSecretKeys:
+    password: password
 
   # Configuration for a separate redis instance only for sidekiq processing.
   # If enabled, any values not specified will be copied from the base config.
@@ -845,10 +847,10 @@ redis:
 
     # May also specify a secret for authentication. If set, takes precedence over
     # `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - password
     existingSecret:
+
+    existingSecretKeys:
+      password: password
 
   # Configuration for a separate redis instance only for cache.
   # If enabled, any values not specified will be copied from the base config.
@@ -864,10 +866,10 @@ redis:
 
     # May also specify a secret for authentication. If set, takes precedence over
     # `password`
-    #
-    # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-    #   - password
     existingSecret:
+
+    existingSecretKeys:
+      password: password
 
 # Configuration for Elasticsearch.
 #
@@ -892,11 +894,11 @@ elasticsearch:
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
-  #
-  # Secret must be `kubernetes.io/basic-auth` and contain the following keys:
-  #   - username
-  #   - password
   existingSecret:
+
+  existingSecretKeys:
+    username: username
+    password: password
 
   # Nodes on which the various elasticsearch pods will run.
   master:

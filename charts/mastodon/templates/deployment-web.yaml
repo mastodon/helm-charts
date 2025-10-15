@@ -82,6 +82,7 @@ spec:
             - name: "PERSISTENT_TIMEOUT"
               value: {{ .Values.mastodon.web.persistentTimeout | quote }}
             {{- end }}
+            {{- include "mastodon.secrets.secret" . | nindent 12 }}
             {{- include "mastodon.secrets.s3" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
