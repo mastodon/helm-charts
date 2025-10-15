@@ -783,19 +783,6 @@ postgresql:
     port:
     database:
 
-  # Set the password for the "postgres" admin user.
-  # Not required, but can be useful for debugging.
-  admin:
-    password:
-
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `username` and `password`
-    existingSecret:
-
-    existingSecretKeys:
-      username: username
-      password: password
-
   # Options for a read-only replica.
   # If enabled, mastodon uses existing defaults for postgres for these values as well.
   # For more information, please see:
