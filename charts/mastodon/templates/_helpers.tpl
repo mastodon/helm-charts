@@ -131,18 +131,11 @@ Secret name containing mastodon secrets.
 {{- if .Values.mastodon.secrets.existingSecret }}
 {{- .Values.mastodon.secrets.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-secrets-predeploy" (include "mastodon.fullname" .) }}
+{{- else }}
 {{- printf "%s-secrets" (include "mastodon.fullname" .) }}
 {{- end }}
-{{- end }}
-
-{{/*
-Secret name containing mastodon secrets. (pre-deploy).
-*/}}
-{{- define "mastodon.secrets.secretNamePreDeploy" -}}
-{{- if .Values.mastodon.secrets.existingSecret }}
-{{- .Values.mastodon.secrets.existingSecret }}
-{{- else }}
-{{- printf "%s-secrets-predeploy" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
 
@@ -153,7 +146,11 @@ Postgres secret name.
 {{- if .Values.postgresql.existingSecret }}
 {{- .Values.postgresql.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-postgres-auth-predeploy" (include "mastodon.fullname" .) }}
+{{- else }}
 {{- printf "%s-postgres-auth" (include "mastodon.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -175,7 +172,11 @@ Redis secret name.
 {{- if .Values.redis.existingSecret }}
 {{- .Values.redis.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-redis-auth-predeploy" (include "mastodon.fullname" .) }}
+{{- else }}
 {{- printf "%s-redis-auth" (include "mastodon.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -186,7 +187,11 @@ Redis sidekiq secret name.
 {{- if .Values.redis.sidekiq.existingSecret }}
 {{- .Values.redis.sidekiq.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-redis-sidekiq-auth-predeploy" (include "mastodon.fullname" .) }}
+{{- else }}
 {{- printf "%s-redis-sidekiq-auth" (include "mastodon.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -197,7 +202,11 @@ Redis cache secret name.
 {{- if .Values.redis.cache.existingSecret }}
 {{- .Values.redis.cache.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-redis-cache-auth-predeploy" (include "mastodon.fullname" .) }}
+{{- else }}
 {{- printf "%s-redis-cache-auth" (include "mastodon.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end }}
 

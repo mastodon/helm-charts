@@ -30,7 +30,7 @@ spec:
             - rake
             - db:migrate
           env:
-            {{- include "mastodon.secrets.secret" . | nindent 12 }}
-            {{- include "mastodon.secrets.database" . | nindent 12 }}
-            {{- include "mastodon.secrets.redis" . | nindent 12 }}
+            {{- include "mastodon.secrets.secret" (merge (dict "preDeploy" true ) .) | nindent 12 }}
+            {{- include "mastodon.secrets.database" (merge (dict "preDeploy" true ) .) | nindent 12 }}
+            {{- include "mastodon.secrets.redis" (merge (dict "preDeploy" true ) .) | nindent 12 }}
 {{- end }}

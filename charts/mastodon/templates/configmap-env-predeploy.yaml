@@ -6,7 +6,7 @@ metadata:
     {{- include "mastodon.labels" . | trim | nindent 4 }}
     {{- include "mastodon.userLabels" . | trim | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     "helm.sh/hook-weight": "-1"
 data:
