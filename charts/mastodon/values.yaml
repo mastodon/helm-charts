@@ -488,6 +488,7 @@ mastodon:
     # Connection info.
     hostname:
     endpoint:
+    protocol: https
     region:
     bucket:
 
@@ -875,6 +876,9 @@ elasticsearch:
   # https://docs.joinmastodon.org/admin/elasticsearch/#choosing-the-correct-preset
   preset: single_node_cluster
 
+  # Specify an optional prefix to use for indicies.
+  indexPrefix:
+
   # Authentication for the cluster (optional)
   username:
   password:
@@ -886,6 +890,12 @@ elasticsearch:
   existingSecretKeys:
     username: username
     password: password
+
+  # If you are using a custom CA for the cluster, specify the secret it contains here.
+  caSecret:
+    name:
+    key: ca.crt
+    mountPath: /opt/opensearch/config/ca.certs
 
   # Nodes on which the various elasticsearch pods will run.
   master:
@@ -1045,7 +1055,10 @@ deploymentAnnotations: {}
 # The annotations set with podAnnotations will be added to all mastodon pods.
 podAnnotations: {}
 
-# The annotations set with jobAnnotations will be added to all mastodon job pods
+# The labels set with jobLabels will be added to all mastodon job pods.
+jobLabels: {}
+
+# The annotations set with jobAnnotations will be added to all mastodon job pods.
 jobAnnotations: {}
 
 # If set to true, an annotation with the current chart release number will be

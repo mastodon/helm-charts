@@ -1,5 +1,5 @@
 {{/*
-Templates for generating secrets for insersion into pods.
+Templates for generating environment variables from kubernetes secrets.
 */}}
 
 {{/*
@@ -85,27 +85,32 @@ Redis secrets.
 Elasticsearch secrets.
 */}}
 {{- define "mastodon.secrets.elasticsearch" -}}
+- name: "ES_USER"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.elasticsearchName" . }}
+      key: {{ .Values.elasticsearch.existingSecretKeys.username }}
 - name: "ES_PASS"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.elasticsearchName" . }}
-      key: password
+      key: {{ .Values.elasticsearch.existingSecretKeys.password }}
 {{- end }}
 
 {{/*
 S3 secrets.
 */}}
 {{- define "mastodon.secrets.s3" -}}
-- name: "AWS_SECRET_ACCESS_KEY"
-  valueFrom:
-    secretKeyRef:
-      name: {{ include "mastodon.secrets.s3Name" . }}
-      key: AWS_SECRET_ACCESS_KEY
 - name: "AWS_ACCESS_KEY_ID"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.s3Name" . }}
-      key: AWS_ACCESS_KEY_ID
+      key: {{ .Values.mastodon.s3.existingSecretKeys.accessKeyId }}
+- name: "AWS_SECRET_ACCESS_KEY"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.s3Name" . }}
+      key: {{ .Values.mastodon.s3.existingSecretKeys.secretAccessKey }}
 {{- end }}
 
 {{/*
@@ -155,7 +160,7 @@ hCaptcha secrets.
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.hcaptchaName" . }}
-      key: HCAPTCHA{{ .Values.mastodon.hcaptcha.existingSecretKeys.apiKey }}
+      key: {{ .Values.mastodon.hcaptcha.existingSecretKeys.apiKey }}
 {{- end }}
 
 {{/*

@@ -61,6 +61,15 @@ User-defined pod labels.
 {{- end }}
 
 {{/*
+User-defined job labels.
+*/}}
+{{- define "mastodon.jobUserLabels" -}}
+{{- range $k, $v := .Values.jobLabels }}
+{{ $k }}: {{ quote $v }}
+{{- end }}
+{{- end }}
+
+{{/*
 Selector labels.
 */}}
 {{- define "mastodon.selectorLabels" -}}

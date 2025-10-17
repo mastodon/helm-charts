@@ -19,9 +19,16 @@ Some deployments have different volume mounting requirements.
 */}}
 {{- define "mastodon.deployment.specWithVolumes" -}}
 {{- include "mastodon.deployment.spec" . }}
-{{- with .Values.volumes }}
+{{- if or .Values.volumeMounts .Values.elasticsearch.caSecret.name }}
 volumes:
+{{- with .Values.volumes }}
   {{- toYaml . | nindent 8 }}
+{{- end }}
+{{- if .Values.elasticsearch.caSecret.name }}
+  - name: elasticsearch-ca
+    secret:
+      secretName: {{ .Values.elasticsearch.caSecret.name }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -44,9 +51,17 @@ Some containers have different volume mounting requirements.
 */}}
 {{- define "mastodon.container.specWithVolumes" -}}
 {{- include "mastodon.container.spec" . }}
-{{- with .Values.volumeMounts }}
+{{- if or .Values.volumeMounts .Values.elasticsearch.caSecret.name }}
 volumeMounts:
+{{- with .Values.volumeMounts }}
   {{- toYaml . | nindent 12 }}
+{{- end }}
+{{- if .Values.elasticsearch.caSecret.name }}
+  - name: elasticsearch-ca
+    mountPath: {{ .Values.elasticsearch.caSecret.mountPath }}
+    subPath: {{ .Values.elasticsearch.caSecret.key }}
+    readOnly: true
+{{- end }}
 {{- end }}
 {{- end }}
 

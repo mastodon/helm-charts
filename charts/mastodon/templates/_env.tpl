@@ -125,6 +125,12 @@ ES_PRESET: {{ .preset | quote }}
 {{- if .port }}
 ES_PORT: {{ .port | quote }}
 {{- end }}
+{{- if .indexPrefix }}
+ES_PREFIX: {{ .indexPrefix | quote }}
+{{- end }}
+{{- if .caSecret.name }}
+ES_CA_FILE: {{ .caSecret.mountPath | quote }}
+{{- end }}
 {{- else }}
 ES_ENABLED: "false"
 {{- end }}
@@ -164,7 +170,7 @@ S3_ENABLED: "true"
 S3_BUCKET: {{ required "S3 bucket is required" .bucket | quote }}
 S3_ENDPOINT: {{ required "S3 endpoint is required" .endpoint | quote }}
 S3_HOSTNAME: {{ required "S3 hostname is required" .hostname | quote}}
-S3_PROTOCOL: "https"
+S3_PROTOCOL: {{ .protocol | default "https" }}
 {{- if .permission }}
 S3_PERMISSION: {{ .permission | quote }}
 {{- end }}

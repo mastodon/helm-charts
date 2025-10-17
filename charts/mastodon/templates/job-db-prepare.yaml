@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "mastodon.labels" . | nindent 4 }}
     {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+    {{- include "mastodon.jobUserLabels" . | trim | nindent 4}}
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
