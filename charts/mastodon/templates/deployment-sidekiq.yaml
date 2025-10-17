@@ -85,6 +85,7 @@ spec:
             {{- include "mastodon.secrets.database" $context | nindent 12 }}
             {{- include "mastodon.secrets.redis" $context | nindent 12 }}
             {{- include "mastodon.secrets.smtp" $context | nindent 12 }}
+            {{- include "mastodon.secrets.ldap" $context | nindent 12 }}
             {{- if $context.Values.elasticsearch.enabeld }}
             {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}\
             {{- end }}

@@ -86,6 +86,7 @@ spec:
             {{- include "mastodon.secrets.s3" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
+            {{- include "mastodon.secrets.ldap" . | nindent 12 }}
             {{- if .Values.elasticsearch.enabled }}
             {{- include "mastodon.secrets.elasticsearch" . | nindent 12 }}
             {{- end }}

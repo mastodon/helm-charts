@@ -306,3 +306,14 @@ Cache buster secret name.
 {{- printf "%s-cachebuster-auth" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
+
+{{/*
+LDAP secret name.
+*/}}
+{{- define "mastodon.secrets.ldapName" -}}
+{{- if .Values.externalAuth.ldap.existingSecret }}
+{{- .Values.externalAuth.ldap.existingSecret }}
+{{- else }}
+{{- printf "%s-ldap-auth" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}

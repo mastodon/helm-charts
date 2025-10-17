@@ -1008,6 +1008,9 @@ externalAuth:
     base:
     bindDn:
     password:
+    existingSecret:
+    existingSecretKeys:
+      password: password
     uid: cn
     mail: mail
     searchFilter: "(|(%{uid}=%{email})(%{mail}=%{email}))"

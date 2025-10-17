@@ -173,3 +173,14 @@ Cache buster secrets.
       name: {{ include "mastodon.secrets.cacheBusterName" . }}
       key: {{ .Values.mastodon.cacheBuster.existingSecretKeys.authToken }}
 {{- end }}
+
+{{/*
+LDAP secrets
+*/}}
+{{- define "mastodon.secrets.ldap" -}}
+- name: LDAP_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.ldapName" . }}
+      value: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
+{{- end }}

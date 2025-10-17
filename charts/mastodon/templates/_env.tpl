@@ -537,9 +537,6 @@ LDAP_BASE: {{ .base | quote }}
 {{- if .bindDn }}
 LDAP_BIND_DN: {{ .bindDn | quote }}
 {{- end }}
-{{- if .password }}
-LDAP_PASSWORD: {{ .password | quote }}
-{{- end }}
 {{- if .uid }}
 LDAP_UID: {{ .uid | quote }}
 {{- end }}
