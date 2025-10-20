@@ -95,6 +95,13 @@ mastodon:
     # Nodes on which this job will run.
     nodeSelector: {}
 
+  # Set the log level for various components of mastodon.
+  logLevel:
+    # https://docs.joinmastodon.org/admin/config/#rails_log_level
+    rails: info
+    # https://docs.joinmastodon.org/admin/config/#log_level
+    streaming: info
+
   # Configuration for various pre- and post-install hooks
   hooks:
 

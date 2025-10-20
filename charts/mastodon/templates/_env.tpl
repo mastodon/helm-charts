@@ -29,6 +29,8 @@ AUTHORIZED_FETCH: {{ .authorizedFetch | quote }}
 {{- if .limitedFederationMode }}
 LIMITED_FEDERATION_MODE: {{ .limitedFederationMode | quote }}
 {{- end }}
+RAILS_LOG_LEVEL: {{ .logLevel.rails }}
+LOG_LEVEL: {{ .logLevel.streaming }}
 MALLOC_ARENA_MAX: "2"
 NODE_ENV: "production"
 RAILS_ENV: "production"
