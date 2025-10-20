@@ -74,6 +74,16 @@ entries:
   mastodon:
   - apiVersion: v2
     appVersion: v4.4.5
+    created: "2025-10-20T13:57:27.536149829Z"
+    description: Mastodon is a free, open-source social network server based on ActivityPub.
+    digest: 6472b6709e709b3c1e38a160c2e3efa428396d080343ea1436b1807d687f0235
+    name: mastodon
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/mastodon-0.1.6/mastodon-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: v4.4.5
     created: "2025-10-17T13:02:31.454998178Z"
     description: Mastodon is a free, open-source social network server based on ActivityPub.
     digest: 9703a32b279e2c6a709858aa329b0a3e17afcdb2d4ebd39fe336dab4c84d080c
@@ -210,4 +220,4 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-17T13:02:31.455053882Z"
+generated: "2025-10-20T13:57:27.536221893Z"
