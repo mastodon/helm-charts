@@ -97,6 +97,14 @@ redis:
   password: XXXXXXXXXXXXXXXX
 ```
 
+Then , to install:
+
+```bash
+helm repo add mastodon https://mastodon.github.io/helm-charts/
+
+helm install mastodon mastodon --values ./my-values.yaml
+```
+
 ## Using existing secrets
 
 It's not recommended to pass sensitive information like passwords or API keys via a `values.yaml` file that gets committed to source control for security reasons. One approach that is more secure is creating the secrets in advance:
@@ -161,4 +169,17 @@ postgresql:
 
 redis:
   existingSecret: redis-auth
+```
+
+# 🔧 Administration
+
+Once deployed, you can access the command line of a web pod by running:
+
+```bash
+kubectl exec -it deploy/mastodon-web -- bash
+```
+
+These pods contain the `tootctl` command that you can use to manage the instance:
+```bash
+tootctl accounts modify admin --reset-password
 ```
