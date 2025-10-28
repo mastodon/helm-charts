@@ -216,6 +216,7 @@ mastodon:
     vapidPublicKey:
 
     # Active Record Encryption
+    # https://docs.joinmastodon.org/admin/config/#db-encryption-support
     arePrimaryKey:
     areDeterministicKey:
     areKeyDerivationSalt:
@@ -490,7 +491,6 @@ mastodon:
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/optional/object-storage/#environment-variables-for-s3-api-access
   s3:
-    enabled: false
 
     # Connection info.
     hostname:
