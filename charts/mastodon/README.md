@@ -6,7 +6,7 @@ For the sake of simplicity and flexibility, this chart does not contain addition
 
 This chart is compatible with Mastodon versions from v4.4 and above, and has been tested with Kubernetes 1.33+ and helm 3.11+.
 
-# ℹ️ Upgrading from pervious chart
+# ℹ️ Upgrading from previous chart
 
 This chart is a successor to the former official [Mastodon helm chart](https://github.com/mastodon/chart). The former chart had several inconsistencies in its design and implementation, and did not follow Helm best practices. This chart was created as a re-write to address these concerns, remove old features before Mastodon v4.4, and generally refactor/redesign the codebase to be more flexible and easy to work with.
 
