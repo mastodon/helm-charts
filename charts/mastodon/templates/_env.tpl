@@ -120,7 +120,7 @@ Elasticsearch info.
 {{- with .Values.elasticsearch -}}
 {{- if .enabled }}
 ES_ENABLED: "true"
-ES_HOST: {{ required "Elasticsearch hostname is required" .hostname | quote }}
+ES_HOST: {{ include "mastodon.elasticsearch.fullHostname" $ }}
 {{- if .preset }}
 ES_PRESET: {{ .preset | quote }}
 {{- end }}

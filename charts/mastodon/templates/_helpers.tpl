@@ -220,6 +220,22 @@ Redis cache secret name.
 {{- end }}
 
 {{/*
+Full Elasticsearch URI.
+*/}}
+{{- define "mastodon.elasticsearch.fullHostname" -}}
+{{- if .Values.elasticsearch.enabled }}
+{{- if not .Values.elasticsearch.hostname }}
+{{- fail "Elasticsearch hostname required when enabled"}}
+{{- end }}
+{{- if .Values.elasticsearch.tls }}
+{{- printf "https://%s" .Values.elasticsearch.hostname -}}
+{{- else -}}
+{{- printf "%s" .Values.elasticsearch.hostname -}}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
 Elasticsearch secret name.
 */}}
 {{- define "mastodon.secrets.elasticsearchName" -}}
