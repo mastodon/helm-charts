@@ -190,7 +190,6 @@ mastodon:
       # May also specify a secret with the access keys. If set, takes precedence
       # over `accessKeyId` and `secretAccessKey`.
       existingSecret:
-
       existingSecretKeys:
         accessKeyId: access-key-id
         secretAccessKey: secret-access-key
@@ -224,7 +223,6 @@ mastodon:
     # May also specify a secret with all mastodon secrets. If set, takes
     # precedence over above values.
     existingSecret:
-
     existingSecretKeys:
       secretKeyBase: secret-key-base
       vapidPrivateKey: vapid-private-key
@@ -439,17 +437,24 @@ mastodon:
     # custom values are provided.
 
     # Self-signed certificates that Node.js needs for connections (i.e. database).
-    extraCerts: {}
+    extraCerts:
 
-    # Secret containing a key "ca.crt" holding one or more root certificates
-    # in PEM format.
-    existingSecret:
+      # CA certificate itself in PEM format.
+      caCert:
 
-    # Optional volume name for mounting the .crt file, defaults to "extra-certs",
-    name:
+      # May also specify a secret with all mastodon secrets. If set, takes
+      # precedence over above values.
+      existingSecret:
+      existingSecretKeys:
+        caCert: ca.crt
 
-    # Optional sslMode setting. See nodejs's SSL_MODE. Consider "no-verify".
-    sslMode:
+      # Volume mounting configuration for .crt file.
+      mountName: extra-certs
+      mountPath: /usr/local/share/ca-certificates
+      mountFile: trusted-ca.crt
+
+      # Optional sslMode setting. See nodejs's SSL_MODE. Consider "no-verify".
+      sslMode: true
 
     # Specify extra environment variables to be added to streaming pods.
     # These will be added in addition to global values.
@@ -506,7 +511,6 @@ mastodon:
     # May also specify a secret with the access keys. If set, takes precedence
     # over `accessKeyId` and `secretAccessKey`.
     existingSecret:
-
     existingSecretKeys:
       accessKeyId: access-key-id
       secretAccessKey: secret-access-key
@@ -537,7 +541,6 @@ mastodon:
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
     existingSecret:
-
     existingSecretKeys:
       apiKey: api-key
 
@@ -551,7 +554,6 @@ mastodon:
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
     existingSecret:
-
     existingSecretKeys:
       apiKey: api-key
 
@@ -582,7 +584,6 @@ mastodon:
     # May also specify a secret for authentication. If set, takes precedence over
     # `username` and `password`
     existingSecret:
-
     existingSecretKeys:
       username: username
       password: password
@@ -615,7 +616,6 @@ mastodon:
       # May also specify a secret for authentication. If set, takes precedence over
       # `username` and `password`
       existingSecret:
-
       existingSecretKeys:
         username: username
         password: password
@@ -635,7 +635,6 @@ mastodon:
     # May also specify a secret for the API key. If set, takes precedence over
     # `authToken`
     existingSecret:
-
     existingSecretKeys:
       authToken: auth-token
 
@@ -772,7 +771,6 @@ postgresql:
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
   existingSecret:
-
   existingSecretKeys:
     username: username
     password: password
@@ -807,7 +805,6 @@ postgresql:
     # May also specify a secret for authentication. If set, takes precedence over
     # `username` and `password`
     existingSecret:
-
     existingSecretKeys:
       username: username
       password: password
@@ -824,7 +821,6 @@ redis:
   # May also specify a secret for authentication. If set, takes precedence over
   # `password`
   existingSecret:
-
   existingSecretKeys:
     password: password
 
@@ -843,7 +839,6 @@ redis:
     # May also specify a secret for authentication. If set, takes precedence over
     # `password`
     existingSecret:
-
     existingSecretKeys:
       password: password
 
@@ -862,7 +857,6 @@ redis:
     # May also specify a secret for authentication. If set, takes precedence over
     # `password`
     existingSecret:
-
     existingSecretKeys:
       password: password
 
@@ -893,7 +887,6 @@ elasticsearch:
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
   existingSecret:
-
   existingSecretKeys:
     username: username
     password: password

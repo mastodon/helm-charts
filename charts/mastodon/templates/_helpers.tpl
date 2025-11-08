@@ -317,3 +317,14 @@ LDAP secret name.
 {{- printf "%s-ldap-auth" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
+
+{{/*
+Streaming cert secret name.
+*/}}
+{{- define "mastodon.secrets.streamingCertName" -}}
+{{- if .Values.mastodon.streaming.extraCerts.existingSecret }}
+{{- .Values.mastodon.streaming.extraCerts.existingSecret }}
+{{- else }}
+{{- printf "%s-streaming-cert" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}

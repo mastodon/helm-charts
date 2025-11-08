@@ -46,15 +46,16 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.mastodon.streaming.extraCerts }}
       volumes:
-        {{- $name := .name | default "extra-certs" }}
-          - name: {{ $name }}
+        {{- with .Values.mastodon.streaming.extraCerts }}
+        {{- if or .caCert .existingSecret }}
+          - name: {{ .mountName }}
             secret:
-              secretName: {{ .existingSecret }}
+              secretName: {{ include "mastodon.secrets.streamingCertName" $ }}
               items:
-              - key: ca.crt
-                path: trusted-ca.crt
+              - key: {{ .existingSecretKeys.caCert }}
+                path: {{ .mountFile }}
+        {{- end }}
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
@@ -71,11 +72,12 @@ spec:
           command:
             - node
             - ./streaming
-          {{- with .Values.mastodon.streaming.extraCerts }}
           volumeMounts:
-            {{- $name := .name | default "extra-certs" }}
-            - name: {{ $name }}
-              mountPath: "/usr/local/share/ca-certificates"
+            {{- with .Values.mastodon.streaming.extraCerts }}
+            {{- if or .caCert .existingSecret }}
+            - name: {{ .mountName }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
             {{- end }}
             {{- with .Values.volumeMounts }}
             volumeMounts:
@@ -86,10 +88,10 @@ spec:
               value: {{ .Values.mastodon.streaming.port | quote }}
             {{- with .Values.mastodon.streaming.extraCerts }}
             - name: "NODE_EXTRA_CA_CERTS"
-              value: "/usr/local/share/ca-certificates/trusted-ca.crt"
-            {{- with .sslMode }}
+              value: "{{ .mountPath }}/{{ .mountFile }}"
+            {{- if .sslMode }}
             - name: "DB_SSLMODE"
-              value: {{ . }}
+              value: "{{ .sslMode }}"
             {{- end }}
             {{- end }}
             {{- with .Values.postgresql.readReplica.hostname }}

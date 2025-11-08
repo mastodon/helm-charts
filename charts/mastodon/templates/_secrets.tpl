@@ -175,7 +175,7 @@ Cache buster secrets.
 {{- end }}
 
 {{/*
-LDAP secrets
+LDAP secrets.
 */}}
 {{- define "mastodon.secrets.ldap" -}}
 - name: LDAP_PASSWORD
