@@ -10,7 +10,7 @@ This chart is compatible with Mastodon versions from v4.4 and above, and has bee
 
 This chart is a successor to the former official [Mastodon helm chart](https://github.com/mastodon/chart). The former chart had several inconsistencies in its design and implementation, and did not follow Helm best practices. This chart was created as a re-write to address these concerns, remove old features before Mastodon v4.4, and generally refactor/redesign the codebase to be more flexible and easy to work with.
 
-(Details about migrating to follow)
+For detailed steps on how to migrate from one chart to the other, please follow our [Migration Guide](MIGRATION.md).
 
 # 📋 Prerequisites
 
