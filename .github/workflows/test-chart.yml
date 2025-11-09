@@ -5,6 +5,8 @@ on:
     paths-ignore:
       - "README.md"
       - "MIGRATION.md"
+  push:
+  workflow_dispatch:
 
 permissions:
   contents: read
