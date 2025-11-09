@@ -1,6 +1,10 @@
 name: Test Charts
 
-on: pull_request
+on:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+      - "MIGRATION.md"
 
 permissions:
   contents: read
