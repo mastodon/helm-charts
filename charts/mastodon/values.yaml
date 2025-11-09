@@ -146,7 +146,7 @@ mastodon:
       enabled: false
 
       # Only deploy one index.
-      #Possible values: instances, accounts, tags, statuses, public_statuses.
+      # Possible values: instances, accounts, tags, statuses, public_statuses.
       only: ""
 
       # How many threads to use when deploying the index(es).
@@ -339,7 +339,7 @@ mastodon:
           - ingress,4
           - mailers,2
           - pull
-          - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
+          - scheduler    # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
           - fasp
 
         # Number of threads / parallel sidekiq jobs that are executed per Pod
@@ -690,19 +690,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 # Service configuration.
 service:
   type: ClusterIP
@@ -1033,16 +1020,6 @@ podSecurityContext:
   fsGroup: 991
 
 securityContext: {}
-
-serviceAccount:
-  create: true
-
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
-
-  annotations: {}
-
 
 # Labels added to every Mastodon-related object
 labels: {}
