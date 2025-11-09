@@ -765,7 +765,7 @@ postgresql:
   database: mastodon
 
   # Database authentication.
-  username: mastodon
+  username: mastodonn
   password:
 
   # May also specify a secret for authentication. If set, takes precedence over
