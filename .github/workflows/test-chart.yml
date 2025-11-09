@@ -3,13 +3,13 @@ name: Test Charts
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths-ignore:
       - "README.md"
       - "MIGRATION.md"
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 permissions:
