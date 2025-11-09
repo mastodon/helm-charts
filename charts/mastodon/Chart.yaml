@@ -3,7 +3,7 @@ name: mastodon
 description: Mastodon is a free, open-source social network server based on ActivityPub.
 home: https://joinmastodon.org
 maintainers:
-  - name: Timothy Campbell
+  - name: Tim Campbell
     email: tim@joinmastodon.org
     url: https://github.com/timetinytim
 type: application
