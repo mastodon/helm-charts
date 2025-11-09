@@ -15,8 +15,6 @@ jobs:
 
   lint-and-test:
     runs-on: ubuntu-latest
-    permisions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v5
