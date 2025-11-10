@@ -852,7 +852,7 @@ redis:
 # If you enable ES after the initial install, you will need to enable the
 # pre-install hook `deploySearch` for the initial chart install ONLY.
 elasticsearch:
-  enabled: true
+  enabled: false
 
   hostname:
   port: 9200
