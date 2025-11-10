@@ -5,6 +5,7 @@ home: https://joinmastodon.org
 maintainers:
   - name: Mastodon
     url: https://joinmastodon.org
+icon: https://avatars.githubusercontent.com/u/24979032
 type: application
-version: 0.1.11
+version: 0.2.0
 appVersion: "v4.4.5"
