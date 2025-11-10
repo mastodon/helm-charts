@@ -55,12 +55,12 @@ Mastodon secret definitions
 */}}
 {{- define "mastodon.env.secrets" -}}
 {{- with .Values.mastodon.secrets -}}
-secret-key-base: {{ required "secretKeyBase is required" (.secretKeyBase | b64enc | quote) }}
-vapid-private-key: {{ required "vapidPrivateKey is required" (.vapidPrivateKey | b64enc | quote) }}
-vapid-public-key: {{ required "vapidPublicKey is required" (.vapidPublicKey | b64enc | quote) }}
-are-primary-key: {{ required "arePrimaryKey is required" (.arePrimaryKey | b64enc | quote) }}
-are-deterministic-key: {{ required "areDeterministicKey is required" (.areDeterministicKey | b64enc | quote) }}
-are-derivation-salt: {{ required "areKeyDerivationSalt is required" (.areKeyDerivationSalt | b64enc | quote) }}
+secret-key-base: {{ required "secretKeyBase is required" .secretKeyBase | b64enc | quote }}
+vapid-private-key: {{ required "vapidPrivateKey is required" .vapidPrivateKey | b64enc | quote }}
+vapid-public-key: {{ required "vapidPublicKey is required" .vapidPublicKey | b64enc | quote }}
+are-primary-key: {{ required "arePrimaryKey is required" .arePrimaryKey | b64enc | quote }}
+are-deterministic-key: {{ required "areDeterministicKey is required" .areDeterministicKey | b64enc | quote }}
+are-derivation-salt: {{ required "areKeyDerivationSalt is required" .areKeyDerivationSalt | b64enc | quote }}
 {{- end }}
 {{- end }}
 
