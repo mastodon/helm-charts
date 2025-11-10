@@ -48,10 +48,10 @@ To install the helm chart, there are certain values that need to be filled in vi
 ```yaml {data-filename="values.yaml"}
 mastodon:
 
-  # The name/URL of your mastodon instance
+  # The name/URL of your mastodon instance.
   localDomain: mydomain.social
 
-  # Mastodon secrets
+  # Mastodon secrets.
   # To generate these, see:
   # https://docs.joinmastodon.org/admin/config/#secrets
   # https://docs.joinmastodon.org/admin/config/#db-encryption-support
@@ -63,8 +63,8 @@ mastodon:
     areDeterministicKey: XXXXXXXXXXXXXXXX
     areKeyDerivationSalt: XXXXXXXXXXXXXXXX
 
-  # S3 storage for media
-  # Make sure to use your own S3 connection information
+  # S3 storage for media.
+  # Make sure to use your own S3 connection information.
   s3:
     hostname: https://s3.us-east-1.amazonaws.com/
     endpoint: s3.us-east-1.amazonaws.com
@@ -74,7 +74,14 @@ mastodon:
     accessKeyId: XXXXXXXXXXXXXXXX
     secretAccessKey: XXXXXXXXXXXXXXXX
 
-# Ingress information (needs to match your localDomain)
+  # SMTP configuration for sending emails to users.
+  # Make sure to use your own SMTP provider URL and credentials.
+  smtp:
+    server: smtp.postmarkapp.com
+    username: XXXXXXXXXXXXXXXX
+    password: XXXXXXXXXXXXXXXX
+
+# Ingress information (needs to match your localDomain).
 ingress:
   hosts:
     - host: mydomain.social
@@ -86,8 +93,8 @@ ingress:
       hosts:
         - mydomain.social
 
-# External database connection info
-# Make sure to use your own connection information
+# External database connection info.
+# Make sure to use your own connection information.
 postgresql:
   hostname: postgres.endpoint
   username: mastodon
