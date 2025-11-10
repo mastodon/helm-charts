@@ -52,8 +52,6 @@ spec:
         {{- with $context.Values.mastodon.sidekiq.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        # roll the pods to pick up any db migrations or other changes
-        {{- include "mastodon.rollingPodAnnotations" $context | nindent 8 }}
     spec:
       {{- include "mastodon.deployment.specWithVolumes" $context | nindent 6 }}
       {{- with coalesce $context.Values.mastodon.sidekiq.podSecurityContext $context.Values.podSecurityContext }}
