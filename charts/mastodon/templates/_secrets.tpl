@@ -46,7 +46,7 @@ Database secrets.
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.postgresName" . }}
-      key: {{ .Values.postgresql.existingSecretKeys.username }}
+      key: {{ .Values.postgresql.existingSecretKeys.password }}
 {{- if or .Values.postgresql.readReplica.existingSecret .Values.postgresql.readReplica.password }}
 - name: "REPLICA_DB_PASS"
   valueFrom:
