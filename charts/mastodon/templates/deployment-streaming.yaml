@@ -89,10 +89,8 @@ spec:
             {{- with .Values.mastodon.streaming.extraCerts }}
             - name: "NODE_EXTRA_CA_CERTS"
               value: "{{ .mountPath }}/{{ .mountFile }}"
-            {{- if .sslMode }}
             - name: "DB_SSLMODE"
               value: "{{ .sslMode }}"
-            {{- end }}
             {{- end }}
             {{- with .Values.postgresql.readReplica.hostname }}
             - name: "DB_HOST"
