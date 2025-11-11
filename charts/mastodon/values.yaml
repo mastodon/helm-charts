@@ -454,7 +454,7 @@ mastodon:
       mountFile: trusted-ca.crt
 
       # Optional sslMode setting. See nodejs's SSL_MODE. Consider "no-verify".
-      sslMode: true
+      sslMode: no-verify
 
     # Specify extra environment variables to be added to streaming pods.
     # These will be added in addition to global values.

@@ -89,10 +89,8 @@ spec:
             {{- with .Values.mastodon.streaming.extraCerts }}
             - name: "NODE_EXTRA_CA_CERTS"
               value: "{{ .mountPath }}/{{ .mountFile }}"
-            {{- if .sslMode }}
             - name: "DB_SSLMODE"
               value: "{{ .sslMode }}"
-            {{- end }}
             {{- end }}
             {{- with .Values.postgresql.readReplica.hostname }}
             - name: "DB_HOST"
@@ -101,7 +99,9 @@ spec:
             {{- include "mastodon.secrets.secret" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
+            {{- if .Values.externalAuth.ldap.enabled }}
             {{- include "mastodon.secrets.ldap" . | nindent 12 }}
+            {{- end }}
             {{- range $k, $v := .Values.mastodon.streaming.extraEnvVars }}
             - name: {{ $k }}
               value: {{ quote $v }}
