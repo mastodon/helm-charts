@@ -101,7 +101,9 @@ spec:
             {{- include "mastodon.secrets.secret" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
+            {{- if .Values.externalAuth.ldap.enabled }}
             {{- include "mastodon.secrets.ldap" . | nindent 12 }}
+            {{- end }}
             {{- range $k, $v := .Values.mastodon.streaming.extraEnvVars }}
             - name: {{ $k }}
               value: {{ quote $v }}
