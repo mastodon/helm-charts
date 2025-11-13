@@ -9,7 +9,7 @@ echo "##### Installing databases #####"
 echo
 helm install redis dandydev/redis-ha \
     --set "replicas=1,auth=true,redisPassword=password"
-helm install postgresql cnpg cnpg/cloudnative-pg \
+helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
 kubectl apply -f charts/mastodon/ci/test-postgres-cluster.yaml \
