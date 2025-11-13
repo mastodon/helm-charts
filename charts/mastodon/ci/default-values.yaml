@@ -30,13 +30,9 @@ ingress:
       hosts:
         - mydomain.social
 postgresql:
-  hostname: postgres.endpoint
+  hostname: postgres-rw
   username: mastodon
   password: password
 redis:
-  hostname: redis.endpoint
-  password: password
-elasticsearch:
-  hostname: elasticsearch.endpoint
-  username: mastodon
+  hostname: redis-redis-ha
   password: password

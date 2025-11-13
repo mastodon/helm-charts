@@ -1,10 +1,18 @@
 #!/bin/bash
 
-
+echo "##### Adding Helm Repositories"
+echo
 helm repo add dandydev https://dandydeveloper.github.io/charts
 helm repo add cnpg https://cloudnative-pg.github.io/charts
+
+echo "##### Installing databases #####"
+echo
 helm install redis dandydev/redis-ha \
     --set "replicas=1,auth=true,redisPassword=password"
 helm install postgresql cnpg cnpg/cloudnative-pg
-
 kubectl apply -f charts/mastodon/ci/test-postgres-cluster.yaml
+
+echo
+echo "Waiting for pods to become ready..."
+kubectl wait --for=condition=Ready --timeout=120s pod/redis-redis-ha-server-0
+kubectl wait --for=condition=Ready --timeout=120s cluster/postgres
