@@ -46,13 +46,13 @@ Database secrets.
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.postgresName" . }}
-      key: {{ .Values.postgresql.existingSecretKeys.username }}
+      key: {{ .Values.postgresql.existingSecretKeys.password }}
 {{- if or .Values.postgresql.readReplica.existingSecret .Values.postgresql.readReplica.password }}
 - name: "REPLICA_DB_PASS"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.postgresReplicaName" . }}
-      key: {{ .Values.postgresql.existingSecretKeys.password }}
+      key: {{ .Values.postgresql.readReplica.existingSecretKeys.password }}
 {{- end }}
 {{- end }}
 
@@ -178,9 +178,11 @@ Cache buster secrets.
 LDAP secrets.
 */}}
 {{- define "mastodon.secrets.ldap" -}}
+{{- if .Values.ldap.enabled }}
 - name: LDAP_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.ldapName" . }}
-      value: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
+      key: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
+{{- end }}
 {{- end }}
