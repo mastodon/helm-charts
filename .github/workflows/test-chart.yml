@@ -55,10 +55,7 @@ jobs:
         uses: helm/kind-action@v1
 
       - name: Install dependencies
-        run: |
-          helm repo add dandydev https://dandydeveloper.github.io/charts \
-              && helm install redis dandydev/redis-ha \
-                  --set "replicas=1,auth=true,redisPassword=password"
+        run: bash charts/mastodon/ci/setup-cluster-dependencies
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'

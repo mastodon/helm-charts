@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: kubernetes.io/basic-auth
+stringData:
+  username: mastodon
+  password: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: mastodon
+      owner: mastodon
+      secret:
+        name: db-password
+      postInitSQL:
+        - CREATE DATABASE mastodon OWNER mastodon
+  storage:
+    size: 5Gi
