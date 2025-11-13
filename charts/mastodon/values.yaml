@@ -759,7 +759,6 @@ postgresql:
   # `username` and `password`
   existingSecret:
   existingSecretKeys:
-    username: username
     password: password
 
   # Whether to enable prepared statement support.
@@ -793,7 +792,6 @@ postgresql:
     # `username` and `password`
     existingSecret:
     existingSecretKeys:
-      username: username
       password: password
 
 # Configuration for Redis.

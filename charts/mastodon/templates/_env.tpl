@@ -10,9 +10,9 @@ Mastodon general info.
 TZ: {{ .Values.timezone | quote }}
 {{- end }}
 {{- with .Values.mastodon }}
-LOCAL_DOMAIN: {{ .local_domain | quote }}
+LOCAL_DOMAIN: {{ .localDomain | quote }}
 {{- if .web_domain }}
-WEB_DOMAIN: {{ .web_domain | quote }}
+WEB_DOMAIN: {{ .webDomain | quote }}
 {{- end }}
 {{- if .locale }}
 DEFAULT_LOCALE: {{ .locale | quote }}
@@ -72,6 +72,7 @@ Database info.
 DB_HOST: {{ required "Database hostname must be given" .hostname | quote }}
 DB_PORT: {{ required "Database port must be given" .port | quote }}
 DB_NAME: {{ required "Database name must be given" .database | quote }}
+DB_USER: {{ required "Database user must be given" .username | quote }}
 PREPARED_STATEMENTS: {{ .preparedStatements | quote }}
 {{- end }}
 {{- end }}
