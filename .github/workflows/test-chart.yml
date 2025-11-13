@@ -57,7 +57,7 @@ jobs:
       - name: Install dependencies
         run: |
           helm repo add dandydev https://dandydeveloper.github.io/charts \
-              && helm install dandydev/redis-ha redis
+              && helm install redis dandydev/redis-ha
                   --set "replicas=1,auth=true,redisPassword=password"
 
       - name: Run chart-testing (install)
