@@ -7,5 +7,5 @@ maintainers:
     url: https://joinmastodon.org
 icon: https://avatars.githubusercontent.com/u/24979032
 type: application
-version: 0.2.0
+version: 0.2.1
 appVersion: "v4.4.5"
