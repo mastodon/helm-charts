@@ -87,7 +87,7 @@ spec:
             {{- include "mastodon.secrets.ldap" $context | nindent 12 }}
             {{- end }}
             {{- if $context.Values.elasticsearch.enabled }}
-            {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}\
+            {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}
             {{- end }}
             {{- if $context.Values.mastodon.deepl.enabled }}
             {{- include "mastodon.secrets.deepl" $context | nindent 12 }}
