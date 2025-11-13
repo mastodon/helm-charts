@@ -1,5 +1,6 @@
 mastodon:
   localDomain: mydomain.social
+  limitedFederationMode: true
   secrets:
     secretKeyBase: some-secret-key-base
     vapidPrivateKey: some-vapid-private-key
