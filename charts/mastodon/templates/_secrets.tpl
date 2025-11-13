@@ -182,5 +182,5 @@ LDAP secrets.
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.ldapName" . }}
-      value: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
+      key: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
 {{- end }}
