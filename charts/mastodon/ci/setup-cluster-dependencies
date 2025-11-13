@@ -13,7 +13,7 @@ helm install redis dandydev/redis-ha \
 helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
-kubectl -n cnpg-system rollout status deployment/postgres-cnpg-cloudnative-pg
+kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
 kubectl apply -f charts/mastodon/ci/test-postgres-cluster.yaml \
 
 echo
