@@ -1,0 +1,41 @@
+mastodon:
+  localDomain: mydomain.social
+  secrets:
+    secretKeyBase: some-secret-key-base
+    vapidPrivateKey: some-vapid-private-key
+    vapidPublicKey: some-vapid-public-key
+    arePrimaryKey: some-are-primary-key
+    areDeterministicKey: some-are-deterministic-key
+    areKeyDerivationSalt: some-are-key-derivation-salt
+  s3:
+    hostname: https://s3.us-east-1.amazonaws.com/
+    endpoint: s3.us-east-1.amazonaws.com
+    region: us-east-1
+    bucket: mastodon-media
+    accessKeyId: some-access-key-id
+    secretAccessKey: some-secret-access-key
+  smtp:
+    server: smtp.postmarkapp.com
+    username: username
+    password: password
+ingress:
+  hosts:
+    - host: mydomain.social
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - secretName: mastodon-tls
+      hosts:
+        - mydomain.social
+postgresql:
+  hostname: postgres.endpoint
+  username: mastodon
+  password: password
+redis:
+  hostname: redis.endpoint
+  password: password
+elasticsearch:
+  hostname: elasticsearch.endpoint
+  username: mastodon
+  password: password
