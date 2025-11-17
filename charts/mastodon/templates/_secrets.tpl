@@ -47,12 +47,22 @@ Database secrets.
     secretKeyRef:
       name: {{ include "mastodon.secrets.postgresName" . }}
       key: {{ .Values.postgresql.existingSecretKeys.password }}
-{{- if or .Values.postgresql.readReplica.existingSecret .Values.postgresql.readReplica.password }}
+- name: "DB_USER"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.postgresName" . }}
+      key: {{ .Values.postgresql.existingSecretKeys.username }}
+{{- if .Values.postgresql.readReplica.existingSecret }}
 - name: "REPLICA_DB_PASS"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.postgresReplicaName" . }}
       key: {{ .Values.postgresql.readReplica.existingSecretKeys.password }}
+- name: "REPLICA_DB_USER"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.postgresReplicaName" . }}
+      key: {{ .Values.postgresql.readReplica.existingSecretKeys.username }}
 {{- end }}
 {{- end }}
 
