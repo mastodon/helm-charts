@@ -18,7 +18,7 @@ spec:
       annotations:
         {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
     spec:
-      {{- include "mastodon.deployment.specPreDeploy" . | trim | nindent 6 }}
+      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
       restartPolicy: Never
       {{- with .Values.podSecurityContext }}
       securityContext:
@@ -26,7 +26,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ include "mastodon.fullname" . }}-db-migrate
-          {{- include "mastodon.container.specPreDeploy" . | trim | nindent 10 }}
+          {{- include "mastodon.container.spec" . | trim | nindent 10 }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
