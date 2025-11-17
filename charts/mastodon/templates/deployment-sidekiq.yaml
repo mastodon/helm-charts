@@ -83,18 +83,10 @@ spec:
             {{- include "mastodon.secrets.database" $context | nindent 12 }}
             {{- include "mastodon.secrets.redis" $context | nindent 12 }}
             {{- include "mastodon.secrets.smtp" $context | nindent 12 }}
-            {{- if $context.Values.externalAuth.ldap.enabled }}
             {{- include "mastodon.secrets.ldap" $context | nindent 12 }}
-            {{- end }}
-            {{- if $context.Values.elasticsearch.enabeld }}
             {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}\
-            {{- end }}
-            {{- if $context.Values.mastodon.deepl.enabled }}
             {{- include "mastodon.secrets.deepl" $context | nindent 12 }}
-            {{- end }}
-            {{- if $context.Values.mastodon.cacheBuster.enabled }}
             {{- include "mastodon.secrets.cacheBuster" $context | nindent 12 }}
-            {{- end }}
             {{- if or $context.Values.mastodon.sidekiq.otel.enabled (and $context.Values.mastodon.otel.enabled (ne $context.Values.mastodon.sidekiq.otel.enabled false)) }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ coalesce $context.Values.mastodon.sidekiq.otel.endpointUri $context.Values.mastodon.otel.endpointUri }}

@@ -85,6 +85,7 @@ Redis secrets.
 Elasticsearch secrets.
 */}}
 {{- define "mastodon.secrets.elasticsearch" -}}
+{{- if .Values.elasticsearch.enabled }}
 - name: "ES_USER"
   valueFrom:
     secretKeyRef:
@@ -95,6 +96,7 @@ Elasticsearch secrets.
     secretKeyRef:
       name: {{ include "mastodon.secrets.elasticsearchName" . }}
       key: {{ .Values.elasticsearch.existingSecretKeys.password }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -145,33 +147,39 @@ SMTP secrets.
 Deepl secrets.
 */}}
 {{- define "mastodon.secrets.deepl" -}}
+{{- if .Values.mastodon.deepl.enabled }}
 - name: "DEEPL_API_KEY"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.deeplName" . }}
       key: {{ .Values.mastodon.deepl.existingSecretKeys.apiKey }}
 {{- end }}
+{{- end }}
 
 {{/*
 hCaptcha secrets.
 */}}
 {{- define "mastodon.secrets.hcaptcha" -}}
+{{- if .Values.mastodon.hcaptcha.enabled }}
 - name: "HCAPTCHA_SECRET_KEY"
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.hcaptchaName" . }}
       key: {{ .Values.mastodon.hcaptcha.existingSecretKeys.apiKey }}
 {{- end }}
+{{- end }}
 
 {{/*
 Cache buster secrets.
 */}}
 {{- define "mastodon.secrets.cacheBuster" -}}
+{{- if .Values.mastodon.cacheBuster.enabled }}
 - name: CACHE_BUSTER_SECRET
   valueFrom:
     secretKeyRef:
       name: {{ include "mastodon.secrets.cacheBusterName" . }}
       key: {{ .Values.mastodon.cacheBuster.existingSecretKeys.authToken }}
+{{- end }}
 {{- end }}
 
 {{/*
