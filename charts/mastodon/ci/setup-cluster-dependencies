@@ -9,16 +9,14 @@ helm repo add cnpg https://cloudnative-pg.github.io/charts
 echo "##### Installing databases #####"
 echo
 helm install redis dandydev/redis-ha \
-    --set "replicas=1,auth=true,redisPassword=password" \
-    --namespace mastodon \
-    --create-namespace
+    --set "replicas=2,auth=true,redisPassword=password" \
+    --namespace default
 helm install cnpg cnpg/cloudnative-pg \
-    --namespace cnpg-system \
-    --create-namespace
+    --namespace default
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
 kubectl apply -n mastodon -f charts/mastodon/ci/test-postgres-cluster.yaml
 
 echo
 echo "Waiting for pods to become ready..."
-kubectl wait -n mastodon --for=condition=Ready --timeout=300s pod/redis-redis-ha-server-0
-kubectl wait -n mastodon --for=condition=Ready --timeout=300s cluster/postgres
+kubectl -n default rollout status --timeout=600s sts/redis-redis-ha-server
+kubectl wait -n default --for=condition=Ready --timeout=300s cluster/postgres
