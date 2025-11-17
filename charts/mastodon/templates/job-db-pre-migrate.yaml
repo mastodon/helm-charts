@@ -14,7 +14,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ include "mastodon.fullname" . }}-db-migrate
+      name: {{ include "mastodon.fullname" . }}-db-pre-migrate
       annotations:
         {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
     spec:
@@ -25,7 +25,7 @@ spec:
       {{- end }}
       restartPolicy: Never
       containers:
-        - name: {{ include "mastodon.fullname" . }}-db-migrate
+        - name: {{ include "mastodon.fullname" . }}-db-pre-migrate
           {{- include "mastodon.container.specPreDeploy" . | trim | nindent 10 }}
           {{- with .Values.securityContext }}
           securityContext:
