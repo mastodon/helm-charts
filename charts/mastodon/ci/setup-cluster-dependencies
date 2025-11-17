@@ -15,7 +15,7 @@ helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
-kubectl apply -n mastodon -f charts/mastodon/ci/test-postgres-cluster.yaml
+kubectl apply -n default -f charts/mastodon/ci/test-postgres-cluster.yaml
 
 echo
 echo "Waiting for pods to become ready..."
