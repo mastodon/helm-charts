@@ -72,6 +72,7 @@ Database info.
 DB_HOST: {{ required "Database hostname must be given" .hostname | quote }}
 DB_PORT: {{ required "Database port must be given" .port | quote }}
 DB_NAME: {{ required "Database name must be given" .database | quote }}
+DB_USER: {{ required "Database user must be given" .username | quote }}
 PREPARED_STATEMENTS: {{ .preparedStatements | quote }}
 {{- end }}
 {{- end }}
