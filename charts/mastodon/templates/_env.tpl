@@ -18,7 +18,7 @@ WEB_DOMAIN: {{ .webDomain | quote }}
 DEFAULT_LOCALE: {{ .locale | quote }}
 {{- end }}
 {{- if .alternate_domains }}
-ALTERNATE_DOMAINS: {{ join "," .alternate_domains | quote }}
+ALTERNATE_DOMAINS: {{ join "," .alternateDomains | quote }}
 {{- end }}
 {{- if .singleUserMode }}
 SINGLE_USER_MODE: "true"
