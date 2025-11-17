@@ -10,15 +10,15 @@ Mastodon general info.
 TZ: {{ .Values.timezone | quote }}
 {{- end }}
 {{- with .Values.mastodon }}
-LOCAL_DOMAIN: {{ .local_domain | quote }}
+LOCAL_DOMAIN: {{ .localDomain | quote }}
 {{- if .web_domain }}
-WEB_DOMAIN: {{ .web_domain | quote }}
+WEB_DOMAIN: {{ .webDomain | quote }}
 {{- end }}
 {{- if .locale }}
 DEFAULT_LOCALE: {{ .locale | quote }}
 {{- end }}
 {{- if .alternate_domains }}
-ALTERNATE_DOMAINS: {{ join "," .alternate_domains | quote }}
+ALTERNATE_DOMAINS: {{ join "," .alternateDomains | quote }}
 {{- end }}
 {{- if .singleUserMode }}
 SINGLE_USER_MODE: "true"
