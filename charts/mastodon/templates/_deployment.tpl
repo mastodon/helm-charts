@@ -14,6 +14,18 @@ imagePullSecrets:
 {{- end }}
 
 {{/*
+Common deployment template spec (pre-deploy).
+Points to pre-deploy config maps and secrets.
+*/}}
+{{- define "mastodon.deployment.specPreDeploy" -}}
+serviceAccountName: {{ include "mastodon.serviceAccountName" . }}-predeploy
+{{- with .Values.imagePullSecrets }}
+imagePullSecrets:
+  {{- toYaml . | nindent 8 }}
+{{- end }}
+{{- end }}
+
+{{/*
 Common deployment template spec (volumes included).
 Some deployments have different volume mounting requirements.
 */}}

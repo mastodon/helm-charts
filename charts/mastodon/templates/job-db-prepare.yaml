@@ -18,7 +18,7 @@ spec:
       annotations:
         {{- include "mastodon.userJobAnnotations" . | trim | nindent 8 }}
     spec:
-      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
+      {{- include "mastodon.deployment.specPreDeploy" . | trim | nindent 6 }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
