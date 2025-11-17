@@ -8,7 +8,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-weight": "-10"
 data:
   {{- include "mastodon.env" . | trim | nindent 2 }}
   {{- include "mastodon.env.database" . | trim | nindent 2 }}
