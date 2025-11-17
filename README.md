@@ -11,6 +11,6 @@ This repo utilizes Helm's [chart-testing](https://github.com/helm/chart-testing)
 - All charts for this repo live in the `charts/` directory
 - Any default values required for a successful deploy of a given chart are added to `<chart>/ci/default-values.yaml`
 
-## Custom chart setup
+## Custom pre-install setup
 
 Some of the charts that live in this repo require specific setup in order to successfully be tested and installed. The testing pipeline therefore checks for the presence of a `<chart>/ci/setup` file to run when performing tests on a given chart. Any custom configuration that needs to be run before installing can be done in this file.
