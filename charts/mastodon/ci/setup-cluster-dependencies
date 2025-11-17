@@ -12,7 +12,8 @@ helm install redis dandydev/redis-ha \
     --set "replicas=2,auth=true,redisPassword=password" \
     --namespace default
 helm install cnpg cnpg/cloudnative-pg \
-    --namespace default
+    --namespace cnpg-system \
+    --create-namespace
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
 kubectl apply -n mastodon -f charts/mastodon/ci/test-postgres-cluster.yaml
 
