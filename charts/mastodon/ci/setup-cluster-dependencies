@@ -18,6 +18,6 @@ kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
 kubectl apply -n default -f charts/mastodon/ci/test-postgres-cluster.yaml
 
 echo
-echo "Waiting for pods to become ready..."
+echo "##### Post-install rollout #####"
 kubectl -n default rollout status --timeout=300s sts/redis-redis-ha-server
 kubectl wait -n default --for=condition=Ready --timeout=300s cluster/postgres
