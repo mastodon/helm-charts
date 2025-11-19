@@ -86,21 +86,11 @@ spec:
             {{- include "mastodon.secrets.s3" . | nindent 12 }}
             {{- include "mastodon.secrets.database" . | nindent 12 }}
             {{- include "mastodon.secrets.redis" . | nindent 12 }}
-            {{- if .Values.externalAuth.ldap.enabled }}
             {{- include "mastodon.secrets.ldap" . | nindent 12 }}
-            {{- end }}
-            {{- if .Values.elasticsearch.enabled }}
             {{- include "mastodon.secrets.elasticsearch" . | nindent 12 }}
-            {{- end }}
-            {{- if .Values.mastodon.deepl.enabled }}
             {{- include "mastodon.secrets.deepl" . | nindent 12 }}
-            {{- end }}
-            {{- if .Values.mastodon.hcaptcha.enabled }}
             {{- include "mastodon.secrets.hcaptcha" . | nindent 12 }}
-            {{- end }}
-            {{- if .Values.mastodon.cacheBuster.enabled }}
             {{- include "mastodon.secrets.cacheBuster" . | nindent 12 }}
-            {{- end }}
             {{- if or .Values.mastodon.web.otel.enabled (and .Values.mastodon.otel.enabled (ne .Values.mastodon.web.otel.enabled false)) }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ coalesce .Values.mastodon.web.otel.endpointUri .Values.mastodon.otel.endpointUri }}

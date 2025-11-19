@@ -104,12 +104,6 @@ REPLICA_DB_PORT: {{ .port | quote }}
 {{- if .database }}
 REPLICA_DB_NAME: {{ .database | quote }}
 {{- end }}
-{{- if .username }}
-REPLICA_DB_USER: {{ .username | quote }}
-{{- end }}
-{{- if .password }}
-REPLICA_DB_PASS: {{ .password | quote }}
-{{- end }}
 {{- end }}
 {{- end }}
 
