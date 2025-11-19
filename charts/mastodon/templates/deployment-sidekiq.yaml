@@ -84,7 +84,7 @@ spec:
             {{- include "mastodon.secrets.redis" $context | nindent 12 }}
             {{- include "mastodon.secrets.smtp" $context | nindent 12 }}
             {{- include "mastodon.secrets.ldap" $context | nindent 12 }}
-            {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}\
+            {{- include "mastodon.secrets.elasticsearch" $context | nindent 12 }}
             {{- include "mastodon.secrets.deepl" $context | nindent 12 }}
             {{- include "mastodon.secrets.cacheBuster" $context | nindent 12 }}
             {{- if or $context.Values.mastodon.sidekiq.otel.enabled (and $context.Values.mastodon.otel.enabled (ne $context.Values.mastodon.sidekiq.otel.enabled false)) }}

@@ -196,7 +196,7 @@ Cache buster secrets.
 LDAP secrets.
 */}}
 {{- define "mastodon.secrets.ldap" -}}
-{{- if .Values.ldap.enabled }}
+{{- if .Values.externalAuth.ldap.enabled }}
 - name: LDAP_PASSWORD
   valueFrom:
     secretKeyRef:
