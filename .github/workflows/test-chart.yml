@@ -7,10 +7,6 @@ on:
     paths-ignore:
       - "README.md"
       - "MIGRATION.md"
-  push:
-    branches:
-      - main
-  workflow_dispatch:
 
 permissions:
   contents: read

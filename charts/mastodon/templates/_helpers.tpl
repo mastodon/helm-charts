@@ -46,7 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 User-defined labels.
 */}}
 {{- define "mastodon.userLabels" -}}
-{{- range $k, $v := .Values.mastodon.labels }}
+{{- range $k, $v := .Values.labels }}
 {{ $k }}: {{ quote $v }}
 {{- end }}
 {{- end }}
