@@ -727,7 +727,7 @@ ingress:
 
   # This allows you to have a separate ingress for streaming.
   # When enabled, the main ingress will no longer handle streaming requests.
-  # You will also need to configure mastodon.streaming.base_url accordingly.
+  # You will also need to configure mastodon.streaming.baseUrl accordingly.
   streaming:
     enabled: false
 
