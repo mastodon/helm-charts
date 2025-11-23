@@ -205,9 +205,6 @@ SMTP_DOMAIN: {{ .domain | quote }}
 {{- if .enableStartTls }}
 SMTP_ENABLE_STARTTLS: {{ .enableStartTls | quote }}
 {{- end }}
-{{- if .enableStartTlsAuto }}
-SMTP_ENABLE_STARTTLS_AUTO: {{ .enableStartTlsAuto | quote }}
-{{- end }}
 {{- if .fromAddress }}
 SMTP_FROM_ADDRESS: {{ .fromAddress | quote }}
 {{- end }}
@@ -249,9 +246,6 @@ BULK_SMTP_DOMAIN: {{ .domain }}
 {{- end }}
 {{- if .enableStartTls }}
 BULK_SMTP_ENABLE_STARTTLS: {{ .enableStartTls | quote }}
-{{- end }}
-{{- if .enableStartTlsAuto }}
-SMTP_ENABLE_STARTTLS_AUTO: {{ .enableStartTlsAuto | quote }}
 {{- end }}
 {{- if .fromAddress }}
 BULK_SMTP_FROM_ADDRESS: {{ .fromAddress | quote }}
