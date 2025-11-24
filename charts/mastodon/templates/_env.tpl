@@ -173,14 +173,14 @@ S3_PERMISSION: {{ .permission | quote }}
 {{- if .region }}
 S3_REGION: {{ .region | quote }}
 {{- end }}
-{{- if .aliasHost }}
-S3_ALIAS_HOST: {{ .aliasHost | quote }}
+{{- if or .aliasHost .alias_host }}
+S3_ALIAS_HOST: {{ (.aliasHost | default .alias_host) | quote }}
 {{- end }}
-{{- if .multipartThreshold }}
-S3_MULTIPART_THRESHOLD: {{ .multipartThreshold | quote }}
+{{- if or .multipartThreshold .multipart_threshold }}
+S3_MULTIPART_THRESHOLD: {{ (.multipartThreshold | default .multipart_threshold) | quote }}
 {{- end }}
-{{- if .overridePathStyle }}
-S3_OVERRIDE_PATH_STYLE: {{ .overridePathStyle | quote }}
+{{- if or .overridePathStyle .override_path_style }}
+S3_OVERRIDE_PATH_STYLE: {{ (.overridePathStyle | default .override_path_style) | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -190,32 +190,32 @@ SMTP info.
 */}}
 {{- define "mastodon.env.smtp" -}}
 {{- with .Values.mastodon.smtp -}}
-{{- if .authMethod }}
-SMTP_AUTH_METHOD: {{ .authMethod | quote }}
+{{- if or .authMethod .auth_method }}
+SMTP_AUTH_METHOD: {{ (.authMethod | default .auth_method) | quote }}
 {{- end }}
-{{- if .caFile }}
-SMTP_CA_FILE: {{ .caFile | quote }}
+{{- if or .caFile .ca_file }}
+SMTP_CA_FILE: {{ (.caFile | default .ca_file) | quote }}
 {{- end }}
-{{- if .deliveryMethod }}
-SMTP_DELIVERY_METHOD: {{ .deliveryMethod | quote }}
+{{- if or .deliveryMethod .delivery_method }}
+SMTP_DELIVERY_METHOD: {{ (.deliveryMethod | default .delivery_method) | quote }}
 {{- end }}
 {{- if .domain }}
 SMTP_DOMAIN: {{ .domain | quote }}
 {{- end }}
-{{- if .enableStartTls }}
-SMTP_ENABLE_STARTTLS: {{ .enableStartTls | quote }}
+{{- if or .enableStartTls .enable_starttls }}
+SMTP_ENABLE_STARTTLS: {{ (.enableStartTls | default .enable_starttls) | quote }}
 {{- end }}
-{{- if .enableStartTlsAuto }}
-SMTP_ENABLE_STARTTLS_AUTO: {{ .enableStartTlsAuto | quote }}
+{{- if or .enableStartTlsAuto .enable_starttls_auto }}
+SMTP_ENABLE_STARTTLS_AUTO: {{ (.enableStartTlsAuto | default .enable_starttls_auto) | quote }}
 {{- end }}
-{{- if .fromAddress }}
-SMTP_FROM_ADDRESS: {{ .fromAddress | quote }}
+{{- if or .fromAddress .from_address }}
+SMTP_FROM_ADDRESS: {{ (.fromAddress | default .from_address) | quote }}
 {{- end }}
-{{- if .returnPath }}
-SMTP_RETURN_PATH: {{ .returnPath | quote }}
+{{- if or .returnPath .return_path }}
+SMTP_RETURN_PATH: {{ (.returnPath | default .return_path) | quote }}
 {{- end }}
-{{- if .opensslVerifyMode }}
-SMTP_OPENSSL_VERIFY_MODE: {{ .opensslVerifyMode | quote }}
+{{- if or .opensslVerifyMode .openssl_verify_mode }}
+SMTP_OPENSSL_VERIFY_MODE: {{ (.opensslVerifyMode | default .openssl_verify_mode) | quote }}
 {{- end }}
 {{- if .port }}
 SMTP_PORT: {{ .port | quote }}
@@ -238,26 +238,26 @@ Renders blank if not enabled.
 */}}
 {{- define "mastodon.env.smtp.bulk" -}}
 {{- with .Values.mastodon.smtp.bulk -}}
-{{- if .authMethod }}
-BULK_SMTP_AUTH_METHOD: {{ .authMethod }}
+{{- if or .authMethod .auth_method }}
+BULK_SMTP_AUTH_METHOD: {{ (.authMethod | default .auth_method) }}
 {{- end }}
-{{- if .caFile }}
-BULK_SMTP_CA_FILE: {{ .caFile }}
+{{- if or .caFile .ca_file }}
+BULK_SMTP_CA_FILE: {{ (.caFile | default .ca_file) }}
 {{- end }}
 {{- if .domain }}
 BULK_SMTP_DOMAIN: {{ .domain }}
 {{- end }}
-{{- if .enableStartTls }}
-BULK_SMTP_ENABLE_STARTTLS: {{ .enableStartTls | quote }}
+{{- if or .enableStartTls .enable_starttls }}
+BULK_SMTP_ENABLE_STARTTLS: {{ (.enableStartTls | default .enable_starttls) | quote }}
 {{- end }}
-{{- if .enableStartTlsAuto }}
-BULK_SMTP_ENABLE_STARTTLS_AUTO: {{ .enableStartTlsAuto | quote }}
+{{- if or .enableStartTlsAuto .enable_starttls_auto }}
+BULK_SMTP_ENABLE_STARTTLS_AUTO: {{ (.enableStartTlsAuto | default .enable_starttls_auto) | quote }}
 {{- end }}
-{{- if .fromAddress }}
-BULK_SMTP_FROM_ADDRESS: {{ .fromAddress | quote }}
+{{- if or .fromAddress .from_address }}
+BULK_SMTP_FROM_ADDRESS: {{ (.fromAddress | default .from_address) | quote }}
 {{- end }}
-{{- if .opensslVerifyMode }}
-BULK_SMTP_OPENSSL_VERIFY_MODE: {{ .opensslVerifyMode }}
+{{- if or .opensslVerifyMode .openssl_verify_mode }}
+BULK_SMTP_OPENSSL_VERIFY_MODE: {{ (.opensslVerifyMode | default .openssl_verify_mode) }}
 {{- end }}
 {{- if .port }}
 BULK_SMTP_PORT: {{ .port | quote }}
