@@ -66,8 +66,8 @@ mastodon:
   # S3 storage for media.
   # Make sure to use your own S3 connection information.
   s3:
-    hostname: https://s3.us-east-1.amazonaws.com/
-    endpoint: s3.us-east-1.amazonaws.com
+    hostname: s3.us-east-1.amazonaws.com
+    endpoint: https://s3.us-east-1.amazonaws.com/
     region: us-east-1
     bucket: mastodon-media
 
