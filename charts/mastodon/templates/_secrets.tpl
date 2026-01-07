@@ -204,3 +204,19 @@ LDAP secrets.
       key: {{ .Values.externalAuth.ldap.existingSecretKeys.password }}
 {{- end }}
 {{- end }}
+
+{{/*
+OIDC secrets.
+*/}}
+{{- define "mastodon.secrets.externalAuth.oidc" -}}
+- name: "OIDC_CLIENT_ID"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.externalAuth.oidcName" . }}
+      key: {{ .Values.externalAuth.oidc.existingSecretKeys.clientId }}
+- name: "OIDC_CLIENT_SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mastodon.secrets.externalAuth.oidcName" . }}
+      key: {{ .Values.externalAuth.oidc.existingSecretKeys.clientSecret }}
+{{- end }}

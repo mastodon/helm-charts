@@ -344,3 +344,14 @@ Streaming cert secret name.
 {{- printf "%s-streaming-cert" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
+
+{{/*
+OIDC secret name.
+*/}}
+{{- define "mastodon.secrets.externalAuth.oidcName" -}}
+{{- if .Values.externalAuth.oidc.existingSecret }}
+{{- .Values.externalAuth.oidc.existingSecret }}
+{{- else }}
+{{- printf "%s-oidc" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}

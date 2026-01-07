@@ -297,8 +297,6 @@ OIDC_ISSUER: {{ .issuer | quote }}
 OIDC_DISCOVERY: {{ .discovery | quote }}
 OIDC_SCOPE: {{ .scope | quote }}
 OIDC_UID_FIELD: {{ .uidField | quote }}
-OIDC_CLIENT_ID: {{ .clientId | quote }}
-OIDC_CLIENT_SECRET: {{ .clientSecret | quote }}
 OIDC_REDIRECT_URI: {{ .redirectUri | quote }}
 OIDC_SECURITY_ASSUME_EMAIL_IS_VERIFIED: {{ .assumeEmailIsVerified | quote }}
 {{- if .clientAuthMethod }}
