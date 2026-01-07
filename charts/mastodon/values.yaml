@@ -1011,6 +1011,11 @@ externalAuth:
     userInfoEndpoint: ""
     endSessionEndpoint: ""
 
+    existingSecret:
+    existingSecretKeys:
+      clientId:
+      clientSecret:
+
   saml:
     enabled: false
 
