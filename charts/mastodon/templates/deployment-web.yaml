@@ -91,6 +91,7 @@ spec:
             {{- include "mastodon.secrets.deepl" . | nindent 12 }}
             {{- include "mastodon.secrets.hcaptcha" . | nindent 12 }}
             {{- include "mastodon.secrets.cacheBuster" . | nindent 12 }}
+            {{- include "mastodon.secrets.externalAuth.oidc" . | nindent 12 }}
             {{- if or .Values.mastodon.web.otel.enabled (and .Values.mastodon.otel.enabled (ne .Values.mastodon.web.otel.enabled false)) }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ coalesce .Values.mastodon.web.otel.endpointUri .Values.mastodon.otel.endpointUri }}
