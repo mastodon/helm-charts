@@ -695,9 +695,10 @@ service:
   type: ClusterIP
   port: 80
 
-# Ingress configuration
+# Ingress configuration.
+# Disabled by default, it's recommended to use HTTPRoutes with the Gateway API.
 ingress:
-  enabled: true
+  enabled: false
 
   annotations:
     # For choosing an ingress ingressClassName is preferred over annotations
@@ -743,6 +744,36 @@ ingress:
       - secretName: mastodon-tls
         hosts:
           - streaming.mastodon.local
+
+# HTTPRoute configuration for Gateway API.
+# This is the recommended method for handling ingress traffic.
+httproute:
+  enabled: true
+
+  labels: {}
+  annotations: {}
+
+  # Reference(s) to the Gateway(s) that will forward traffic to us.
+  parentRefs:
+    - name: example-gateway
+      namespace: example-gateway-namespace
+      sectionName: websecure
+
+  # Hostname to listen for.
+  # This should be the same as the web domain.
+  hostnames:
+    - mastodon.local
+
+  # Streaming hostnames, if different than the instance hostname.
+  streamingHostnames: []
+  #  - streaming.mastodon.local
+
+  # Routing rules for the web frontend.
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /
 
 # Configuration for PostgreSQL.
 postgresql:

@@ -19,16 +19,9 @@ mastodon:
     server: smtp.postmarkapp.com
     username: username
     password: password
-ingress:
-  hosts:
-    - host: mydomain.social
-      paths:
-        - path: "/"
-          pathType: Prefix
-  tls:
-    - secretName: mastodon-tls
-      hosts:
-        - mydomain.social
+httproute:
+  hostnames:
+    - mydomain.social
 postgresql:
   hostname: postgres-rw
   username: mastodon
