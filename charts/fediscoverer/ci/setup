@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+echo "##### Adding Helm Repositories #####"
+echo
+helm repo add traefik https://traefik.github.io/charts
+
+echo "##### Installing databases #####"
+echo
+helm install traefik traefik/traefik \
+    --namespace traefik \
+    --create-namespace \
+    --set "ingressClass.enabled=false" \
+    --set "providers.kubernetesIngress.enabled=false,providers.kubernetesGateway.enabled=true"
