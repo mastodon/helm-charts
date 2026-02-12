@@ -67,3 +67,14 @@ Create the database connection URI
 {{- define "fediscoverer.database.uri" -}}
 {{- printf "postgres://%s:%d" .Values.config.database.host (int .Values.config.database.port) }}
 {{- end }}
+
+{{/*
+Secret name for the secretKeyBase
+*/}}
+{{- define "fediscoverer.secrets.secretKeyBase" -}}
+{{- if .Values.config.existingSecret }}
+{{- .Values.config.existingSecret }}
+{{- else }}
+{{- printf "%s-secret" (include "fediscoverer.fullname" .) }}
+{{- end }}
+{{- end }}
