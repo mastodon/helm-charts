@@ -1,2 +1,4 @@
 image:
   tag: latest
+config:
+  secretKeyBase: test-secret-key-base

@@ -22,10 +22,13 @@ config:
   domain: localhost
 
   # Fediverse secret key base.
-  secretKeyBase:
-    secretKeyRef:
-      name: fediscoverer-secrets
-      key: secret-key-base
+  secretKeyBase: ""
+
+  # Existing secret that contains the secretKeyBase.
+  # If set, takes precedence over the above value.
+  existingSecret: ""
+  existingSecretKeys:
+    secretKeyBase: secret-key-base
 
   # Size of the DB connection pool used by the application.
   queueConnectionPoolSize: 5
