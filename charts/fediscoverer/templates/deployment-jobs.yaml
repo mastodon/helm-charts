@@ -49,8 +49,8 @@ spec:
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.config.secretKeyBase.secretKeyRef.name }}
-                  key: {{ .Values.config.secretKeyBase.secretKeyRef.key }}
+                  name: {{ include "fediscoverer.secrets.secretKeyBase" . }}
+                  key: {{ .Values.config.existingSecretKeys.secretKeyBase }}
             - name: DATABASE_URL
               value: {{ include "fediscoverer.database.uri" . }}
             - name: FEDISCOVERER_DATABASE_PASSWORD

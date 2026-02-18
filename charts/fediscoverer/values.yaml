@@ -22,10 +22,13 @@ config:
   domain: localhost
 
   # Fediverse secret key base.
-  secretKeyBase:
-    secretKeyRef:
-      name: fediscoverer-secrets
-      key: secret-key-base
+  secretKeyBase: ""
+
+  # Existing secret that contains the secretKeyBase.
+  # If set, takes precedence over the above value.
+  existingSecret: ""
+  existingSecretKeys:
+    secretKeyBase: secret-key-base
 
   # Size of the DB connection pool used by the application.
   queueConnectionPoolSize: 5
@@ -111,7 +114,7 @@ service:
   port: 3000
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -125,6 +128,24 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+httproute:
+  enabled: true
+
+  labels: {}
+  annotations: {}
+
+  parentRefs:
+    - name: example-gateway
+      namespace: example-gateway-namespace
+      sectionName: websecure
+  hostnames:
+    - example.domain
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
