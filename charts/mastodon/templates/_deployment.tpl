@@ -9,7 +9,11 @@ Common deployment template spec.
 serviceAccountName: {{ include "mastodon.serviceAccountName" . }}
 {{- with .Values.imagePullSecrets }}
 imagePullSecrets:
-  {{- toYaml . | nindent 8 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.hostAliases }}
+hostAliases:
+  {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -21,7 +25,11 @@ Points to pre-deploy config maps and secrets.
 serviceAccountName: {{ include "mastodon.serviceAccountName" . }}-predeploy
 {{- with .Values.imagePullSecrets }}
 imagePullSecrets:
-  {{- toYaml . | nindent 8 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.hostAliases }}
+hostAliases:
+  {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
