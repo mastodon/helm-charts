@@ -44,7 +44,7 @@ TRUSTED_PROXY_IP: {{ .trustedProxyIp | quote }}
 {{- if .deepl.enabled }}
 DEEPL_PLAN: {{ .deepl.plan | quote }}
 {{- end }}
-{{- if .hcaptcha.enabled | quote }}
+{{- if .hcaptcha.enabled }}
 HCAPTCHA_SITE_KEY: {{ .hcaptcha.siteId| quote }}
 {{- end }}
 {{- end }}
