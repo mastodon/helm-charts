@@ -42,4 +42,5 @@ spec:
             {{- include "mastodon.secrets.secret" (merge (dict "preDeploy" true ) .) | nindent 12 }}
             {{- include "mastodon.secrets.database" (merge (dict "preDeploy" true ) .) | nindent 12 }}
             {{- include "mastodon.secrets.redis" (merge (dict "preDeploy" true ) .) | nindent 12 }}
+            {{- include "mastodon.secrets.ldap" (merge (dict "preDeploy" true ) .) | nindent 12 }}
 {{- end }}
