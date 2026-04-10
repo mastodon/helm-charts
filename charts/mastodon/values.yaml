@@ -1052,10 +1052,10 @@ podSecurityContext:
 
 securityContext: {}
 
-# Labels added to every Mastodon-related object
+# Labels added to every Mastodon-related object.
 labels: {}
 
-# Labes added to every deployed mastodon pod
+# Labes added to every deployed mastodon pod.
 podLabels: {}
 
 # Custom annotations to apply to all created mastodon deployment objects. These
@@ -1072,6 +1072,9 @@ jobLabels: {}
 
 # The annotations set with jobAnnotations will be added to all mastodon job pods.
 jobAnnotations: {}
+
+# DNS aliases to add to every pod.
+hostAliases: []
 
 # If set to true, an annotation with the current chart release number will be
 # added to all mastodon pods. This will cause all pods to be recreated every
