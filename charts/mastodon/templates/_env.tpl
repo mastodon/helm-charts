@@ -161,6 +161,7 @@ CACHE_REDIS_PORT: {{ .cache.port | quote }}
 S3 info.
 */}}
 {{- define "mastodon.env.s3" -}}
+{{- if .Values.mastodon.s3.enabled }}
 {{- with .Values.mastodon.s3 -}}
 S3_ENABLED: "true"
 S3_BUCKET: {{ required "S3 bucket is required" .bucket | quote }}
@@ -181,6 +182,7 @@ S3_MULTIPART_THRESHOLD: {{ .multipartThreshold | quote }}
 {{- end }}
 {{- if .overridePathStyle }}
 S3_OVERRIDE_PATH_STYLE: {{ .overridePathStyle | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -138,7 +138,8 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-            {{- include "mastodon.volumeMounts" . | nindent 12 | trim }}
+            {{- include "mastodon.volumeMounts" . | nindent 12 }}
+            {{- include "mastodon.pvc.volumeMounts" . | nindent 12 }}
         {{- if .Values.mastodon.metrics.prometheus.enabled }}
         - name: prometheus-exporter
           image: "{{ coalesce .Values.mastodon.web.image.repository .Values.image.repository }}:{{ coalesce .Values.mastodon.web.image.tag .Values.image.tag .Chart.AppVersion }}"
@@ -161,7 +162,8 @@ spec:
               containerPort: {{ .Values.mastodon.metrics.prometheus.port }}
         {{- end }}
       volumes:
-        {{- include "mastodon.volumes" . | nindent 8 | trim }}
+        {{- include "mastodon.volumes" . | nindent 8 }}
+        {{- include "mastodon.pvc.volumes" . | nindent 8 }}
       {{- with coalesce .Values.mastodon.web.nodeSelector .Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}

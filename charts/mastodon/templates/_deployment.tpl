@@ -93,3 +93,29 @@ volumeMounts:
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Volumes for assets/system PVCs.
+*/}}
+{{- define "mastodon.pvc.volumes" -}}
+{{- if .Values.mastodon.pvc.enabled }}
+- name: assets
+  persistentVolumeClaim:
+    claimName: {{ template "mastodon.pvc.assetsName" . }}
+- name: system
+  persistentVolumeClaim:
+    claimName: {{ template "mastodon.pvc.systemName" . }}
+{{- end }}
+{{- end }}
+
+{{/*
+VolumeMounts for assets/system PVCs.
+*/}}
+{{- define "mastodon.pvc.volumeMounts" -}}
+{{- if .Values.mastodon.pvc.enabled }}
+- name: assets
+  mountPath: /opt/mastodon/public/assets
+- name: system
+  mountPath: /opt/mastodon/public/system
+{{- end }}
+{{- end }}

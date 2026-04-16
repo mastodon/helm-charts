@@ -134,6 +134,28 @@ Main ConfigMap name.
 {{- end }}
 
 {{/*
+PVC "assets" name.
+*/}}
+{{- define "mastodon.pvc.assetsName" -}}
+{{- if .Values.mastodon.pvc.assets.existingClaim }}
+{{- .Values.mastodon.pvc.assets.existingClaim -}}
+{{- else -}}
+{{- printf "%s-assets" (include "mastodon.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+PVC "system" name.
+*/}}
+{{- define "mastodon.pvc.systemName" -}}
+{{- if .Values.mastodon.pvc.system.existingClaim }}
+{{- .Values.mastodon.pvc.system.existingClaim -}}
+{{- else -}}
+{{- printf "%s-system" (include "mastodon.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Secret name containing mastodon secrets.
 */}}
 {{- define "mastodon.secrets.secretName" -}}

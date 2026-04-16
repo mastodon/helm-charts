@@ -135,9 +135,11 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-            {{- include "mastodon.volumeMounts" $context | nindent 12 | trim }}
+            {{- include "mastodon.volumeMounts" $context | nindent 12 }}
+            {{- include "mastodon.pvc.volumeMounts" $context | nindent 12 }}
       volumes:
-        {{- include "mastodon.volumes" $context | nindent 8 | trim }}
+        {{- include "mastodon.volumes" $context | nindent 8 }}
+        {{- include "mastodon.pvc.volumes" $context | nindent 8 }}
       {{- with coalesce .nodeSelector $context.Values.mastodon.sidekiq.nodeSelector $context.Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}
