@@ -53,7 +53,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- include "mastodon.deployment.specWithVolumes" $context | nindent 6 }}
+      {{- include "mastodon.deployment.spec" $context | nindent 6 }}
       {{- with coalesce $context.Values.mastodon.sidekiq.podSecurityContext $context.Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -134,6 +134,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            {{- include "mastodon.volumeMounts" $context | nindend 12 }}
+      volumes:
+        {{- include "mastodon.volumes" $context | nindent 8 }}
       {{- with coalesce .nodeSelector $context.Values.mastodon.sidekiq.nodeSelector $context.Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}
