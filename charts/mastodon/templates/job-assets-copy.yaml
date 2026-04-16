@@ -23,7 +23,6 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
       restartPolicy: Never
       initContainers:
         - name: extract-assets
