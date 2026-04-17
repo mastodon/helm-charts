@@ -1,4 +1,4 @@
-{{- if .Values.mastodon.hooks.s3Upload.enabled -}}
+{{- if and .Values.mastodon.s3.enabled .Values.mastodon.hooks.s3Upload.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
