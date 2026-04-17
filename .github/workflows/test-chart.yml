@@ -45,7 +45,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }} --lint-conf ./.github/configs/lintconf.yaml
 
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
