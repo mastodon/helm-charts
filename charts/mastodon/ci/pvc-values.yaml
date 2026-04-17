@@ -14,8 +14,10 @@ mastodon:
     enabled: true
     assets:
       accessMode: ReadWriteOnce
+      keepAfterDelete: false
     system:
       accessMode: ReadWriteOnce
+      keepAfterDelete: false
   smtp:
     server: smtp.postmarkapp.com
     username: username
