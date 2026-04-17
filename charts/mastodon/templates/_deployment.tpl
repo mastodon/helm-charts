@@ -34,25 +34,6 @@ hostAliases:
 {{- end }}
 
 {{/*
-Common deployment template spec (volumes included).
-Some deployments have different volume mounting requirements.
-*/}}
-{{- define "mastodon.deployment.specWithVolumes" -}}
-{{- include "mastodon.deployment.spec" . }}
-{{- if or .Values.volumeMounts .Values.elasticsearch.caSecret.name }}
-volumes:
-{{- with .Values.volumes }}
-  {{- toYaml . | nindent 8 }}
-{{- end }}
-{{- if .Values.elasticsearch.caSecret.name }}
-  - name: elasticsearch-ca
-    secret:
-      secretName: {{ .Values.elasticsearch.caSecret.name }}
-{{- end }}
-{{- end }}
-{{- end }}
-
-{{/*
 Common container spec.
 */}}
 {{- define "mastodon.container.spec" -}}
@@ -66,12 +47,40 @@ envFrom:
 {{- end }}
 
 {{/*
-Common container spec (with volumes).
-Some containers have different volume mounting requirements.
+Common container spec (pre-deploy).
+Points to pre-deploy config maps and secrets.
 */}}
-{{- define "mastodon.container.specWithVolumes" -}}
-{{- include "mastodon.container.spec" . }}
-{{- if or .Values.volumeMounts .Values.elasticsearch.caSecret.name }}
+{{- define "mastodon.container.specPreDeploy" -}}
+envFrom:
+  - configMapRef:
+      name: {{ include "mastodon.configMapName" . }}-predeploy
+  {{- if .Values.mastodon.extraEnvFrom }}
+  - configMapRef:
+      name: {{ .Values.mastodon.extraEnvFrom }}
+  {{- end }}
+{{- end }}
+
+{{/*
+Standard volumes that will be mounted for most pods.
+*/}}
+{{- define "mastodon.volumes" -}}
+{{- if .Values.volumeMounts }}
+{{- with .Values.volumes }}
+  {{- toYaml . | nindent 8 }}
+{{- end }}
+{{- if .Values.elasticsearch.caSecret.name }}
+  - name: elasticsearch-ca
+    secret:
+      secretName: {{ .Values.elasticsearch.caSecret.name }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Standard volumeMounts that will be configured for most containers.
+*/}}
+{{- define "mastodon.volumeMounts" -}}
+{{- if .Values.volumeMounts }}
 volumeMounts:
 {{- with .Values.volumeMounts }}
   {{- toYaml . | nindent 12 }}
@@ -86,15 +95,27 @@ volumeMounts:
 {{- end }}
 
 {{/*
-Common container spec (pre-deploy jobs).
-Points to pre-deploy config maps and secrets.
+Volumes for assets/system PVCs.
 */}}
-{{- define "mastodon.container.specPreDeploy" -}}
-envFrom:
-  - configMapRef:
-      name: {{ include "mastodon.configMapName" . }}-predeploy
-  {{- if .Values.mastodon.extraEnvFrom }}
-  - configMapRef:
-      name: {{ .Values.mastodon.extraEnvFrom }}
-  {{- end }}
+{{- define "mastodon.pvc.volumes" -}}
+{{- if .Values.mastodon.pvc.enabled }}
+- name: assets
+  persistentVolumeClaim:
+    claimName: {{ template "mastodon.pvc.assetsName" . }}
+- name: system
+  persistentVolumeClaim:
+    claimName: {{ template "mastodon.pvc.systemName" . }}
+{{- end }}
+{{- end }}
+
+{{/*
+VolumeMounts for assets/system PVCs.
+*/}}
+{{- define "mastodon.pvc.volumeMounts" -}}
+{{- if .Values.mastodon.pvc.enabled }}
+- name: assets
+  mountPath: /opt/mastodon/public/assets
+- name: system
+  mountPath: /opt/mastodon/public/system
+{{- end }}
 {{- end }}

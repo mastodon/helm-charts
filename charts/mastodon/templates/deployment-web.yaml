@@ -1,3 +1,4 @@
+{{- template "mastodon.check.pvc" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,26 +44,28 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- include "mastodon.deployment.specWithVolumes" . | trim | nindent 6 }}
+      {{- include "mastodon.deployment.spec" . | trim | nindent 6 }}
       {{- with coalesce .Values.mastodon.web.podSecurityContext .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}-web
-          {{- include "mastodon.container.specWithVolumes" . | trim | nindent 10 }}
+          {{- include "mastodon.container.spec" . | trim | nindent 10 }}
           {{- with coalesce .Values.mastodon.web.securityContext .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ coalesce .Values.mastodon.web.image.repository .Values.image.repository }}:{{ coalesce .Values.mastodon.web.image.tag .Values.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if not .Values.mastodon.pvc.enabled }}
           command:
             - bundle
             - exec
             - puma
             - -C
             - config/puma.rb
+          {{- end }}
           env:
             - name: "PORT"
               value: {{ .Values.mastodon.web.port | quote }}
@@ -137,6 +140,9 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            {{- include "mastodon.volumeMounts" . | nindent 12 }}
+            {{- include "mastodon.pvc.volumeMounts" . | nindent 12 }}
         {{- if .Values.mastodon.metrics.prometheus.enabled }}
         - name: prometheus-exporter
           image: "{{ coalesce .Values.mastodon.web.image.repository .Values.image.repository }}:{{ coalesce .Values.mastodon.web.image.tag .Values.image.tag .Chart.AppVersion }}"
@@ -158,6 +164,9 @@ spec:
             - name: prometheus
               containerPort: {{ .Values.mastodon.metrics.prometheus.port }}
         {{- end }}
+      volumes:
+        {{- include "mastodon.volumes" . | nindent 8 }}
+        {{- include "mastodon.pvc.volumes" . | nindent 8 }}
       {{- with coalesce .Values.mastodon.web.nodeSelector .Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}

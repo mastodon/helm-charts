@@ -1,3 +1,4 @@
+{{- template "mastodon.check.pvc" . }}
 {{- $context := . }}
 {{- range .Values.mastodon.sidekiq.workers }}
 ---
@@ -53,14 +54,14 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- include "mastodon.deployment.specWithVolumes" $context | nindent 6 }}
+      {{- include "mastodon.deployment.spec" $context | nindent 6 }}
       {{- with coalesce $context.Values.mastodon.sidekiq.podSecurityContext $context.Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ $context.Chart.Name }}
-          {{- include "mastodon.container.specWithVolumes" $context | nindent 10 }}
+          {{- include "mastodon.container.spec" $context | nindent 10 }}
           {{- with $context.Values.mastodon.sidekiq.securityContext | default $context.Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
@@ -134,6 +135,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            {{- include "mastodon.volumeMounts" $context | nindent 12 }}
+            {{- include "mastodon.pvc.volumeMounts" $context | nindent 12 }}
+      volumes:
+        {{- include "mastodon.volumes" $context | nindent 8 }}
+        {{- include "mastodon.pvc.volumes" $context | nindent 8 }}
       {{- with coalesce .nodeSelector $context.Values.mastodon.sidekiq.nodeSelector $context.Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}

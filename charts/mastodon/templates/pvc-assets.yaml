@@ -1,0 +1,21 @@
+{{- if and (.Values.mastodon.pvc.enabled) (not .Values.mastodon.pvc.assets.existingClaim) -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mastodon.pvc.assetsName" . }}
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  {{- if .Values.mastodon.pvc.assets.keepAfterDelete }}
+  annotations:
+    helm.sh/hook-delete-policy: keep
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.mastodon.pvc.assets.accessMode }}
+  {{- with .Values.mastodon.pvc.assets.resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  storageClassName: {{ .Values.mastodon.pvc.assets.storageClassName }}
+{{- end }}

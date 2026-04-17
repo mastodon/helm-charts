@@ -161,6 +161,10 @@ CACHE_REDIS_PORT: {{ .cache.port | quote }}
 S3 info.
 */}}
 {{- define "mastodon.env.s3" -}}
+{{- if .Values.mastodon.s3.enabled }}
+{{- if .Values.mastodon.pvc.enabled }}
+{{- fail "Cannot have both mastodon.s3 and mastodon.pvc enabled" }}
+{{- end }}
 {{- with .Values.mastodon.s3 -}}
 S3_ENABLED: "true"
 S3_BUCKET: {{ required "S3 bucket is required" .bucket | quote }}
@@ -182,6 +186,9 @@ S3_MULTIPART_THRESHOLD: {{ .multipartThreshold | quote }}
 {{- if .overridePathStyle }}
 S3_OVERRIDE_PATH_STYLE: {{ .overridePathStyle | quote }}
 {{- end }}
+{{- end }}
+{{- else if and (not .Values.mastodon.s3.enabled) (not .Values.mastodon.pvc.enabled) }}
+{{- fail "Must enable either mastodon.s3 or mastodon.pvc" }}
 {{- end }}
 {{- end }}
 

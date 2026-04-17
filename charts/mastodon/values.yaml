@@ -491,11 +491,12 @@ mastodon:
     pdb:
       enable: false
 
-  # Configuration for S3 storage that Mastodon's persistent data will live in.
+  # Configuration for S3 storage where Mastodon's persistent data will live.
   #
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/optional/object-storage/#environment-variables-for-s3-api-access
   s3:
+    enabled: true
 
     # Connection info.
     hostname:
@@ -530,6 +531,52 @@ mastodon:
     # Set this to true if the storage provider uses domain style
     # 'bucket.endpoint' naming
     overridePathStyle:
+
+  # Configuration for kubernetes PVCs where Mastodon's persistent data will live.
+  #
+  # NOTE: This is not the recommended way to run Mastodon, as many providers do
+  # not support ReadWriteMany for volumes, and therefore the cluster cannot be
+  # properly scaled. Please consider using S3 instead.
+  pvc:
+    enabled: false
+
+    # Config for the "assets" volume.
+    assets:
+
+      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
+      # limits scalability, since it requires the Rails and Sidekiq pods to run
+      # on the same node.
+      accessMode: ReadWriteMany
+
+      # Whether to keep the volume if the helm chart is deleted.
+      keepAfterDelete: true
+
+      # Size of the volume.
+      resources:
+        requests:
+          storage: 10Gi
+
+      # If there is already an existing PVC, specify it here.
+      existingClaim:
+
+    # Config for the "system" volume.
+    system:
+
+      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
+      # limits scalability, since it requires the Rails and Sidekiq pods to run
+      # on the same node.
+      accessMode: ReadWriteMany
+
+      # Whether to keep the volume if the helm chart is deleted.
+      keepAfterDelete: true
+
+      # Size of the volume.
+      resources:
+        requests:
+          storage: 100Gi
+
+      # If there is already an existing PVC, specify it here.
+      existingClaim:
 
   # Configuration for content translation via deepl.
   deepl:

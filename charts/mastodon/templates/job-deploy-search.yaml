@@ -69,6 +69,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            {{- include "mastodon.pvc.volumeMounts" . | nindent 12 }}
+      volumes:
+        {{- include "mastodon.pvc.volumes" . | nindent 8 }}
       {{- with coalesce .Values.mastodon.createAdmin.nodeSelector .Values.nodeSelector }}
       nodeSelector:
         {{- . | toYaml | nindent 8 }}

@@ -134,6 +134,28 @@ Main ConfigMap name.
 {{- end }}
 
 {{/*
+PVC "assets" name.
+*/}}
+{{- define "mastodon.pvc.assetsName" -}}
+{{- if .Values.mastodon.pvc.assets.existingClaim }}
+{{- .Values.mastodon.pvc.assets.existingClaim -}}
+{{- else -}}
+{{- printf "%s-assets" (include "mastodon.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+PVC "system" name.
+*/}}
+{{- define "mastodon.pvc.systemName" -}}
+{{- if .Values.mastodon.pvc.system.existingClaim }}
+{{- .Values.mastodon.pvc.system.existingClaim -}}
+{{- else -}}
+{{- printf "%s-system" (include "mastodon.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Secret name containing mastodon secrets.
 */}}
 {{- define "mastodon.secrets.secretName" -}}
@@ -342,5 +364,23 @@ Streaming cert secret name.
 {{- .Values.mastodon.streaming.extraCerts.existingSecret }}
 {{- else }}
 {{- printf "%s-streaming-cert" (include "mastodon.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
+PVC pre-flight check.
+Verifies that, if the user has enabled PVCs for assets/system, the rest of the
+configuration is valid.
+*/}}
+{{- define "mastodon.check.pvc" -}}
+{{- if .Values.mastodon.pvc.enabled }}
+  {{- if or (eq .Values.mastodon.pvc.assets.accessMode "ReadWriteOnce") (eq .Values.mastodon.pvc.system.accessMode "ReadWriteOnce") }}
+    {{- if gt .Values.mastodon.web.replicas 1.0 }}
+      {{- fail "Cannot have more than one web pod when using `ReadWriteOnce` for PVCs." }}
+    {{- end }}
+    {{- if .Values.mastodon.sidekiq.workers }}
+      {{- fail "Cannot have separate sidekiq workers when using `ReadWriteOnce` for PVCs." }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 {{- end }}
