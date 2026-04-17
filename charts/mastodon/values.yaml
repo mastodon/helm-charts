@@ -492,7 +492,6 @@ mastodon:
       enable: false
 
   # Configuration for S3 storage where Mastodon's persistent data will live.
-  # This config will override `pvc` unless disabled.
   #
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/optional/object-storage/#environment-variables-for-s3-api-access
@@ -534,11 +533,10 @@ mastodon:
     overridePathStyle:
 
   # Configuration for kubernetes PVCs where Mastodon's persistent data will live.
-  # This config will be overridden by `s3` unless disabled.
   #
   # NOTE: This is not the recommended way to run Mastodon, as many providers do
-  # not support the correct access mode, and therefore the cluster cannot be
-  # scaled with this method. Please consider setting up S3 instead.
+  # not support ReadWriteMany for volumes, and therefore the cluster cannot be
+  # properly scaled. Please consider using S3 instead.
   pvc:
     enabled: false
 
