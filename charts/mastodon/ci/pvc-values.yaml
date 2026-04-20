@@ -13,10 +13,10 @@ mastodon:
   pvc:
     enabled: true
     assets:
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       keepAfterDelete: false
     system:
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       keepAfterDelete: false
   smtp:
     server: smtp.postmarkapp.com

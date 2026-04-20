@@ -12,6 +12,9 @@ metadata:
   {{- end }}
 spec:
   accessModes:
+    {{- if ne .Values.mastodon.pvc.system.accessMode "ReadWriteMany" }}
+      {{- fail "`ReadWriteMany` is required for PVCs." }}
+    {{- end }}
     - {{ .Values.mastodon.pvc.system.accessMode }}
   {{- with .Values.mastodon.pvc.system.resources }}
   resources:

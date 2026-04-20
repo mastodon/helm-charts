@@ -541,17 +541,16 @@ mastodon:
   # Configuration for PVCs where Mastodon's persistent data will live.
   #
   # NOTE: This is not the recommended way to run Mastodon, as many providers do
-  # not support ReadWriteMany for volumes, and therefore the cluster cannot be
-  # properly scaled. Please consider using S3 instead.
+  # not support ReadWriteMany for volumes, which is required to use PVCs.
+  # Please consider using S3 instead.
   pvc:
     enabled: false
 
     # Config for the "assets" volume.
     assets:
 
-      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
-      # limits scalability, since it requires the Rails and Sidekiq pods to run
-      # on the same node.
+      # NOTE: ReadWriteMany is required for this storage method as there are
+      # separate pods for web and sidekiq that both need to access the volumes.
       accessMode: ReadWriteMany
 
       # Whether to keep the volume if the helm chart is deleted.
@@ -568,9 +567,8 @@ mastodon:
     # Config for the "system" volume.
     system:
 
-      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
-      # limits scalability, since it requires the Rails and Sidekiq pods to run
-      # on the same node.
+      # NOTE: ReadWriteMany is required for this storage method as there are
+      # separate pods for web and sidekiq that both need to access the volumes.
       accessMode: ReadWriteMany
 
       # Whether to keep the volume if the helm chart is deleted.
