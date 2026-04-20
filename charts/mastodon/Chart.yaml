@@ -1,11 +1,12 @@
 apiVersion: v2
 name: mastodon
-description: Mastodon is a free, open-source social network server based on ActivityPub.
+description: |
+  Mastodon is a free, open-source social network server based on ActivityPub.
 home: https://joinmastodon.org
 maintainers:
   - name: Mastodon
     url: https://joinmastodon.org
 icon: https://avatars.githubusercontent.com/u/24979032
 type: application
-version: 0.4.0
+version: 0.4.1
 appVersion: "v4.5.9"

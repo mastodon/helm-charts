@@ -1,4 +1,3 @@
-{{- template "mastodon.check.pvc" . }}
 {{- $context := . }}
 {{- range .Values.mastodon.sidekiq.workers }}
 ---

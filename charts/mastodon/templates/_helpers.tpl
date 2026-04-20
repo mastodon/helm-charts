@@ -366,21 +366,3 @@ Streaming cert secret name.
 {{- printf "%s-streaming-cert" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
-
-{{/*
-PVC pre-flight check.
-Verifies that, if the user has enabled PVCs for assets/system, the rest of the
-configuration is valid.
-*/}}
-{{- define "mastodon.check.pvc" -}}
-{{- if .Values.mastodon.pvc.enabled }}
-  {{- if or (eq .Values.mastodon.pvc.assets.accessMode "ReadWriteOnce") (eq .Values.mastodon.pvc.system.accessMode "ReadWriteOnce") }}
-    {{- if gt .Values.mastodon.web.replicas 1.0 }}
-      {{- fail "Cannot have more than one web pod when using `ReadWriteOnce` for PVCs." }}
-    {{- end }}
-    {{- if .Values.mastodon.sidekiq.workers }}
-      {{- fail "Cannot have separate sidekiq workers when using `ReadWriteOnce` for PVCs." }}
-    {{- end }}
-  {{- end }}
-{{- end }}
-{{- end }}

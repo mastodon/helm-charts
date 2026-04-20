@@ -113,6 +113,7 @@ Elasticsearch secrets.
 S3 secrets.
 */}}
 {{- define "mastodon.secrets.s3" -}}
+{{- if .Values.mastodon.s3.enabled }}
 - name: "AWS_ACCESS_KEY_ID"
   valueFrom:
     secretKeyRef:
@@ -123,6 +124,7 @@ S3 secrets.
     secretKeyRef:
       name: {{ include "mastodon.secrets.s3Name" . }}
       key: {{ .Values.mastodon.s3.existingSecretKeys.secretAccessKey }}
+{{- end }}
 {{- end }}
 
 {{/*

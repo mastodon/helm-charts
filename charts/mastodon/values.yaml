@@ -35,7 +35,7 @@ mastodon:
   #
   # For a list of locales, please see:
   # https://docs.joinmastodon.org/admin/config/#default_locale
-  locale:
+  locale: ""
 
   # Do not detect the user's browser language, and use `locale` instead.
   forceLocale: false
@@ -47,13 +47,14 @@ mastodon:
   # tags, specify the instance domain here.
   #
   # Use of WEB_DOMAIN requires careful consideration.
-  # You must redirect LOCAL_DOMAIN/.well-known/ to WEB_DOMAIN/.well-known/ as described.
+  # You must redirect LOCAL_DOMAIN/.well-known/ to WEB_DOMAIN/.well-known/
+  # as described.
   # Please refer to: https://docs.joinmastodon.org/admin/config/#federation
   #
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/config/#web_domain
   # Example: mastodon.example.com
-  webDomain:
+  webDomain: ""
 
   # If you have multiple domains pointed at your Mastodon server, this setting
   # will allow Mastodon to recognize itself when users are addressed using those
@@ -66,7 +67,7 @@ mastodon:
   #
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/config/#trusted_proxy_ip
-  trustedProxyIp:
+  trustedProxyIp: ""
 
   # If set to true, the frontpage of your Mastodon server will always redirect
   # to the first profile in the database and registrations will be disabled.
@@ -109,8 +110,8 @@ mastodon:
     # This job should always be run on first install.
     #
     # NOTE: When using certain GitOps solutions such as Argo CD, this should be
-    # disabled, as these apps do not necessarily differentiate between `pre-install`
-    # and `pre-upgrade`.
+    # disabled, as these apps do not necessarily differentiate between
+    # `pre-install` and `pre-upgrade`.
     dbPrepare:
       enabled: true
 
@@ -179,17 +180,17 @@ mastodon:
       enabled: false
 
       # S3 connection information.
-      endpoint:
-      bucket:
+      endpoint: ""
+      bucket: ""
       acl: public-read
 
       # S3 Access Key and Secret Key.
-      accessKeyId:
-      secretAccessKey:
+      accessKeyId: ""
+      secretAccessKey: ""
 
       # May also specify a secret with the access keys. If set, takes precedence
       # over `accessKeyId` and `secretAccessKey`.
-      existingSecret:
+      existingSecret: ""
       existingSecretKeys:
         accessKeyId: access-key-id
         secretAccessKey: secret-access-key
@@ -208,21 +209,21 @@ mastodon:
   # https://docs.joinmastodon.org/admin/config/#secrets
   secrets:
 
-    secretKeyBase:
+    secretKeyBase: ""
 
     # VAPID
-    vapidPrivateKey:
-    vapidPublicKey:
+    vapidPrivateKey: ""
+    vapidPublicKey: ""
 
     # Active Record Encryption
     # https://docs.joinmastodon.org/admin/config/#db-encryption-support
-    arePrimaryKey:
-    areDeterministicKey:
-    areKeyDerivationSalt:
+    arePrimaryKey: ""
+    areDeterministicKey: ""
+    areKeyDerivationSalt: ""
 
     # May also specify a secret with all mastodon secrets. If set, takes
     # precedence over above values.
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       secretKeyBase: secret-key-base
       vapidPrivateKey: vapid-private-key
@@ -248,8 +249,8 @@ mastodon:
 
     # Custom image to use for web pods.
     image:
-      repository:
-      tag:
+      repository: ""
+      tag: ""
 
     # Specify extra environment variables to be added to web pods.
     # These will be added in addition to global values.
@@ -258,10 +259,10 @@ mastodon:
     # Open Telemetry configuration for web pods.
     # Overrides global settings.
     otel:
-      enabled:
-      exporterUri:
-      namePrefix:
-      nameSeparator:
+      enabled: null
+      exporterUri: ""
+      namePrefix: ""
+      nameSeparator: ""
 
     # Pod/container management options for all web pods.
     # All values override their equivalent global values.
@@ -283,7 +284,9 @@ mastodon:
     podLabels: {}
 
     # Rollout strategy to use when updating pods
-    # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+    #
+    # For more information, please see:
+    # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
     updateStrategy:
       type: RollingUpdate
       rollingUpdate:
@@ -339,7 +342,7 @@ mastodon:
           - ingress,4
           - mailers,2
           - pull
-          - scheduler    # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
+          - scheduler    # Scheduler queue can only have 1 replica
           - fasp
 
         # Number of threads / parallel sidekiq jobs that are executed per Pod
@@ -348,8 +351,8 @@ mastodon:
         # Specify a custom image for this sidekiq worker.
         # Overrides .Values.image
         image:
-          repository:
-          tag:
+          repository: ""
+          tag: ""
 
         # Pod/container management options for this worker's pods.
         # All values override their equivalent parent values.
@@ -368,10 +371,10 @@ mastodon:
     # Open Telemetry configuration for sidekiq pods.
     # Overrides global settings.
     otel:
-      enabled:
-      exporterUri:
-      namePrefix:
-      nameSeparator:
+      enabled: null
+      exporterUri: ""
+      namePrefix: ""
+      nameSeparator: ""
 
     # Pod/container management options for all sidekiq pods.
     # All values override their equivalent global values.
@@ -397,14 +400,16 @@ mastodon:
     # the code introduces a new job as the pods are all replaced immediately.
     # RollingUpdate can help with larger clusters if job retries aren't an
     # issue, as it will reduce strain by replacing pods more slowly. It is
-    # strongly recommended to enable the readinessProbe when using RollingUpdate.
+    # strongly recommended to enable the readinessProbe when using
+    # RollingUpdate.
     #
     # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
     updateStrategy:
       type: Recreate
 
     # Readiness probe configuration.
-    # NOTE: Readiness probe will only work on versions of Mastodon built after 2024-07-10.
+    # NOTE: Readiness probe will only work on versions of Mastodon built after
+    # 2024-07-10.
     readinessProbe:
       enabled: false
       path: /opt/mastodon/tmp/sidekiq_process_has_started_and_will_begin_processing_jobs
@@ -436,15 +441,16 @@ mastodon:
     # Below values are based on default behavior in config/puma.rb when no
     # custom values are provided.
 
-    # Self-signed certificates that Node.js needs for connections (i.e. database).
+    # Self-signed certificates that Node.js needs for connections
+    # (i.e. database).
     extraCerts:
 
       # CA certificate itself in PEM format.
-      caCert:
+      caCert: ""
 
       # May also specify a secret with all mastodon secrets. If set, takes
       # precedence over above values.
-      existingSecret:
+      existingSecret: ""
       existingSecretKeys:
         caCert: ca.crt
 
@@ -499,53 +505,52 @@ mastodon:
     enabled: true
 
     # Connection info.
-    hostname:
-    endpoint:
+    hostname: ""
+    endpoint: ""
     protocol: https
-    region:
-    bucket:
+    region: ""
+    bucket: ""
 
     # S3 Access Key and Secret Key.
-    accessKeyId:
-    secretAccessKey:
+    accessKeyId: ""
+    secretAccessKey: ""
 
     # May also specify a secret with the access keys. If set, takes precedence
     # over `accessKeyId` and `secretAccessKey`.
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       accessKeyId: access-key-id
       secretAccessKey: secret-access-key
 
 
     # S3 ACL to assign to uploaded objects. Defaults to `public-read`.
-    permission:
+    permission: ""
 
     # If a caching proxy is used, enter its base URL here.
-    aliasHost:
+    aliasHost: ""
 
     # When uploading data to S3, if the number of bytes to send exceedes
     # multipartThreshold then a multi part session is automatically started
     # and the data is sent up in chunks. Defaults to 16777216 (16MB).
-    multipartThreshold:
+    multipartThreshold: ""
 
     # Set this to true if the storage provider uses domain style
     # 'bucket.endpoint' naming
-    overridePathStyle:
+    overridePathStyle: ""
 
-  # Configuration for kubernetes PVCs where Mastodon's persistent data will live.
+  # Configuration for PVCs where Mastodon's persistent data will live.
   #
   # NOTE: This is not the recommended way to run Mastodon, as many providers do
-  # not support ReadWriteMany for volumes, and therefore the cluster cannot be
-  # properly scaled. Please consider using S3 instead.
+  # not support ReadWriteMany for volumes, which is required to use PVCs.
+  # Please consider using S3 instead.
   pvc:
     enabled: false
 
     # Config for the "assets" volume.
     assets:
 
-      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
-      # limits scalability, since it requires the Rails and Sidekiq pods to run
-      # on the same node.
+      # NOTE: ReadWriteMany is required for this storage method as there are
+      # separate pods for web and sidekiq that both need to access the volumes.
       accessMode: ReadWriteMany
 
       # Whether to keep the volume if the helm chart is deleted.
@@ -557,14 +562,13 @@ mastodon:
           storage: 10Gi
 
       # If there is already an existing PVC, specify it here.
-      existingClaim:
+      existingClaim: ""
 
     # Config for the "system" volume.
     system:
 
-      # NOTE: ReadWriteOnce is more widely supported than ReadWriteMany, but
-      # limits scalability, since it requires the Rails and Sidekiq pods to run
-      # on the same node.
+      # NOTE: ReadWriteMany is required for this storage method as there are
+      # separate pods for web and sidekiq that both need to access the volumes.
       accessMode: ReadWriteMany
 
       # Whether to keep the volume if the helm chart is deleted.
@@ -576,18 +580,18 @@ mastodon:
           storage: 100Gi
 
       # If there is already an existing PVC, specify it here.
-      existingClaim:
+      existingClaim: ""
 
   # Configuration for content translation via deepl.
   deepl:
     enabled: false
 
-    plan:
-    apiKey:
+    plan: ""
+    apiKey: ""
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       apiKey: api-key
 
@@ -595,12 +599,12 @@ mastodon:
   hcaptcha:
     enabled: false
 
-    siteId:
-    apiKey:
+    siteId: ""
+    apiKey: ""
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `apiKey`.
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       apiKey: api-key
 
@@ -609,10 +613,10 @@ mastodon:
   # https://docs.joinmastodon.org/admin/config/#smtp
   smtp:
 
-    domain:
+    domain: ""
     fromAddress: notifications@example.com
-    returnPath:
-    replyTo:
+    returnPath: ""
+    replyTo: ""
 
     server: smtp.mailgun.org
     port: 587
@@ -625,12 +629,12 @@ mastodon:
     tls: false
 
     # SMTP login information
-    username:
-    password:
+    username: ""
+    password: ""
 
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `username` and `password`
-    existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence
+    # over `username` and `password`
+    existingSecret: ""
     existingSecretKeys:
       username: username
       password: password
@@ -644,7 +648,7 @@ mastodon:
     bulk:
       enabled: false
 
-      domain:
+      domain: ""
       fromAddress: notifications@example.com
 
       server: smtp.mailgun.org
@@ -657,12 +661,12 @@ mastodon:
       tls: false
 
       # SMTP login information
-      username:
-      password:
+      username: ""
+      password: ""
 
-      # May also specify a secret for authentication. If set, takes precedence over
-      # `username` and `password`
-      existingSecret:
+      # May also specify a secret for authentication. If set, takes precedence
+      # over `username` and `password`
+      existingSecret: ""
       existingSecretKeys:
         username: username
         password: password
@@ -676,12 +680,12 @@ mastodon:
 
     # If the cache service requires authentication, specify the header name and
     # secret/token here.
-    authHeader:
-    authToken:
+    authHeader: ""
+    authToken: ""
 
     # May also specify a secret for the API key. If set, takes precedence over
     # `authToken`
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       authToken: auth-token
 
@@ -713,7 +717,7 @@ mastodon:
     enabled: false
 
     # Address of the collector to send metrics to.
-    exporterUri:
+    exporterUri: ""
 
     namePrefix: mastodon
     nameSeparator: "-"
@@ -726,15 +730,15 @@ mastodon:
   # Alternatively specify extra environment variables stored in a ConfigMap.
   # The specified ConfigMap should contain the additional environment variables
   # in key-value format.
-  extraEnvFrom:
+  extraEnvFrom: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
+
   # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+
+  # Custom name to use for the service account.
   name: ""
 
 # Service configuration.
@@ -747,7 +751,7 @@ service:
 ingress:
   enabled: false
 
-  annotations:
+  annotations: {}
     # For choosing an ingress ingressClassName is preferred over annotations
     # kubernetes.io/ingress.class: nginx
     #
@@ -761,7 +765,7 @@ ingress:
     #   for the NGINX ingress controller:
     # nginx.org/client-max-body-size: 40m
 
-  className:
+  className: ""
 
   hosts:
     - host: mastodon.local
@@ -779,8 +783,8 @@ ingress:
   streaming:
     enabled: false
 
-    annotations:
-    className:
+    annotations: ""
+    className: ""
 
     hosts:
       - host: streaming.mastodon.local
@@ -825,17 +829,17 @@ httproute:
 # Configuration for PostgreSQL.
 postgresql:
 
-  hostname:
+  hostname: ""
   port: 5432
   database: mastodon
 
   # Database authentication.
   username: mastodonn
-  password:
+  password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
-  existingSecret:
+  existingSecret: ""
   existingSecretKeys:
     username: username
     password: password
@@ -850,26 +854,26 @@ postgresql:
   # through the connection pooler. This is required for migrations to work
   # properly.
   direct:
-    hostname:
-    port:
-    database:
+    hostname: ""
+    port: 5432
+    database: ""
 
   # Options for a read-only replica.
-  # If enabled, mastodon uses existing defaults for postgres for these values as well.
+  # If enabled, existing default are used for these values as well.
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/scaling/#read-replicas
   readReplica:
-    hostname:
-    port:
-    database:
+    hostname: ""
+    port: 5432
+    database: ""
 
     # Read replica database authentication.
-    username:
-    password:
+    username: ""
+    password: ""
 
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `username` and `password`
-    existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence
+    # over `username` and `password`
+    existingSecret: ""
     existingSecretKeys:
       username: username
       password: password
@@ -877,15 +881,15 @@ postgresql:
 # Configuration for Redis.
 redis:
 
-  hostname:
+  hostname: ""
   port: 6379
 
   # Authentication for redis
-  password:
+  password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `password`
-  existingSecret:
+  existingSecret: ""
   existingSecretKeys:
     password: password
 
@@ -896,14 +900,14 @@ redis:
   sidekiq:
     enabled: false
 
-    hostname:
+    hostname: ""
     port: 6379
 
-    password:
+    password: ""
 
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `password`
-    existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence
+    # over `password`
+    existingSecret: ""
     existingSecretKeys:
       password: password
 
@@ -914,14 +918,14 @@ redis:
   cache:
     enabled: false
 
-    hostname:
+    hostname: ""
     port: 6379
 
-    password:
+    password: ""
 
-    # May also specify a secret for authentication. If set, takes precedence over
-    # `password`
-    existingSecret:
+    # May also specify a secret for authentication. If set, takes precedence
+    # over `password`
+    existingSecret: ""
     existingSecretKeys:
       password: password
 
@@ -932,7 +936,7 @@ redis:
 elasticsearch:
   enabled: false
 
-  hostname:
+  hostname: ""
   port: 9200
   tls: true
 
@@ -944,22 +948,22 @@ elasticsearch:
   preset: single_node_cluster
 
   # Specify an optional prefix to use for indicies.
-  indexPrefix:
+  indexPrefix: ""
 
   # Authentication for the cluster (optional)
-  username:
-  password:
+  username: ""
+  password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`
-  existingSecret:
+  existingSecret: ""
   existingSecretKeys:
     username: username
     password: password
 
-  # If you are using a custom CA for the cluster, specify the secret it contains here.
+  # Secret containing custom CA to use for the elasticsearch cluster.
   caSecret:
-    name:
+    name: ""
     key: ca.crt
     mountPath: /opt/opensearch/config/ca.certs
 
@@ -990,22 +994,22 @@ externalAuth:
     clientSecret: SECRETKEY
     redirectUri: https://example.com/auth/auth/openid_connect/callback
     assumeEmailIsVerified: true
-    clientAuthMethod:
-    responseType:
-    responseMode:
-    display:
-    prompt:
-    sendNonce:
-    sendScopeToTokenEndpoint:
-    idpLogoutRedirectUri:
-    httpScheme:
-    host:
-    port:
-    jwksUri:
-    authEndpoint:
-    tokenEndpoint:
-    userInfoEndpoint:
-    endSessionEndpoint:
+    clientAuthMethod: ""
+    responseType: ""
+    responseMode: ""
+    display: ""
+    prompt: ""
+    sendNonce: ""
+    sendScopeToTokenEndpoint: ""
+    idpLogoutRedirectUri: ""
+    httpScheme: ""
+    host: ""
+    port: ""
+    jwksUri: ""
+    authEndpoint: ""
+    tokenEndpoint: ""
+    userInfoEndpoint: ""
+    endSessionEndpoint: ""
 
   saml:
     enabled: false
@@ -1013,11 +1017,14 @@ externalAuth:
     acsUrl: http://mastodon.example.com/auth/auth/saml/callback
     issuer: mastodon
     idpSsoTargetUrl: https://login.example.com/auth/realms/example/protocol/saml
-    idpCert: '-----BEGIN CERTIFICATE-----[your_cert_content]-----END CERTIFICATE-----'
-    idpCertFingerprint:
+    idpCert: |
+      -----BEGIN CERTIFICATE-----
+      [your_cert_content]
+      -----END CERTIFICATE-----
+    idpCertFingerprint: ""
     nameIdentifierFormat: urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-    cert:
-    privateKey:
+    cert: ""
+    privateKey: ""
     wantAssertionSigned: true
     wantAssertionEncrypted: true
     assumeEmailIsVerified: true
@@ -1028,8 +1035,8 @@ externalAuth:
       fullName: "urn:oid:2.16.840.1.113730.3.1.241"
       firstName: "urn:oid:2.5.4.42"
       lastName: "urn:oid:2.5.4.4"
-      verified:
-      verifiedEmail:
+      verified: ""
+      verifiedEmail: ""
 
   cas:
     enabled: false
@@ -1038,12 +1045,12 @@ externalAuth:
     host: sso.myserver.com
     port: 443
     ssl: true
-    validateUrl:
-    callbackUrl:
-    logoutUrl:
-    loginUrl:
+    validateUrl: ""
+    callbackUrl: ""
+    logoutUrl: ""
+    loginUrl: ""
     uidField: 'user'
-    caPath:
+    caPath: ""
     disableSslVerification: false
     assumeEmailIsVerified: true
     keys:
@@ -1071,10 +1078,10 @@ externalAuth:
     port: 636
     method: simple_tls
     tlsNoVerify: true
-    base:
-    bindDn:
-    password:
-    existingSecret:
+    base: ""
+    bindDn: ""
+    password: ""
+    existingSecret: ""
     existingSecretKeys:
       password: password
     uid: cn
@@ -1109,15 +1116,15 @@ podLabels: {}
 # can be used to help mastodon interact with other services in the cluster.
 deploymentAnnotations: {}
 
-# Kubernetes manages pods for jobs and pods for deployments differently, so you might
-# need to apply different annotations to the two different sets of pods.
+# Kubernetes manages pods for jobs and pods for deployments differently, so you
+# might need to apply different annotations to the two different sets of pods.
 # The annotations set with podAnnotations will be added to all mastodon pods.
 podAnnotations: {}
 
-# The labels set with jobLabels will be added to all mastodon job pods.
+# Labels to add to all job pods.
 jobLabels: {}
 
-# The annotations set with jobAnnotations will be added to all mastodon job pods.
+# Annotations to add to all job pods.
 jobAnnotations: {}
 
 # DNS aliases to add to every pod.
@@ -1129,12 +1136,7 @@ hostAliases: []
 revisionPodAnnotation: true
 
 # Default resources for all mastodon Deployments and jobs unless overridden.
-resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+resources: {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -1152,8 +1154,8 @@ nodeSelector: {}
 
 # -- Topology Spread Constraints for all mastodon pods unless overwritten
 # Please note that you need to use `matchLabelKeys` (Kubernetes 1.25+) if you
-# want to spread each deployment independently, or override topologySpreadConstraints
-# for each deployment
+# want to spread each deployment independently, or override
+# topologySpreadConstraints for each deployment
 topologySpreadConstraints: []
 
 # Toleratinos for all mastodon pods unless overridden.
