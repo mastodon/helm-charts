@@ -27,6 +27,9 @@ cluster:
   # Volume size for the cluster pods
   storage: 25Gi
 
+  # Secret for superuser credentials (must be kubernetes.io/basic-auth)
+  superuserSecret: ""
+
 # Configuration for cluster backup
 backup:
   method: plugin

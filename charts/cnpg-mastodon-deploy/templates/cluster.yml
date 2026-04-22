@@ -10,6 +10,11 @@ metadata:
 spec:
   instances: {{ .Values.instances }}
   imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  {{- if .Values.superuserSecret }}
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: {{ .Values.superuserSecret }}
+  {{- end }}
   {{- if eq .Values.backup.method "plugin" }}
   plugins:
   - name: barman-cloud.cloudnative-pg.io
