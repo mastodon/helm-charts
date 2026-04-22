@@ -10,10 +10,10 @@ metadata:
 spec:
   instances: {{ .Values.instances }}
   imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-  {{- if .Values.superuserSecret }}
+  {{- if .Values.cluster.superuserSecret }}
   enableSuperuserAccess: true
   superuserSecret:
-    name: {{ .Values.superuserSecret }}
+    name: {{ .Values.cluster.superuserSecret }}
   {{- end }}
   {{- if eq .Values.backup.method "plugin" }}
   plugins:
