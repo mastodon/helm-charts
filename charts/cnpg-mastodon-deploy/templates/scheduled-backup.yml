@@ -11,7 +11,7 @@ spec:
   schedule: {{ .Values.backup.schedule }}
   backupOwnerReference: self
   cluster:
-    name: {{ .Values.cluster.name }}
+    name: {{ include "cnpg.fullname" . }}
   method: {{ .Values.backup.method }}
   {{- if eq .Values.backup.method "plugin" }}
   pluginConfiguration:
