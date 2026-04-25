@@ -53,7 +53,7 @@ spec:
           - name: RCLONE_CONFIG_REMOTE_TYPE
             value: s3
           - name: RCLONE_CONFIG_REMOTE_PROVIDER
-            value: AWS
+            value:  {{ .Values.mastodon.hooks.s3Upload.rclone.configRemoteProvider }}
           - name: RCLONE_CONFIG_REMOTE_ENDPOINT
             value: {{ required "Please specify an endpoint for S3 asset uploads" .Values.mastodon.hooks.s3Upload.endpoint }}
           - name: RCLONE_CONFIG_REMOTE_ACCESS_KEY_ID

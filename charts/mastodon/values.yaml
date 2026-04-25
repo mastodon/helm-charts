@@ -197,6 +197,8 @@ mastodon:
 
       # Configuration for the rclone container that will preform the upload.
       rclone:
+        # You can use Minio
+        configRemoteProvider: S3
 
         # Any additional environment variables to pass to rclone.
         env: {}
