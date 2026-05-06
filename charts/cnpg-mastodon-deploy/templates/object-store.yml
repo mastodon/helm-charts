@@ -21,4 +21,5 @@ spec:
         key: ACCESS_SECRET_KEY
     wal:
       compression: gzip
+  retentionPolicy: {{ .Values.backup.retentionPolicy }}
 {{- end }}

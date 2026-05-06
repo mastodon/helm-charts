@@ -46,6 +46,9 @@ backup:
     #  ACCESS_SESSION_TOKEN: xxxxxxx         # if required
     s3Credentials: s3-credentials
 
+  # How long to keep backups for.
+  retentionPolicy: "14d"
+
 # Additional labels to add to all resources
 labels: {}
 
