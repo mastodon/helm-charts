@@ -1013,8 +1013,8 @@ externalAuth:
 
     existingSecret:
     existingSecretKeys:
-      clientId:
-      clientSecret:
+      clientId: client-id
+      clientSecret: client-secret
 
   saml:
     enabled: false

@@ -374,6 +374,6 @@ OIDC secret name.
 {{- if .Values.externalAuth.oidc.existingSecret }}
 {{- .Values.externalAuth.oidc.existingSecret }}
 {{- else }}
-{{- printf "%s-oidc" (include "mastodon.fullname" .) }}
+{{- printf "%s-oidc-auth" (include "mastodon.fullname" .) }}
 {{- end }}
 {{- end }}
