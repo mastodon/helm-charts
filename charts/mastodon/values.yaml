@@ -992,7 +992,7 @@ externalAuth:
     uidField: uid
     clientId: mastodon
     clientSecret: SECRETKEY
-    existingSecret:
+    existingSecret: ""
     existingSecretKeys:
       clientId: client-id
       clientSecret: client-secret
