@@ -370,7 +370,7 @@ Streaming cert secret name.
 {{/*
 OIDC secret name.
 */}}
-{{- define "mastodon.secrets.externalAuth.oidcName" -}}
+{{- define "mastodon.secrets.oidcName" -}}
 {{- if .Values.externalAuth.oidc.existingSecret }}
 {{- .Values.externalAuth.oidc.existingSecret }}
 {{- else }}
