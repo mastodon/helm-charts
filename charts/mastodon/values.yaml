@@ -992,6 +992,10 @@ externalAuth:
     uidField: uid
     clientId: mastodon
     clientSecret: SECRETKEY
+    existingSecret: ""
+    existingSecretKeys:
+      clientId: client-id
+      clientSecret: client-secret
     redirectUri: https://example.com/auth/auth/openid_connect/callback
     assumeEmailIsVerified: true
     clientAuthMethod: ""

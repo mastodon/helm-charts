@@ -9,6 +9,7 @@ helm repo add traefik https://traefik.github.io/charts
 
 echo "##### Installing databases #####"
 echo
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
 helm install redis dandydev/redis-ha \
     --set "replicas=1,auth=true,redisPassword=password,sentinel.quorum=1,redis.config.min-replicas-to-write=0" \
     --namespace default
