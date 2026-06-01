@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "pgbouncer.selectorLabels" . | nindent 6 }}
-  {{- with .Vlaues }}
+  {{- with .Values.topologySpreadConstraints }}
   topologySpreadConstraints:
     {{- toYaml . | nindent 4 }}
   {{- end }}
