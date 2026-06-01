@@ -49,7 +49,7 @@ settings:
 
   poolMode: transaction
   serverResetQuery: DISCARD ALL
-  maxPreparedStatements: 0 # use 0 to disable the feature
+  maxPreparedStatements: 0        # use 0 to disable the feature
 
   connectionLimits:
     maxClientConn: 2000
