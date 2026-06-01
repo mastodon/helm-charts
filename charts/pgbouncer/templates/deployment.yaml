@@ -12,6 +12,10 @@ spec:
   selector:
     matchLabels:
       {{- include "pgbouncer.selectorLabels" . | nindent 6 }}
+  {{- with .Values.topologySpreadConstraints }}
+  topologySpreadConstraints:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       annotations:
