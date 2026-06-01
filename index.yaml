@@ -438,6 +438,20 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.24.0
+    created: "2026-06-01T12:20:18.19385803Z"
+    description: 'Creates a pgbouncer deployment. '
+    digest: bc1d90af57eab9958b897ed6f96508ed8fe8f70cdb79633c4242abba032dbccf
+    home: https://joinmastodon.org
+    maintainers:
+    - name: Mastodon
+      url: https://joinmastodon.org
+    name: pgbouncer
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/pgbouncer-1.4.1/pgbouncer-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v2
+    appVersion: 1.24.0
     created: "2026-06-01T12:10:54.623815916Z"
     description: 'Creates a pgbouncer deployment. '
     digest: c580b7beafe71b1e5563efdbc17df14eeedad2590a8f636b80e96d62885c0363
@@ -527,4 +541,4 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-01T12:10:54.623863386Z"
+generated: "2026-06-01T12:20:18.193958008Z"
