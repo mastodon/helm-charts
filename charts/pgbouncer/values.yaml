@@ -28,10 +28,10 @@ users: {}
 # The secret containing the userlist.txt to deploy
 authFile:
   secretRef:
-    name:
-    key:
+    name: ""
+    key: ""
 
-databases:
+databases: {}
   # name:
   #   host:
   #   port:
@@ -73,13 +73,13 @@ settings:
   clientIdleTimeout: 0
   clientLoginTimeout: 60
 
-# pgbouncer will stop accepting queries immediatly when the pod needs to be stopped
-# but will wait until all transactions end, or this amount of time
+# pgbouncer will stop accepting queries immediatly when the pod needs to be
+# stopped but will wait until all transactions end, or this amount of time
 terminationGracePeriodSeconds: 120
 
 # Sidecar configuration for prometheus exporter.
-# This sidecar needs an additional user "pgbouncer_exporter" to be configured in
-# the auth_file if enabled.
+# This sidecar needs an additional user "pgbouncer_exporter" to be configured
+# in the auth_file if enabled.
 prometheusExporter:
   enabled: false
   statsPgUser: pgbouncer_exporter
@@ -107,10 +107,11 @@ service:
 
 resources:
   {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # We usually recommend not to specify default resources and to leave this as
+  # a conscious choice for the user. This also increases chances charts run on
+  # environments with little resources, such as Minikube. If you do want to
+  # specify resources, uncomment the following lines, adjust them as necessary,
+  # and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
