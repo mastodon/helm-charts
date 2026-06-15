@@ -150,7 +150,7 @@ mastodon:
       # Possible values: instances, accounts, tags, statuses, public_statuses.
       only: ""
 
-      # How many threads to use when deploying the index(es).
+      # How many threads to use when deploying the indexes.
       concurrency: 5
 
       resetChewy: true
@@ -165,7 +165,7 @@ mastodon:
       # Node(s) on which this job will run.
       nodeSelector: {}
 
-    # Upload website assets to S3 before deploying using rclone.
+    # Upload website assets to S3 before deploying using `rclone`.
     #
     # Whenever there is an update to Mastodon, sometimes there are assets files
     # that are renamed. As the pods are getting redeployed, and old/new pods are
@@ -211,11 +211,11 @@ mastodon:
 
     secretKeyBase: ""
 
-    # VAPID
+    # VAPID keys.
     vapidPrivateKey: ""
     vapidPublicKey: ""
 
-    # Active Record Encryption
+    # Active Record Encryption.
     # https://docs.joinmastodon.org/admin/config/#db-encryption-support
     arePrimaryKey: ""
     areDeterministicKey: ""
@@ -283,7 +283,7 @@ mastodon:
     podAnnotations: {}
     podLabels: {}
 
-    # Rollout strategy to use when updating pods
+    # Rollout strategy to use when updating pods.
     #
     # For more information, please see:
     # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
@@ -345,7 +345,7 @@ mastodon:
           - scheduler    # Scheduler queue can only have 1 replica
           - fasp
 
-        # Number of threads / parallel sidekiq jobs that are executed per Pod
+        # Number of threads / parallel sidekiq jobs that are executed per Pod.
         concurrency: 25
 
         # Specify a custom image for this sidekiq worker.
@@ -448,8 +448,8 @@ mastodon:
       # CA certificate itself in PEM format.
       caCert: ""
 
-      # May also specify a secret with all mastodon secrets. If set, takes
-      # precedence over above values.
+      # May also specify a secret with the CA cert. If set, takes precedence
+      # over `caCert`.
       existingSecret: ""
       existingSecretKeys:
         caCert: ca.crt
@@ -628,7 +628,7 @@ mastodon:
     opensslVerifyMode: peer
     tls: false
 
-    # SMTP login information
+    # SMTP login information.
     username: ""
     password: ""
 
@@ -660,7 +660,7 @@ mastodon:
       opensslVerifyMode: peer
       tls: false
 
-      # SMTP login information
+      # SMTP login information.
       username: ""
       password: ""
 
@@ -684,7 +684,7 @@ mastodon:
     authToken: ""
 
     # May also specify a secret for the API key. If set, takes precedence over
-    # `authToken`
+    # `authToken`.
     existingSecret: ""
     existingSecretKeys:
       authToken: auth-token
@@ -698,17 +698,17 @@ mastodon:
     prometheus:
       enabled: false
 
-      # Port for the exporter to listen on
+      # Port for the exporter to listen on.
       port: 9394
 
-      # Prometheus for web pods
+      # Prometheus for web pods.
       web:
-        # Collect per-controller/action metrics for every request
+        # Collect per-controller/action metrics for every request.
         detailed: false
 
-      # Prometheus for sidekiq pods
+      # Prometheus for sidekiq pods.
       sidekiq:
-        # Collect per-job metrics for every job
+        # Collect per-job metrics for every job.
         detailed: false
 
   # Open Telemetry configuration for all deployments. Component-specific
@@ -735,7 +735,7 @@ mastodon:
 serviceAccount:
   create: true
 
-  # Annotations to add to the service account
+  # Annotations to add to the service account.
   annotations: {}
 
   # Custom name to use for the service account.
@@ -838,7 +838,7 @@ postgresql:
   password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
-  # `username` and `password`
+  # `username` and `password`.
   existingSecret: ""
   existingSecretKeys:
     username: username
@@ -884,11 +884,11 @@ redis:
   hostname: ""
   port: 6379
 
-  # Authentication for redis
+  # Authentication for redis.
   password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
-  # `password`
+  # `password`.
   existingSecret: ""
   existingSecretKeys:
     password: password
@@ -906,7 +906,7 @@ redis:
     password: ""
 
     # May also specify a secret for authentication. If set, takes precedence
-    # over `password`
+    # over `password`.
     existingSecret: ""
     existingSecretKeys:
       password: password
@@ -924,7 +924,7 @@ redis:
     password: ""
 
     # May also specify a secret for authentication. If set, takes precedence
-    # over `password`
+    # over `password`.
     existingSecret: ""
     existingSecretKeys:
       password: password
@@ -950,12 +950,12 @@ elasticsearch:
   # Specify an optional prefix to use for indicies.
   indexPrefix: ""
 
-  # Authentication for the cluster (optional)
+  # Authentication for the cluster (optional).
   username: ""
   password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
-  # `username` and `password`
+  # `username` and `password`.
   existingSecret: ""
   existingSecretKeys:
     username: username
@@ -966,18 +966,6 @@ elasticsearch:
     name: ""
     key: ca.crt
     mountPath: /opt/opensearch/config/ca.certs
-
-  # Nodes on which the various elasticsearch pods will run.
-  master:
-    nodeSelector: {}
-  data:
-    nodeSelector: {}
-  coordinating:
-    nodeSelector: {}
-  ingest:
-    nodeSelector: {}
-  metrics:
-    nodeSelector: {}
 
 # Configuration for external authentication mechanisms.
 externalAuth:
@@ -992,6 +980,8 @@ externalAuth:
     uidField: uid
     clientId: mastodon
     clientSecret: SECRETKEY
+    # May also specify a secret for the client secret. If set, takes precedence
+    # over `clientSecret`.
     existingSecret: ""
     existingSecretKeys:
       clientId: client-id
@@ -1085,6 +1075,8 @@ externalAuth:
     base: ""
     bindDn: ""
     password: ""
+    # May also specify a secret for the LDAP password. If set, takes precedence
+    # over `password`.
     existingSecret: ""
     existingSecretKeys:
       password: password
@@ -1102,7 +1094,7 @@ externalAuth:
     omniauthOnly: false
 
 # If you manually change the UID/GID environment variables, ensure these values
-# match:
+# match.
 podSecurityContext:
   runAsUser: 991
   runAsGroup: 991
@@ -1156,20 +1148,21 @@ affinity: {}
 # setting.
 nodeSelector: {}
 
-# -- Topology Spread Constraints for all mastodon pods unless overwritten
+# Topology Spread Constraints for all mastodon pods unless overwritten.
+#
 # Please note that you need to use `matchLabelKeys` (Kubernetes 1.25+) if you
 # want to spread each deployment independently, or override
-# topologySpreadConstraints for each deployment
+# topologySpreadConstraints for each deployment.
 topologySpreadConstraints: []
 
 # Toleratinos for all mastodon pods unless overridden.
 tolerations: []
 
-# -- Timezone for all mastodon pods unless overwritten
+# Timezone for all mastodon pods unless overwritten.
 timezone: UTC
 
-# Default volume mounts for all mastodon pods
+# Default volume mounts for all mastodon pods.
 volumeMounts: []
 
-# Default volumes for all mastodon pods
+# Default volumes for all mastodon pods.
 volumes: []
