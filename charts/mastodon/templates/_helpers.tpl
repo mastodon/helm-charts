@@ -36,7 +36,9 @@ Common labels.
 {{- define "mastodon.labels" -}}
 helm.sh/chart: {{ include "mastodon.chart" . }}
 {{ include "mastodon.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
+{{- if .Values.image.tag }}
+app.kubernetes.io/version: {{ regexReplaceAll "@(\\w+:\\w{0,7})\\w*" .Values.image.tag "@${1}" | quote }}
+{{- else if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
