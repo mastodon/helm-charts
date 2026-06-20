@@ -30,6 +30,7 @@ spec:
     metadata:
       labels:
         {{- include "mastodon.selectorLabels" . | trim | nindent 8 }}
+        {{- include "mastodon.userLabels" . | trim | nindent 8 }}
         {{- include "mastodon.podUserLabels" . | trim | nindent 8 }}
         {{- with .Values.mastodon.web.podLabels }}
         {{- toYaml . | nindent 8 }}
