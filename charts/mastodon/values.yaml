@@ -815,6 +815,13 @@ httproute:
   hostnames:
     - mastodon.local
 
+  # Refernce(s) to the Gateway(s) for streaming, if different than the instance
+  # gateway.
+  streamingParentRefs: []
+  #  - name: example-streaming-gateway
+  #    namespace: example-streaming-gateway-namespace
+  #    sectionName: websecure
+
   # Streaming hostnames, if different than the instance hostname.
   streamingHostnames: []
   #  - streaming.mastodon.local
@@ -825,6 +832,14 @@ httproute:
       - path:
           type: PathPrefix
           value: /
+
+  # Routing rules for the streaming API.
+  streamingRules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /api/v1/streaming
+
 
 # Configuration for PostgreSQL.
 postgresql:
