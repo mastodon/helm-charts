@@ -131,7 +131,7 @@ spec:
             successThreshold: {{ default 1 $context.Values.mastodon.sidekiq.readinessProbe.successThreshold }}
             timeoutSeconds: {{ default 1 $context.Values.mastodon.sidekiq.readinessProbe.timeoutSeconds }}
           {{- end }}
-          {{- with coalesce $context.Values.mastodon.sidekiq.resources $context.Values.resources }}
+          {{- with coalesce .resources $context.Values.mastodon.sidekiq.resources $context.Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}

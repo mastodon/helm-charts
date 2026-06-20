@@ -8,6 +8,7 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | nindent 4 }}
     {{- with .Values.httproute.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
