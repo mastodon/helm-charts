@@ -97,12 +97,12 @@ Database replica connection info.
 {{- with .Values.postgresql.readReplica -}}
 {{- if .hostname }}
 REPLICA_DB_HOST: {{ .hostname | quote }}
-{{- end }}
 {{- if .port }}
 REPLICA_DB_PORT: {{ .port | quote }}
 {{- end }}
 {{- if .database }}
 REPLICA_DB_NAME: {{ .database | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -242,6 +242,7 @@ Renders blank if not enabled.
 */}}
 {{- define "mastodon.env.smtp.bulk" -}}
 {{- with .Values.mastodon.smtp.bulk -}}
+{{- if .enabled }}
 {{- if .authMethod }}
 BULK_SMTP_AUTH_METHOD: {{ .authMethod }}
 {{- end }}
@@ -268,6 +269,7 @@ BULK_SMTP_SERVER: {{ .server }}
 {{- end }}
 {{- if .tls }}
 BULK_SMTP_TLS: {{ .tls | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
