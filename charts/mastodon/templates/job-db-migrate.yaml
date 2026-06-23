@@ -26,7 +26,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ include "mastodon.fullname" . }}-db-migrate
-          {{- include "mastodon.container.spec" . | trim | nindent 10 }}
+          {{- include "mastodon.container.specPreDeploy" . | trim | nindent 10 }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
