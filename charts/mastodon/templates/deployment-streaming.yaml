@@ -87,10 +87,12 @@ spec:
             - name: "PORT"
               value: {{ .Values.mastodon.streaming.port | quote }}
             {{- with .Values.mastodon.streaming.extraCerts }}
+            {{- if or .caCert .existingSecret }}
             - name: "NODE_EXTRA_CA_CERTS"
               value: "{{ .mountPath }}/{{ .mountFile }}"
             - name: "DB_SSLMODE"
               value: "{{ .sslMode }}"
+            {{- end }}
             {{- end }}
             {{- with .Values.postgresql.readReplica.hostname }}
             - name: "DB_HOST"
