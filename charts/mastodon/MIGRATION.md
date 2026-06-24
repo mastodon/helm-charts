@@ -12,15 +12,13 @@ The previous chart used Bitnami subcharts for PostgreSQL and Redis to make insta
 
 ## Kubernetes volumes for assets & system files
 
-Using Kubernetes persistent volumes for storing asset and media data is no longer supported. This is because the storage requirements for a typical Mastodon instance can increase quickly and unpredictably depending on users and activity, and `PersistentVolumes` in Kubernetes don't offer the necessary flexibility.
-
-Using S3-compatible storage is currently the only supported method for storing media assets.
+Using Kubernetes persistent volumes for storing asset and media data is supported with caveats, but not recommended, as S3 storage is much more flexible. This is because each mastodon pod will need access to the same volume, which necessitates `ReadWriteMany` as the access mode.
 
 ## StatsD metrics
 
-StatsD is no longer supported for measuring metrics in Mastodon (support was dropped in v4.3).
+StatsD is no longer supported for measuring metrics in Mastodon, as support was dropped in v4.3.
 
-Instead, we recommend using either Prometheus, or OpenTelemetry.
+Instead, we recommend using either Prometheus or OpenTelemetry.
 
 # Changes in the values file
 
@@ -40,7 +38,6 @@ mastodon:
   preparedStatements:                # Removed               # Moved to `postgresql`
 
   s3:
-    enabled:                         # Removed
     access_key:                      accessKeyId             # Full name change
     access_secret:                   secretAccessKey         # Full name change
     alias_host:                      aliasHost
