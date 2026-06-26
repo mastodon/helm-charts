@@ -278,6 +278,7 @@ mastodon:
     resources: {}
 
     # Applied in addition to previously-defined values.
+    extraContainers: []
     annotations: {}
     labels: {}
     podAnnotations: {}
@@ -356,13 +357,15 @@ mastodon:
 
         # Pod/container management options for this worker's pods.
         # All values override their equivalent parent values.
-
         affinity: {}
         nodeSelector: {}
         topologySpreadConstraints: []
         tolerations: []
 
         resources: {}
+
+        # Applied in addition to previously-defined values.
+        extraContainers: []
 
     # Specify extra environment variables to be added to Sidekiq pods.
     # These will be added in addition to global values.
@@ -390,6 +393,7 @@ mastodon:
     resources: {}
 
     # Applied in addition to previously-defined values.
+    extraContainers: []
     annotations: {}
     labels: {}
     podAnnotations: {}
@@ -480,6 +484,7 @@ mastodon:
     resources: {}
 
     # Applied in addition to previously-defined values.
+    extraContainers: []
     annotations: {}
     labels: {}
     podAnnotations: {}
@@ -1116,6 +1121,9 @@ podSecurityContext:
   fsGroup: 991
 
 securityContext: {}
+
+# Any extra containers that should be added to all deployments.
+extraContainers: []
 
 # Labels added to every Mastodon-related object.
 labels: {}

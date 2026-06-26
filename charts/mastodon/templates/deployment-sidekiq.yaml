@@ -138,6 +138,15 @@ spec:
           volumeMounts:
             {{- include "mastodon.volumeMounts" $context | nindent 12 }}
             {{- include "mastodon.pvc.volumeMounts" $context | nindent 12 }}
+        {{- with .extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $context.Values.mastodon.sidekiq.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $context.Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       volumes:
         {{- include "mastodon.volumes" $context | nindent 8 }}
         {{- include "mastodon.pvc.volumes" $context | nindent 8 }}
