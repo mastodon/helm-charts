@@ -163,6 +163,12 @@ spec:
             - name: prometheus
               containerPort: {{ .Values.mastodon.metrics.prometheus.port }}
         {{- end }}
+        {{- with .Values.mastodon.web.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       volumes:
         {{- include "mastodon.volumes" . | nindent 8 }}
         {{- include "mastodon.pvc.volumes" . | nindent 8 }}
