@@ -1,0 +1,24 @@
+{{- if and (.Values.mastodon.pvc.enabled) (not .Values.mastodon.pvc.system.existingClaim) -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mastodon.pvc.systemName" . }}
+  labels:
+    {{- include "mastodon.labels" . | nindent 4 }}
+    {{- include "mastodon.userLabels" . | trim | nindent 4 }}
+  {{- if .Values.mastodon.pvc.system.keepAfterDelete }}
+  annotations:
+    helm.sh/hook-delete-policy: keep
+  {{- end }}
+spec:
+  accessModes:
+    {{- if ne .Values.mastodon.pvc.system.accessMode "ReadWriteMany" }}
+      {{- fail "`ReadWriteMany` is required for PVCs." }}
+    {{- end }}
+    - {{ .Values.mastodon.pvc.system.accessMode }}
+  {{- with .Values.mastodon.pvc.system.resources }}
+  resources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  storageClassName: {{ .Values.mastodon.pvc.system.storageClassName }}
+{{- end }}

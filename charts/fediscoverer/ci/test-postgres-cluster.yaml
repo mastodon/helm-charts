@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-auth
+type: kubernetes.io/basic-auth
+stringData:
+  username: fediscoverer
+  password: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: fediscoverer_production
+      owner: fediscoverer
+      secret:
+        name: postgres-auth
+      postInitSQL:
+        - CREATE DATABASE fediscoverer_production_cache OWNER fediscoverer
+        - CREATE DATABASE fediscoverer_production_queue OWNER fediscoverer
+  storage:
+    size: 5Gi

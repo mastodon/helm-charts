@@ -1,0 +1,11 @@
+image:
+  tag: latest
+config:
+  secretKeyBase: test-secret-key-base
+  database:
+    host: postgres-rw
+    port: 5432
+    password:
+      secretKeyRef:
+        name: postgres-auth
+        key: password

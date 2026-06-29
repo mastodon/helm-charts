@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+echo "##### Adding Helm Repositories #####"
+echo
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+helm repo add traefik https://traefik.github.io/charts
+
+echo "##### Installing databases #####"
+echo
+helm install cnpg cnpg/cloudnative-pg \
+    --namespace cnpg-system \
+    --create-namespace
+helm install traefik traefik/traefik \
+    --namespace traefik \
+    --create-namespace \
+    --set "ingressClass.enabled=false" \
+    --set "providers.kubernetesIngress.enabled=false,providers.kubernetesGateway.enabled=true"
+kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
+kubectl apply -n default -f charts/fediscoverer/ci/test-postgres-cluster.yaml
+
+echo
+echo "##### Post-install rollout #####"
+kubectl wait -n default --for=condition=Ready --timeout=300s cluster/postgres
