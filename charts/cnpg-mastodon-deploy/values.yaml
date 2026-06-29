@@ -37,8 +37,8 @@ backup:
 
   # If using 'method: plugin', these need to be filled out
   objectStore:
-    destinationPath:
-    endpointUrl:
+    destinationPath: ""
+    endpointUrl: ""
 
     # Secret where S3 credentials are stored, must be in the form:
     #  ACCESS_KEY_ID: xxxxxxx
