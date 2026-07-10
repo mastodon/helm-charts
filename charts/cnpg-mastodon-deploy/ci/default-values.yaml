@@ -3,5 +3,7 @@ cluster:
   password: mypass
 backup:
   objectStore:
+    destinationPath: s3://mybucket
+    endpointUrl: https://nonexistantpath.my.cloud
     accessKeyId: dummy-access-key-id
     secretAccessKey: dummy-secret-access-key
