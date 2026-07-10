@@ -10,4 +10,6 @@ echo
 helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
+helm install barman-cloud cnpg/plugin-barman-cloud \
+    --namespace cnpg-system
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
