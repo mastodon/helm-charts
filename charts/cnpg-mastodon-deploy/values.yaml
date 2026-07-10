@@ -43,6 +43,7 @@ cluster:
 
 # Configuration for cluster backup
 backup:
+  enabled: true
   method: plugin
   schedule: "0 0 0 * * *"  # At midnight every day
 

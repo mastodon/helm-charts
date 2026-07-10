@@ -4,19 +4,11 @@ set -e
 echo "##### Adding Helm Repositories #####"
 echo
 helm repo add cnpg https://cloudnative-pg.github.io/charts
-helm repo add cert-manager https://charts.jetstack.io
 
 echo "##### Installing CNPG controller #####"
 echo
-helm install cert-manager cert-manager/cert-manager \
-    --namespace cert-manager \
-    --create-namespace \
-    --hide-notes
 helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace \
-    --hide-notes
-helm install barman-cloud cnpg/plugin-barman-cloud \
-    --namespace cnpg-system \
     --hide-notes
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg

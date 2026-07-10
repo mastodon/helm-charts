@@ -1,3 +1,4 @@
+{{- if .Values.backup.enabled }}
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
@@ -17,3 +18,4 @@ spec:
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io
   {{- end }}
+{{- end }}

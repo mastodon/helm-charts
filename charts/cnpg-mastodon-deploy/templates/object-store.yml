@@ -1,3 +1,4 @@
+{{- if .Values.backup.enabled }}
 {{- if eq .Values.backup.method "plugin" }}
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
@@ -22,4 +23,5 @@ spec:
     wal:
       compression: gzip
   retentionPolicy: {{ .Values.backup.retentionPolicy }}
+{{- end }}
 {{- end }}
