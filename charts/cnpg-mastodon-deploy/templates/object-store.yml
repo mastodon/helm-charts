@@ -10,15 +10,15 @@ metadata:
     {{- end }}
 spec:
   configuration:
-    destinationPath: {{ .Values.backup.objectStore.destinationPath }}
-    endpointURL: {{ .Values.backup.objectStore.endpointUrl }}
+    destinationPath: {{ required "Destination path required when using plugin backup method" .Values.backup.objectStore.destinationPath }}
+    endpointURL: {{ required "Endpoint URL required when using plugin backup method" .Values.backup.objectStore.endpointUrl }}
     s3Credentials:
       accessKeyId:
-        name: {{ .Values.backup.objectStore.s3Credentials }}
-        key: ACCESS_KEY_ID
+        name: {{ include "cnpg.secrets.objectStoreName" . }}
+        key: {{ .Values.backup.objectStore.existingSecretKeys.accessKeyId }}
       secretAccessKey:
-        name: {{ .Values.backup.objectStore.s3Credentials }}
-        key: ACCESS_SECRET_KEY
+        name: {{ include "cnpg.secrets.objectStoreName" . }}
+        key: {{ .Values.backup.objectStore.existingSecretKeys.secretAccessKey }}
     wal:
       compression: gzip
   retentionPolicy: {{ .Values.backup.retentionPolicy }}

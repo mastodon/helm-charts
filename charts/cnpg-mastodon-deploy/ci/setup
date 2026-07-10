@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+echo "##### Adding Helm Repositories #####"
+echo
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+
+echo "##### Installing CNPG controller #####"
+echo
+helm install cnpg cnpg/cloudnative-pg \
+    --namespace cnpg-system \
+    --create-namespace
+kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg

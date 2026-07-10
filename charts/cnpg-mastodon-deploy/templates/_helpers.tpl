@@ -44,13 +44,46 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Object store name
 */}}
-{{- define "cnpg.store.name"}}
+{{- define "cnpg.store.name" -}}
 {{- printf "%s-store" (include "cnpg.fullname" .) }}
 {{- end }}
 
 {{/*
 Cluster backup name
 */}}
-{{- define "cnpg.backup.name"}}
+{{- define "cnpg.backup.name" -}}
 {{- printf "%s-backup" (include "cnpg.fullname" .) }}
+{{- end }}
+
+{{/*
+User secret name.
+*/}}
+{{- define "cnpg.secrets.userName" -}}
+{{- if .Values.cluster.existingSecret }}
+{{- .Values.cluster.existingSecret }}
+{{- else }}
+{{- printf "%s-user" (include "cnpg.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
+Superuser secret name.
+*/}}
+{{- define "cnpg.secrets.superuserName" -}}
+{{- if .Values.cluster.superuser.existingSecret }}
+{{- .Values.cluster.superuser.existingSecret }}
+{{- else }}
+{{- printf "%s-superuser" (include "cnpg.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
+Objectstore secret name.
+*/}}
+{{- define "cnpg.secrets.objectStoreName" -}}
+{{- if .Values.backup.objectStore.existingSecret }}
+{{- .Values.backup.objectStore.existingSecret }}
+{{- else }}
+{{- printf "%s-objectstore" (include "cnpg.fullname" .) }}
+{{- end }}
 {{- end }}

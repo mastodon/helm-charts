@@ -10,10 +10,10 @@ metadata:
 spec:
   instances: {{ .Values.instances }}
   imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-  {{- if .Values.cluster.superuserSecret }}
+  {{- if or (and .Values.cluster.superuser.username .Values.cluster.superuser.password) .Values.cluster.superuser.existingSecret }}
   enableSuperuserAccess: true
   superuserSecret:
-    name: {{ .Values.cluster.superuserSecret }}
+    name: {{ include "cnpg.secrets.superuserName" . }}
   {{- end }}
   {{- if eq .Values.backup.method "plugin" }}
   plugins:
@@ -27,7 +27,7 @@ spec:
       database: {{ .Values.cluster.dbname }}
       owner: {{ .Values.cluster.owner }}
       secret:
-        name: {{ .Values.cluster.secret }}
+        name: {{ include "cnpg.secrets.userName" . }}
       postInitSQL:
         - CREATE DATABASE {{ .Values.cluster.dbname }} OWNER {{ .Values.cluster.owner }}
   storage:
