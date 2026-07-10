@@ -12,16 +12,20 @@ echo
 kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
 helm install redis dandydev/redis-ha \
     --set "replicas=1,auth=true,redisPassword=password,sentinel.quorum=1,redis.config.min-replicas-to-write=0" \
-    --namespace default
+    --namespace default \
+    --hide-notes
 helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
-    --create-namespace
+    --create-namespace \
+    --hide-notes
 helm install traefik traefik/traefik \
     --namespace traefik \
     --create-namespace \
     --set "ingressClass.enabled=false" \
-    --set "providers.kubernetesIngress.enabled=false,providers.kubernetesGateway.enabled=true"
+    --set "providers.kubernetesIngress.enabled=false,providers.kubernetesGateway.enabled=true" \
+    --hide-notes
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
+sleep 10s
 kubectl apply -n default -f charts/mastodon/ci/test-postgres-cluster.yaml
 
 echo
