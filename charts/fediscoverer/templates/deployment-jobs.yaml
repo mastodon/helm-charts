@@ -62,6 +62,10 @@ spec:
             - name: JSON_LOGGING
               value: "true"
             {{- end }}
+            {{- range $key, $value := .Values.jobs.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}

@@ -69,6 +69,10 @@ web:
   # These will be added in addition to other labels
   podlabels:
 
+  # Additional environment variables to set for all web pods.
+  # Applied in additional to global env values.
+  env:
+
 # Configuration for job pods
 jobs:
 
@@ -86,6 +90,10 @@ jobs:
   # Additional labels for jobs pods
   # These will be added in addition to other labels
   podlabels:
+
+  # Additional environment variables to set for all job pods.
+  # Applied in additional to global env values.
+  env:
 
 # Additional environment variables to set for all pods.
 env:
