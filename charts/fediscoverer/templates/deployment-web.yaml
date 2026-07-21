@@ -69,6 +69,10 @@ spec:
             - name: QUEUE_CONNECTION_POOL_SIZE
               value: {{ .Values.config.queueConnectionPoolSize | quote }}
             {{- end }}
+            {{- range $key, $value := .Values.web.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
