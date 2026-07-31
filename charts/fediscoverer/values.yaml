@@ -73,6 +73,14 @@ web:
   # Applied in additional to global env values.
   env: {}
 
+  # Open Telemetry configuration for web pods.
+  # Overrides global settings.
+  otel:
+    enabled: null
+    exporterUri: ""
+    namePrefix: ""
+    nameSeparator: ""
+
 # Configuration for job pods
 jobs:
 
@@ -95,6 +103,14 @@ jobs:
   # Applied in additional to global env values.
   env: {}
 
+  # Open Telemetry configuration for web pods.
+  # Overrides global settings.
+  otel:
+    enabled: null
+    exporterUri: ""
+    namePrefix: ""
+    nameSeparator: ""
+
 # Additional environment variables to set for all pods.
 env: {}
 
@@ -103,6 +119,17 @@ metrics:
   prometheus:
     enabled: false
     port: 9394
+
+# Open Telemetry configuration for all deployments. Component-specific
+# configuration will override these values.
+otel:
+  enabled: false
+
+  # Address of the collector to send metrics to.
+  exporterUri: ""
+
+  namePrefix: fediscoverer
+  nameSeparator: "-"
 
 podAnnotations: {}
 

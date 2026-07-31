@@ -69,6 +69,14 @@ spec:
             - name: QUEUE_CONNECTION_POOL_SIZE
               value: {{ .Values.config.queueConnectionPoolSize | quote }}
             {{- end }}
+            {{- if or .Values.web.otel.enabled (and .Values.otel.enabled (ne .Values.web.otel.enabled false)) }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ required "OTEL endpoint is required when OTEL is enabled" (coalesce .Values.web.otel.endpointUri .Values.otel.endpointUri) }}
+            - name: OTEL_SERVICE_NAME_PREFIX
+              value: {{ coalesce .Values.web.otel.namePrefix .Values.otel.namePrefix }}
+            - name: OTEL_SERVICE_NAME_SEPARATOR
+              value: "{{ coalesce .Values.web.otel.nameSeparator .Values.otel.nameSeparator }}"
+            {{- end }}
             {{- range $key, $value := .Values.web.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}

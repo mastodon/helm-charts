@@ -62,6 +62,14 @@ spec:
             - name: JSON_LOGGING
               value: "true"
             {{- end }}
+            {{- if or .Values.jobs.otel.enabled (and .Values.otel.enabled (ne .Values.jobs.otel.enabled false)) }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ required "OTEL endpoint is required when OTEL is enabled" (coalesce .Values.jobs.otel.endpointUri .Values.otel.endpointUri) }}
+            - name: OTEL_SERVICE_NAME_PREFIX
+              value: {{ coalesce .Values.jobs.otel.namePrefix .Values.otel.namePrefix }}
+            - name: OTEL_SERVICE_NAME_SEPARATOR
+              value: "{{ coalesce .Values.jobs.otel.nameSeparator .Values.otel.nameSeparator }}"
+            {{- end }}
             {{- range $key, $value := .Values.jobs.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
