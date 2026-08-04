@@ -41,6 +41,12 @@ cluster:
   # Volume size for the cluster pods
   storage: 25Gi
 
+  # Labels to apply to the cluster
+  labels: {}
+
+  # Annotations to apply to the cluster
+  annotations: {}
+
 # Configuration for cluster backup
 backup:
   enabled: true
