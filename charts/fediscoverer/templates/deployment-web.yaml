@@ -77,13 +77,11 @@ spec:
             - name: OTEL_SERVICE_NAME_SEPARATOR
               value: "{{ coalesce .Values.web.otel.nameSeparator .Values.otel.nameSeparator }}"
             {{- end }}
-            {{- range $key, $value := .Values.web.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- with .Values.web.env }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
           ports:
             - name: http

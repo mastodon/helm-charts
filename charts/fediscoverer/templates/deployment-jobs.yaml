@@ -70,13 +70,11 @@ spec:
             - name: OTEL_SERVICE_NAME_SEPARATOR
               value: "{{ coalesce .Values.jobs.otel.nameSeparator .Values.otel.nameSeparator }}"
             {{- end }}
-            {{- range $key, $value := .Values.jobs.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- with .Values.jobs.env }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

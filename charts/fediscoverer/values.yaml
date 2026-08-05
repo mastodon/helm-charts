@@ -71,7 +71,7 @@ web:
 
   # Additional environment variables to set for all web pods.
   # Applied in additional to global env values.
-  env: {}
+  env: []
 
   # Open Telemetry configuration for web pods.
   # Overrides global settings.
@@ -101,7 +101,7 @@ jobs:
 
   # Additional environment variables to set for all job pods.
   # Applied in additional to global env values.
-  env: {}
+  env: []
 
   # Open Telemetry configuration for web pods.
   # Overrides global settings.
@@ -112,7 +112,7 @@ jobs:
     nameSeparator: ""
 
 # Additional environment variables to set for all pods.
-env: {}
+env: []
 
 # Whether to enable the prometheus exporter for monitoring
 metrics:
