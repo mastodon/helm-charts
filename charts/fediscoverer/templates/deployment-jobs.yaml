@@ -44,6 +44,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {{- with .Values.jobs.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
             - name: DOMAIN
               value: {{ .Values.config.domain }}
             - name: SECRET_KEY_BASE
@@ -69,12 +75,6 @@ spec:
               value: {{ coalesce .Values.jobs.otel.namePrefix .Values.otel.namePrefix }}
             - name: OTEL_SERVICE_NAME_SEPARATOR
               value: "{{ coalesce .Values.jobs.otel.nameSeparator .Values.otel.nameSeparator }}"
-            {{- end }}
-            {{- with .Values.jobs.env }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
-            {{- with .Values.env }}
-            {{- toYaml . | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
