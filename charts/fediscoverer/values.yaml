@@ -78,8 +78,7 @@ web:
   otel:
     enabled: null
     exporterUri: ""
-    namePrefix: ""
-    nameSeparator: ""
+    serviceName: ""
 
 # Configuration for job pods
 jobs:
@@ -108,8 +107,7 @@ jobs:
   otel:
     enabled: null
     exporterUri: ""
-    namePrefix: ""
-    nameSeparator: ""
+    serviceName: ""
 
 # Additional environment variables to set for all pods.
 env: []
@@ -128,8 +126,9 @@ otel:
   # Address of the collector to send metrics to.
   exporterUri: ""
 
-  namePrefix: fediscoverer
-  nameSeparator: "-"
+  # Service name for OTEL to use when sending metrics.
+  # Defaults to 'fediscoverer' when not set.
+  serviceName: ""
 
 podAnnotations: {}
 
