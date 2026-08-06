@@ -38,6 +38,12 @@ cluster:
     # Must be of type kubernetes.io/basic-auth.
     existingSecret: ""
 
+  # SQL commands to perform on first boot
+  postInitSQL: []
+
+  # Managed roles to add to the cluster
+  managedRoles: []
+
   # Volume size for the cluster pods
   storage: 25Gi
 

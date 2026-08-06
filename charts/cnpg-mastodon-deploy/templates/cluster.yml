@@ -2,6 +2,10 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: {{ include "cnpg.fullname" . }}
+  {{- with .Values.cluster.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "cnpg.labels" . | nindent 4 }}
     {{- with .Values.cluster.labels }}
@@ -31,13 +35,23 @@ spec:
       owner: {{ .Values.cluster.owner }}
       secret:
         name: {{ include "cnpg.secrets.userName" . }}
+      {{- with .Values.cluster.postInitSQL }}
       postInitSQL:
-        - CREATE DATABASE {{ .Values.cluster.dbname }} OWNER {{ .Values.cluster.owner }}
+        {{- toYaml . | nindent 8}}
+      {{- end }}
+  {{- with .Values.cluster.managedRoles }}
+  managed:
+    roles:
+      {{- toYaml . | nindent 6 }}
+  {{- end }}
   storage:
     size: {{ .Values.cluster.storage }}
+  postgresql:
+    parameters:
+      pg_stat_statements.track: all
   monitoring:
     enablePodMonitor: true
+  {{- with .Values.affinity }}
   affinity:
-    {{- with .Values.affinity }}
     {{- toYaml . | nindent 4 }}
-    {{- end }}
+  {{- end }}
