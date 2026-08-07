@@ -75,6 +75,10 @@ Secret name for the secretKeyBase
 {{- if .Values.config.existingSecret }}
 {{- .Values.config.existingSecret }}
 {{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-secret-predeploy" (include "fediscoverer.fullname" .) }}
+{{- else }}
 {{- printf "%s-secret" (include "fediscoverer.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end }}

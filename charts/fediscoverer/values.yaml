@@ -15,6 +15,13 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Install/upgrade hooks.
+hooks:
+
+  # Whether to run database migrations.
+  dbMigrate:
+    enabled: true
+
 # App-wide configuration
 config:
 
