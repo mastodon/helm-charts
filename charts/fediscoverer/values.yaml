@@ -55,6 +55,12 @@ config:
         name: postgresql-auth
         key: password
 
+    # In case the database is sitting behind a connection pooler, direct
+    # connection information needs to be provided for automatic migrations.
+    direct:
+      host: ""
+      port: 0
+
   # Whether to enable JSON logging
   jsonLogging: true
 

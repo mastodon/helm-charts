@@ -10,7 +10,11 @@ General environment definition for all pods.
       name: {{ include "fediscoverer.secrets.secretKeyBase" (merge (dict "preDeploy" .preDeploy ) .) }}
       key: {{ .Values.config.existingSecretKeys.secretKeyBase }}
 - name: DATABASE_URL
+  {{- if .preDeploy }}
+  value: {{ include "fediscoverer.database.uriDirect" . }}
+  {{- else }}
   value: {{ include "fediscoverer.database.uri" . }}
+  {{- end }}
 - name: FEDISCOVERER_DATABASE_PASSWORD
   valueFrom:
     secretKeyRef:

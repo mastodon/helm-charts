@@ -69,6 +69,13 @@ Create the database connection URI
 {{- end }}
 
 {{/*
+Create the database connection URI (direct connection)
+*/}}
+{{- define "fediscoverer.database.uriDirect" -}}
+{{- printf "postgres://%s:%d" (coalesce .Values.config.database.direct.host .Values.config.database.host) (int (coalesce .Values.config.database.direct.port .Values.config.database.port)) }}
+{{- end }}
+
+{{/*
 Secret name for the secretKeyBase
 */}}
 {{- define "fediscoverer.secrets.secretKeyBase" -}}
