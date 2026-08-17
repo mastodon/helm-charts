@@ -49,20 +49,7 @@ spec:
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
-            - name: DOMAIN
-              value: {{ .Values.config.domain }}
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "fediscoverer.secrets.secretKeyBase" . }}
-                  key: {{ .Values.config.existingSecretKeys.secretKeyBase }}
-            - name: DATABASE_URL
-              value: {{ include "fediscoverer.database.uri" . }}
-            - name: FEDISCOVERER_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.config.database.password.secretKeyRef.name }}
-                  key: {{ .Values.config.database.password.secretKeyRef.key }}
+            {{- include "fediscoverer.env" . | trim | nindent 12 }}
             {{- if .Values.metrics.prometheus.enabled }}
             - name: PROMETHEUS_EXPORTER_ENABLED
               value: "true"
