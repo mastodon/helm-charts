@@ -22,7 +22,7 @@ spec:
   superuserSecret:
     name: {{ include "cnpg.secrets.superuserName" . }}
   {{- end }}
-  {{- if eq .Values.backup.method "plugin" }}
+  {{- if and (.Values.backup.enabled) (eq .Values.backup.method "plugin") }}
   plugins:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
