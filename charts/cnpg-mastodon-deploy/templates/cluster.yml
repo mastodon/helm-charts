@@ -1,0 +1,57 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "cnpg.fullname" . }}
+  {{- with .Values.cluster.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "cnpg.labels" . | nindent 4 }}
+    {{- with .Values.cluster.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  instances: {{ .Values.instances }}
+  imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  {{- if or (and .Values.cluster.superuser.username .Values.cluster.superuser.password) .Values.cluster.superuser.existingSecret }}
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: {{ include "cnpg.secrets.superuserName" . }}
+  {{- end }}
+  {{- if and (.Values.backup.enabled) (eq .Values.backup.method "plugin") }}
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: {{ include "cnpg.store.name" . }}
+  {{- end }}
+  bootstrap:
+    initdb:
+      database: {{ .Values.cluster.dbname }}
+      owner: {{ .Values.cluster.owner }}
+      secret:
+        name: {{ include "cnpg.secrets.userName" . }}
+      {{- with .Values.cluster.postInitSQL }}
+      postInitSQL:
+        {{- toYaml . | nindent 8}}
+      {{- end }}
+  {{- with .Values.cluster.managedRoles }}
+  managed:
+    roles:
+      {{- toYaml . | nindent 6 }}
+  {{- end }}
+  storage:
+    size: {{ .Values.cluster.storage }}
+  postgresql:
+    parameters:
+      pg_stat_statements.track: all
+  monitoring:
+    enablePodMonitor: true
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

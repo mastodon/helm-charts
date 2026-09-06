@@ -1,0 +1,85 @@
+# Number of postgres instances to create for this cluster.
+# A minimum of 2 is recommended for HA and resiliency.
+instances: 2
+
+# Postgres image to use for the cluster.
+image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Configuration for the postgres cluster itself
+cluster:
+
+  # Database name and owner
+  dbname: mastodon
+  owner: mastodon
+
+  # Login credentials for the initial user.
+  username: ""
+  password: ""
+
+  # Secret contains the user credentials. Overrides above values.
+  # Must be of type kubernetes.io/basic-auth.
+  existingSecret: ""
+
+  # Optional creation/credentials for the admin user.
+  # Must specify both username and password to enable superuser creation.
+  superuser:
+
+    username: ""
+    password: ""
+
+    # Secret for superuser credentials. Overrides above values.
+    # Must be of type kubernetes.io/basic-auth.
+    existingSecret: ""
+
+  # SQL commands to perform on first boot
+  postInitSQL: []
+
+  # Managed roles to add to the cluster
+  managedRoles: []
+
+  # Volume size for the cluster pods
+  storage: 25Gi
+
+  # Labels to apply to the cluster
+  labels: {}
+
+  # Annotations to apply to the cluster
+  annotations: {}
+
+# Configuration for cluster backup
+backup:
+  enabled: true
+  method: plugin
+  schedule: "0 0 0 * * *"  # At midnight every day
+
+  # If using 'method: plugin', these need to be filled out
+  objectStore:
+    destinationPath: ""
+    endpointUrl: ""
+
+    # S3 connection credentials
+    accessKeyId: ""
+    secretAccessKey: ""
+    accessSessionToken: ""
+
+    # Secret for S3 connection credentials. Overrides above values.
+    existingSecret: ""
+    existingSecretKeys:
+      accessKeyId: access-key-id
+      secretAccessKey: secret-access-key
+      accessSessionToken: access-session-token
+
+  # How long to keep backups for.
+  retentionPolicy: "14d"
+
+# Additional labels to add to all resources
+labels: {}
+
+affinity: {}
