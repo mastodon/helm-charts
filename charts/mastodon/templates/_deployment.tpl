@@ -64,15 +64,13 @@ envFrom:
 Standard volumes that will be mounted for most pods.
 */}}
 {{- define "mastodon.volumes" -}}
-{{- if .Values.volumeMounts }}
 {{- with .Values.volumes }}
-  {{- toYaml . | nindent 8 }}
+{{- toYaml . }}
 {{- end }}
 {{- if .Values.elasticsearch.caSecret.name }}
-  - name: elasticsearch-ca
-    secret:
-      secretName: {{ .Values.elasticsearch.caSecret.name }}
-{{- end }}
+- name: elasticsearch-ca
+  secret:
+    secretName: {{ .Values.elasticsearch.caSecret.name }}
 {{- end }}
 {{- end }}
 
@@ -80,17 +78,14 @@ Standard volumes that will be mounted for most pods.
 Standard volumeMounts that will be configured for most containers.
 */}}
 {{- define "mastodon.volumeMounts" -}}
-{{- if .Values.volumeMounts }}
-volumeMounts:
 {{- with .Values.volumeMounts }}
-  {{- toYaml . | nindent 12 }}
+{{- toYaml . }}
 {{- end }}
 {{- if .Values.elasticsearch.caSecret.name }}
-  - name: elasticsearch-ca
-    mountPath: {{ .Values.elasticsearch.caSecret.mountPath }}
-    subPath: {{ .Values.elasticsearch.caSecret.key }}
-    readOnly: true
-{{- end }}
+- name: elasticsearch-ca
+  mountPath: {{ .Values.elasticsearch.caSecret.mountPath }}
+  subPath: {{ .Values.elasticsearch.caSecret.key }}
+  readOnly: true
 {{- end }}
 {{- end }}
 
