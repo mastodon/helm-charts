@@ -43,20 +43,13 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: DOMAIN
-              value: {{ .Values.config.domain }}
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "fediscoverer.secrets.secretKeyBase" . }}
-                  key: {{ .Values.config.existingSecretKeys.secretKeyBase }}
-            - name: DATABASE_URL
-              value: {{ include "fediscoverer.database.uri" . }}
-            - name: FEDISCOVERER_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.config.database.password.secretKeyRef.name }}
-                  key: {{ .Values.config.database.password.secretKeyRef.key }}
+            {{- with .Values.web.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- include "fediscoverer.env" . | trim | nindent 12 }}
             {{- if .Values.metrics.prometheus.enabled }}
             - name: PROMETHEUS_EXPORTER_ENABLED
               value: "true"
@@ -69,9 +62,11 @@ spec:
             - name: QUEUE_CONNECTION_POOL_SIZE
               value: {{ .Values.config.queueConnectionPoolSize | quote }}
             {{- end }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- if or .Values.web.otel.enabled (and .Values.otel.enabled (ne .Values.web.otel.enabled false)) }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ required "OTEL endpoint is required when OTEL is enabled" (coalesce .Values.web.otel.endpointUri .Values.otel.endpointUri) }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ coalesce .Values.web.otel.serviceName .Values.otel.serviceName }}
             {{- end }}
           ports:
             - name: http

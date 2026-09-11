@@ -44,27 +44,22 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: DOMAIN
-              value: {{ .Values.config.domain }}
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "fediscoverer.secrets.secretKeyBase" . }}
-                  key: {{ .Values.config.existingSecretKeys.secretKeyBase }}
-            - name: DATABASE_URL
-              value: {{ include "fediscoverer.database.uri" . }}
-            - name: FEDISCOVERER_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.config.database.password.secretKeyRef.name }}
-                  key: {{ .Values.config.database.password.secretKeyRef.key }}
+            {{- with .Values.jobs.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- include "fediscoverer.env" . | trim | nindent 12 }}
             {{- if .Values.config.jsonLogging }}
             - name: JSON_LOGGING
               value: "true"
             {{- end }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
+            {{- if or .Values.jobs.otel.enabled (and .Values.otel.enabled (ne .Values.jobs.otel.enabled false)) }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ required "OTEL endpoint is required when OTEL is enabled" (coalesce .Values.jobs.otel.endpointUri .Values.otel.endpointUri) }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ coalesce .Values.jobs.otel.serviceName .Values.otel.serviceName }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

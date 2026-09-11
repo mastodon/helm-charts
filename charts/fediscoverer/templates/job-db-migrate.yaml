@@ -1,0 +1,37 @@
+{{- if .Values.hooks.dbMigrate.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "fediscoverer.fullname" . }}-db-migrate
+  labels:
+    {{- include "fediscoverer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name: {{ include "fediscoverer.fullname" . }}-db-migrate
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "fediscoverer.fullname" . }}-db-migrate
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - bundle
+            - exec
+            - rake
+            - db:migrate
+          env:
+            {{- include "fediscoverer.env" (merge (dict "preDeploy" true ) .) | trim | nindent 12 }}
+{{- end }}

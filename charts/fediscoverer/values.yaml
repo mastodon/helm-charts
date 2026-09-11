@@ -9,11 +9,18 @@ image:
   repository: ghcr.io/mastodon/fediscoverer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag:
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+# Install/upgrade hooks.
+hooks:
+
+  # Whether to run database migrations.
+  dbMigrate:
+    enabled: true
 
 # App-wide configuration
 config:
@@ -48,6 +55,12 @@ config:
         name: postgresql-auth
         key: password
 
+    # In case the database is sitting behind a connection pooler, direct
+    # connection information needs to be provided for automatic migrations.
+    direct:
+      host: ""
+      port: 0
+
   # Whether to enable JSON logging
   jsonLogging: true
 
@@ -56,45 +69,79 @@ web:
 
   # Number of web pods
   # Will override the global replicaCount value
-  replicaCount:
+  replicaCount: 1
 
   # Tags for the deployment object
-  tags:
+  tags: ""
 
   # Additional annotations for web pods
   # These will be added in addition to global podAnnotations
-  podAnnotations:
+  podAnnotations: {}
 
   # Additional labels for web pods
   # These will be added in addition to other labels
-  podlabels:
+  podlabels: {}
+
+  # Additional environment variables to set for all web pods.
+  # Applied in additional to global env values.
+  env: []
+
+  # Open Telemetry configuration for web pods.
+  # Overrides global settings.
+  otel:
+    enabled: null
+    exporterUri: ""
+    serviceName: ""
 
 # Configuration for job pods
 jobs:
 
   # Number of job pods
   # Will override the global replicaCount value
-  replicaCount:
+  replicaCount: 1
 
   # Tags for the deployment object
-  tags:
+  tags: ""
 
   # Additional annotations for web pods
   # These will be added in addition to global podAnnotations
-  podAnnotations:
+  podAnnotations: {}
 
   # Additional labels for jobs pods
   # These will be added in addition to other labels
-  podlabels:
+  podlabels: {}
+
+  # Additional environment variables to set for all job pods.
+  # Applied in additional to global env values.
+  env: []
+
+  # Open Telemetry configuration for web pods.
+  # Overrides global settings.
+  otel:
+    enabled: null
+    exporterUri: ""
+    serviceName: ""
 
 # Additional environment variables to set for all pods.
-env:
+env: []
 
 # Whether to enable the prometheus exporter for monitoring
 metrics:
   prometheus:
     enabled: false
     port: 9394
+
+# Open Telemetry configuration for all deployments. Component-specific
+# configuration will override these values.
+otel:
+  enabled: false
+
+  # Address of the collector to send metrics to.
+  exporterUri: ""
+
+  # Service name for OTEL to use when sending metrics.
+  # Defaults to 'fediscoverer' when not set.
+  serviceName: ""
 
 podAnnotations: {}
 
@@ -148,16 +195,6 @@ httproute:
           value: /
 
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
 
 nodeSelector: {}
 
