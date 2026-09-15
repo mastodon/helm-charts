@@ -56,6 +56,13 @@ Cluster backup name
 {{- end }}
 
 {{/*
+Cluster pooler name
+*/}}
+{{- define "cnpg.pooler.name" -}}
+{{- printf "%s-pooler" (include "cnpg.fullname" .) }}
+{{- end }}
+
+{{/*
 User secret name.
 */}}
 {{- define "cnpg.secrets.userName" -}}

@@ -79,6 +79,20 @@ backup:
   # How long to keep backups for.
   retentionPolicy: "14d"
 
+# Connection pooler
+pooler:
+  enabed: false
+
+  # Number of pooler instances
+  instances: 2
+
+  # Pooler mode
+  mode: session
+
+  # Connection configuration
+  maxClientConn: 1000
+  defaultPoolSize: 10
+
 # Additional labels to add to all resources
 labels: {}
 

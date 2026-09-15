@@ -1,0 +1,16 @@
+{{- if .Values.pooler.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: {{ include "cnpg.pooler.name" . }}
+spec:
+  cluster:
+    name: {{ include "cnpg.fullname" . }}
+  instances: {{ .Values.pooler.instances }}
+  type: rw
+  pgbouncer:
+    poolMode: {{ .Values.pooler.mode }}
+    parameters:
+      max_client_conn: {{ .Values.pooler.maxClientConn | quote }}
+      default_pool_size: {{ .Values.pooler.defaultPoolSize | quote }}
+{{- end }}
