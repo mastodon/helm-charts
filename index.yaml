@@ -3,6 +3,21 @@ entries:
   fediscoverer:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2026-09-28T08:00:11.540416022Z"
+    description: Exploring decentralized search and discovery for the Fediverse.
+    digest: 66ea278933a5425b3b3e042cd9b3db0661f7985cfd2f5860172d98c479f03ce7
+    home: https://discovery.joinmastodon.org
+    icon: https://avatars.githubusercontent.com/u/24979032
+    maintainers:
+    - name: Mastodon
+      url: https://joinmastodon.org
+    name: fediscoverer
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/fediscoverer-0.7.0/fediscoverer-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2026-08-17T13:07:30.077538605Z"
     description: Exploring decentralized search and discovery for the Fediverse.
     digest: 4d84d3e45a38fac6414cc92d13e7b345ed3e4cfa6306313abeac11c34dc9d483
@@ -916,4 +931,4 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-15T14:37:13.61047054Z"
+generated: "2026-09-28T08:00:11.540568349Z"
