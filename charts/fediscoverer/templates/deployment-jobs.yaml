@@ -61,8 +61,10 @@ spec:
             - name: OTEL_SERVICE_NAME
               value: {{ coalesce .Values.jobs.otel.serviceName .Values.otel.serviceName }}
             {{- end }}
+          {{- with coalesce .Values.jobs.resources .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
