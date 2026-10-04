@@ -737,6 +737,9 @@ mastodon:
   # in key-value format.
   extraEnvFrom: ""
 
+  ## Exta environment variables that should be secrets
+  extraSecretFrom: ""
+
 serviceAccount:
   create: true
 
