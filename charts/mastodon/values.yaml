@@ -737,7 +737,8 @@ mastodon:
   # in key-value format.
   extraEnvFrom: ""
 
-  ## Exta environment variables that should be secrets
+  # Specify extra environment variables to be added to all Mastodon pods that
+  # are defined in kubernetes Secrets.
   extraSecretFrom: ""
 
 serviceAccount:

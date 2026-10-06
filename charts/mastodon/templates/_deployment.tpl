@@ -45,7 +45,7 @@ envFrom:
       name: {{ .Values.mastodon.extraEnvFrom }}
   {{- end }}
   {{- if .Values.mastodon.extraSecretFrom }}
-  - SecretRef:
+  - secretRef:
       name: {{ .Values.mastodon.extraSecretFrom }}
   {{- end }}
 {{- end }}
@@ -63,7 +63,7 @@ envFrom:
       name: {{ .Values.mastodon.extraEnvFrom }}
   {{- end }}
   {{- if .Values.mastodon.extraSecretFrom }}
-  - SecretRef:
+  - secretRef:
       name: {{ .Values.mastodon.extraSecretFrom }}
   {{- end }}
 {{- end }}
