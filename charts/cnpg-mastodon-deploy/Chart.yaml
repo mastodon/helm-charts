@@ -1,0 +1,10 @@
+apiVersion: v2
+name: cnpg-mastodon-deploy
+description: A deployment of a CloudNativePG cluster for Mastodon instances.
+type: application
+home: https://joinmastodon.org
+maintainers:
+  - name: Mastodon
+    url: https://joinmastodon.org
+version: 0.1.0
+appVersion: "17.5"
