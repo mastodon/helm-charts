@@ -93,6 +93,12 @@ web:
     exporterUri: ""
     serviceName: ""
 
+  # Web-specific pod customizations. Overrides global values.
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
 # Configuration for job pods
 jobs:
 
@@ -121,6 +127,12 @@ jobs:
     enabled: null
     exporterUri: ""
     serviceName: ""
+
+  # Job-specific pod customizations. Overrides global values.
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 # Additional environment variables to set for all pods.
 env: []
