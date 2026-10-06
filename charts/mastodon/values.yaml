@@ -365,6 +365,9 @@ mastodon:
         resources: {}
 
         # Applied in addition to previously-defined values.
+        lables: {}
+        podAnnotations: {}
+        podLabels: {}
         extraContainers: []
 
     # Specify extra environment variables to be added to Sidekiq pods.
