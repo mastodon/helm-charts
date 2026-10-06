@@ -8,6 +8,9 @@ metadata:
   labels:
     {{- include "mastodon.labels" $context | trim | nindent 4 }}
     {{- include "mastodon.userLabels" $context | trim | nindent 4 }}
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
     {{- with $context.Values.mastodon.sidekiq.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -42,6 +45,9 @@ spec:
         {{- include "mastodon.selectorLabels" $context | trim | nindent 8 }}
         {{- include "mastodon.userLabels" $context | trim | nindent 8 }}
         {{- include "mastodon.podUserLabels" $context | trim | nindent 8 }}
+        {{- with .podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with $context.Values.mastodon.sidekiq.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -50,6 +56,9 @@ spec:
       annotations:
         {{- include "mastodon.userPodAnnotations" $context | trim | nindent 8 }}
         {{- include "mastodon.rollingPodAnnotations" $context | trim | nindent 8 }}
+        {{- with .podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with $context.Values.mastodon.sidekiq.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
