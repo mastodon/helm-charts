@@ -92,13 +92,10 @@ spec:
             - "0.0.0.0"
             - "--port"
             - "{{ .Values.metrics.prometheus.port }}"
+          {{- with coalesce .Values.web.resources .Values.resources }}
           resources:
-            requests:
-              cpu: "0.1"
-              memory: "180M"
-            limits:
-              cpu: "0.5"
-              memory: "250M"
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - name: prometheus
               containerPort: {{ .Values.metrics.prometheus.port }}
