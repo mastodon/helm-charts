@@ -740,6 +740,10 @@ mastodon:
   # in key-value format.
   extraEnvFrom: ""
 
+  # Specify extra environment variables to be added to all Mastodon pods that
+  # are defined in kubernetes Secrets.
+  extraSecretFrom: ""
+
 serviceAccount:
   create: true
 
