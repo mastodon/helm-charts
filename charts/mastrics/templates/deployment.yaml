@@ -42,6 +42,12 @@ spec:
                 secretKeyRef:
                   name: {{ include "mastrics.secrets.secretKeyBase" . }}
                   key: {{ .Values.mastrics.existingSecretKeys.secretKeyBase }}
+            - name: DB_USERNAME
+              value: {{ .Values.mastrics.database.host }}
+            - name: DB_PASSWORD
+              value: {{ .Values.mastrics.database.host }}
+            - name: DATABASE_URL
+              value: {{ printf "postgresql://$(DB_USERNAME):$(DB_PASSWORD)@%s:%d/%s" .Values.mastrics.database.host (.Values.mastrics.database.port | int) .Values.mastrics.database.dbname | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

@@ -33,6 +33,7 @@ mastrics:
   database:
     host: ""
     port: 5432
+    dbname: mastrics_production
 
     username: ""
     password: ""

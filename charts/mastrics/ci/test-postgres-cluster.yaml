@@ -15,7 +15,7 @@ spec:
   instances: 1
   bootstrap:
     initdb:
-      database: mastrics
+      database: mastrics_production
       owner: mastrics
       secret:
         name: postgres-auth

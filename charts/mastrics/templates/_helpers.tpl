@@ -71,3 +71,14 @@ Secret name for the secretKeyBase
 {{- printf "%s-secret" (include "mastrics.fullname" .) }}
 {{- end }}
 {{- end }}
+
+{{/*
+Secret name for the database
+*/}}
+{{- define "mastrics.secrets.databaseName" -}}
+{{- if .Values.mastrics.database.existingSecret }}
+{{- .Values.mastrics.database.existingSecret }}
+{{- else }}
+{{- printf "%s-database-auth" (include "mastrics.fullname" .) }}
+{{- end }}
+{{- end }}

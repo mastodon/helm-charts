@@ -3,7 +3,4 @@ mastrics:
   database:
     host: postgres-rw
     port: 5432
-    password:
-      secretKeyRef:
-        name: postgres-auth
-        key: password
+    existingSecret: postgres-auth
