@@ -7,7 +7,6 @@ helm repo add cnpg https://cloudnative-pg.github.io/charts
 
 echo "##### Installing dependencies #####"
 echo
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
 helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
@@ -16,7 +15,7 @@ helm install envoy-gateway oci://docker.io/envoyproxy/gateway-helm \
     --create-namespace
 kubectl wait \
     --timeout=5m \
-    --namespace envoy-gateway-system \
+    -n envoy-gateway-system \
     deployment/envoy-gateway \
     --for=condition=Available
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
