@@ -1,0 +1,11 @@
+apiVersion: v2
+name: metabase
+description: Open Source SQL Explorer.
+home: https://www.metabase.com/
+maintainers:
+  - name: Mastodon
+    url: https://joinmastodon.org
+icon: https://avatars.githubusercontent.com/u/10520629
+type: application
+version: 0.1.0
+appVersion: "v0.64.1"

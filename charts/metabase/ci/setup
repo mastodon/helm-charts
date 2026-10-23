@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+echo "##### Adding Helm Repositories #####"
+echo
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+
+echo "##### Installing dependencies #####"
+echo
+helm install cnpg cnpg/cloudnative-pg \
+    --namespace cnpg-system \
+    --create-namespace
+helm install envoy-gateway oci://docker.io/envoyproxy/gateway-helm \
+    --namespace envoy-gateway-system \
+    --create-namespace
+kubectl wait \
+    --timeout=5m \
+    -n envoy-gateway-system \
+    deployment/envoy-gateway \
+    --for=condition=Available
+kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
+kubectl apply -n default -f charts/metabase/ci/test-postgres-cluster.yaml
+
+echo
+echo "##### Post-install rollout #####"
+kubectl wait -n default --for=condition=Ready --timeout=300s cluster/postgres
