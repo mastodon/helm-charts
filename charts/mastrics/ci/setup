@@ -11,7 +11,7 @@ helm install cnpg cnpg/cloudnative-pg \
     --namespace cnpg-system \
     --create-namespace
 helm install envoy-gateway oci://docker.io/envoyproxy/gateway-helm \
-    ---namespace envoy-gateway-system \
+    --namespace envoy-gateway-system \
     --create-namespace
 kubectl wait \
     --timeout=5m \
@@ -19,7 +19,7 @@ kubectl wait \
     deployment/envoy-gateway \
     --for=condition=Available
 kubectl -n cnpg-system rollout status deployment/cnpg-cloudnative-pg
-kubectl apply -n default -f charts/fediscoverer/ci/test-postgres-cluster.yaml
+kubectl apply -n default -f charts/mastrics/ci/test-postgres-cluster.yaml
 
 echo
 echo "##### Post-install rollout #####"
