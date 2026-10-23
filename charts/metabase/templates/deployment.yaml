@@ -45,12 +45,12 @@ spec:
               value: {{ .Values.metabase.database.port | quote }}
             - name: MB_DB_USER
               valueFrom:
-                secretRef:
+                secretKeyRef:
                   name: {{ include "metabase.secrets.databaseName" . }}
                   key: {{ .Values.metabase.database.existingSecretKeys.username }}
             - name: MB_DB_PASS
               valueFrom:
-                secretRef:
+                secretKeyRef:
                   name: {{ include "metabase.secrets.databaseName" . }}
                   key: {{ .Values.metabase.database.existingSecretKeys.password }}
           ports:
