@@ -1,0 +1,12 @@
+apiVersion: v2
+name: mastodon
+description: |
+  Mastodon (Business) metrics server.
+home: https://joinmastodon.org
+maintainers:
+  - name: Mastodon
+    url: https://joinmastodon.org
+icon: https://avatars.githubusercontent.com/u/24979032
+type: application
+version: 0.1.0
+appVersion: "v1.0.0"
