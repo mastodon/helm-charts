@@ -44,6 +44,10 @@ envFrom:
   - configMapRef:
       name: {{ .Values.mastodon.extraEnvFrom }}
   {{- end }}
+  {{- if .Values.mastodon.extraSecretFrom }}
+  - secretRef:
+      name: {{ .Values.mastodon.extraSecretFrom }}
+  {{- end }}
 {{- end }}
 
 {{/*
@@ -57,6 +61,10 @@ envFrom:
   {{- if .Values.mastodon.extraEnvFrom }}
   - configMapRef:
       name: {{ .Values.mastodon.extraEnvFrom }}
+  {{- end }}
+  {{- if .Values.mastodon.extraSecretFrom }}
+  - secretRef:
+      name: {{ .Values.mastodon.extraSecretFrom }}
   {{- end }}
 {{- end }}
 
