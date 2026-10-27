@@ -1,0 +1,5 @@
+metabase:
+  database:
+    host: postgres-rw
+    port: 5432
+    existingSecret: postgres-auth

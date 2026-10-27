@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-auth
+type: kubernetes.io/basic-auth
+stringData:
+  username: metabase
+  password: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: metabase
+      owner: metabase
+      secret:
+        name: postgres-auth
+  storage:
+    size: 5Gi
