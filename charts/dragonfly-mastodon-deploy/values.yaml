@@ -1,0 +1,45 @@
+# Default values for dragonfly.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of replicas for each dragonfly cluster.
+replicas: 1
+
+image:
+  repository: ghcr.io/dragonflydb/dragonfly
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Whether to enable password authentication.
+authentication:
+  secret:
+  key: password
+
+# Whether we should use separate dragonflies for app and sidekiq
+separate: false
+
+# Regular snapshot backups to be made to an attached volume.
+snapshot:
+  cron: "*/5 * * * *"      # Every 5 minutes
+  storage: 20Gi
+
+# Additional arguments to add to the process.
+args: []
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
