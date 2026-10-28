@@ -4,6 +4,10 @@ metadata:
   name: {{ include "metabase.fullname" . }}
   labels:
     {{- include "metabase.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4}}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,3 +17,6 @@ spec:
       name: http
   selector:
     {{- include "metabase.selectorLabels" . | nindent 4 }}
+  {{- if .Values.service.loadBalancerClass }}
+  loadBalancerClass: {{ .Values.service.loadBalancerClass }}
+  {{- end }}
