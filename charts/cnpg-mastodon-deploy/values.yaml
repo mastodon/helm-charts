@@ -47,6 +47,9 @@ cluster:
   # Volume size for the cluster pods
   storage: 25Gi
 
+  # Any additional databases to create
+  databases: []
+
   # Labels to apply to the cluster
   labels: {}
 
