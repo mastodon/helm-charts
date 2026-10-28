@@ -888,6 +888,21 @@ entries:
   metabase:
   - apiVersion: v2
     appVersion: v0.64.1
+    created: "2026-10-28T10:55:46.098919088Z"
+    description: Open Source SQL Explorer.
+    digest: 2bd02036b41695f862b02b01832406070a9996340d826f9537e8f3e4ad2fe9cf
+    home: https://www.metabase.com/
+    icon: https://avatars.githubusercontent.com/u/10520629
+    maintainers:
+    - name: Mastodon
+      url: https://joinmastodon.org
+    name: metabase
+    type: application
+    urls:
+    - https://github.com/mastodon/helm-charts/releases/download/metabase-0.1.1/metabase-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v0.64.1
     created: "2026-10-27T10:31:02.391560778Z"
     description: Open Source SQL Explorer.
     digest: ac7c6aadc6a4e7c4ba98163e826a40018b32eec335e18d9aa8a1d9f97c5777b0
@@ -1007,4 +1022,4 @@ entries:
     urls:
     - https://github.com/mastodon/helm-charts/releases/download/pgcat-0.1.0/pgcat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-10-27T10:31:02.391665665Z"
+generated: "2026-10-28T10:55:46.09905959Z"
