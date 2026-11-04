@@ -1,0 +1,12 @@
+{{- $context := . }}
+{{- range .Values.cluster.databases }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: {{ printf "%s-%s" (include "cnpg.fullname" $context) .name }}
+spec:
+  name: {{ .name }}
+  owner: {{ .owner }}
+  cluster:
+    name: {{ include "cnpg.fullname" $context }}
+{{- end }}
