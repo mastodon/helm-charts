@@ -16,7 +16,17 @@ metadata:
     {{- end }}
 spec:
   instances: {{ .Values.instances }}
+  {{- if .Values.image.repository }}
   imageName: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  {{- else if .Values.imageCatalog.name }}
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: {{ .Values.imageCatalog.kind }}
+    name: {{ .Values.imageCatalog.name }}
+    major: {{ .Values.imageCatalog.major }}
+  {{- else }}
+    {{- fail "Must specify either an image or an imageCatalog." }}
+  {{- end }}
   {{- if or (and .Values.cluster.superuser.username .Values.cluster.superuser.password) .Values.cluster.superuser.existingSecret }}
   enableSuperuserAccess: true
   superuserSecret:
