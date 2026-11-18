@@ -5,7 +5,7 @@ instances: 2
 # Postgres image to use for the cluster. Takes precedence over `imageCatalog`
 # when `repository` is set.
 image:
-  repository: "" # ghcr.io/cloudnative-pg/postgresql
+  repository: ""         # ghcr.io/cloudnative-pg/postgresql
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
