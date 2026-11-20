@@ -1,0 +1,7 @@
+image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+cluster:
+  username: myuser
+  password: mypass
+backup:
+  enabled: false
